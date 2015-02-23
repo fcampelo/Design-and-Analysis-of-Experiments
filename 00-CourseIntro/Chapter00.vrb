@@ -3,12 +3,12 @@
 \vhalf
 \url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
 \vone
-Please reference this work as:\\
-\flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: \url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}.\\
+\footnotesize Please reference this work as:\\
+\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
 Version 2.11; Creative Commons BY-NC-SA 4.0.\\
 
-\begin{Verbatim}[fontsize=\scriptsize]
-    @Misc{Campelo2014,
+\begin{Verbatim}[fontsize=\tiny]
+    @Misc{Campelo2015,
       title={Lecture Notes on Design and Analysis of Experiments},
       author={Felipe Campelo},
       howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
