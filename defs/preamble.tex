@@ -1,0 +1,75 @@
+% Preamble file - general definitions, package loading, etc.
+
+\usepackage{amssymb,amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{color}
+\usepackage{tikz}
+\usetikzlibrary{mindmap,trees,arrows}
+\usepackage{fancyvrb}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{subfigure}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\mode<presentation>
+{
+	\usetheme{Madrid}
+	\usecolortheme{whale}
+	\useoutertheme{infolines}
+	\setbeamercovered{invisible}
+}
+
+% Get rid of nav bar
+\beamertemplatenavigationsymbolsempty
+
+% Insert frame number at bottom of the page.
+\usefoottemplate{\hfil\tiny{\color{black!90}\insertframenumber}} 
+
+
+
+\newcommand\Real{{\mathbb{R}}}
+\newcommand{\vi}{\vspace{0.6\baselineskip}}
+\newcommand{\goodgap}{\hspace{\subfigtopskip}\hspace{\subfigbottomskip}}
+% Equation
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eq}{\end{equation}}
+
+\newcommand{\beqs}{\begin{equation*}}
+\newcommand{\eqs}{\end{equation*}}
+% Equation Array
+\newcommand{\beqn}{\begin{eqnarray}}
+\newcommand{\eqn}{\end{eqnarray}}
+% Bold variables
+\newcommand{\mbf}[1]{\ensuremath{\mathbf{#1}}}
+
+\newcommand{\bitem}{\begin{itemize}}
+\newcommand{\eitem}{\end{itemize}}
+\newcommand{\spitem}{\vskip 1em\item}
+\newcommand{\bitems}{\begin{itemize}\item}
+
+\newenvironment{colorblock}[2]{%
+\setbeamercolor{block title}{#2}
+\begin{block}{#1}}{\end{block}}
+  
+\newcommand{\vone}{\vskip 1em}
+\newcommand{\vhalf}{\vskip .5em}
+
+\newenvironment{ftst}[3][t]{%
+\begin{frame}{environment=ftst,#1}
+\frametitle{#2}
+\framesubtitle{#3}}{\end{frame}}
+
+
+\newenvironment{ftstf}[2]{
+\begin{frame}[fragile,environment=ftstf]
+\frametitle{#1}
+\framesubtitle{#2}}{\end{frame}}
+
+\definecolor{MyGray}{rgb}{0.5,0.5,0.5}
+\definecolor{MyDBGray}{rgb}{0.1,0.1,0.4}
+
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+\def\defn#1{{\color{red} #1}}
