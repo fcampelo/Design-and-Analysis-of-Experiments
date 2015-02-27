@@ -1,5 +1,5 @@
 ## Lecture Notes on Design and Analysis of Experiments  
-### **Prof. Felipe Campelo, Ph.D,**  
+### **Prof. Felipe Campelo, Ph.D.**  
 
 Here are my Lecture Notes on Design & Analysis of Experiments. Originally developed for my course in the Graduate Program in Electrical Engineering, I hope they might be useful elsewhere.
 
