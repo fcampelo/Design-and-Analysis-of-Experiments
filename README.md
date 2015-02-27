@@ -3,5 +3,5 @@ Here are my Lecture Notes on Design & Analysis of Experiments. Originally develo
 
 The lectures are fully developed in Beamer, with R as the statistical software of choice. All example files and datasets will also be made available here.
 
-Cheers,
+Cheers,  
 Felipe
