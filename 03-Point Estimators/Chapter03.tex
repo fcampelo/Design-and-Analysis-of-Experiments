@@ -1,0 +1,341 @@
+\documentclass[t]{beamer}
+
+% Load general definitions
+\input{../defs/preamble.tex}
+
+% Specific definitions
+\title[]{Design and Analysis of Experiments}
+\subtitle[]{03 - Point Estimators}
+\author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
+\institute{Graduate Program in Electrical Engineering}
+\date{\scriptsize Belo Horizonte\\March 2015}
+
+\begin{document}
+
+% cover page
+\setbeamertemplate{footline}{}
+\begin{frame}
+\begin{flushright}
+\includegraphics[width=.25\textwidth]{../figs/principal_completa3_ufmg}
+\end{flushright}
+  \titlepage
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
+  \end{tikzpicture}  
+\end{frame}
+
+%=====
+
+% quotation page
+  \begin{frame}[b]
+		\frametitle{}
+\begin{columns}[T]
+\column{0.77\textwidth}
+\flushright{\small ``\textit{A scientist must indeed be freely imaginative and yet skeptical, creative and yet a critic.\\There is a sense in which he must be free, but another in which his thought must be very precisely regimented; \\there is poetry in science, but also a lot of bookkeeping.}''\\\ \\
+Sir Peter B. Medawar\\
+1915-1987\\
+British Immunologist}
+\column{0.23\textwidth}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=20pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/Medawar.jpg}};
+\end{tikzpicture}
+\end{columns}
+\vhalf
+\let\thefootnote\relax\footnote{\tiny Image: \url{http://commons.wikimedia.org/wiki/File:Peter_Brian_Medawar.jpgQ}}
+\end{frame}
+
+%=====
+
+% Main slides
+\begin{ftst}
+{Introduction}
+{Probability vs. Statistics}
+\textbf{Statistical inference}: using \textit{samples} to draw conclusion about \textit{populations};
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+	\begin{block}{Probability}
+		\centering Given the pool,what are the odds of drawing a certain combination of colors?\\
+		\centering \includegraphics[height=3.5cm]{../figs/ballpool.png}
+	\end{block}
+\column{0.48\textwidth}
+	\begin{block}{Statistics}
+		\centering Given the colors of a few balls drawn, what can I know about the pool?\\
+		\centering \includegraphics[height=3.45cm]{../figs/hand02.png}
+	\end{block}
+\end{columns}
+\let\thefootnote\relax\footnote{\tiny Pool image: \url{http://goo.gl/y8doaN}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Population, Sample and Observation}
+{Definitions}
+\begin{columns}
+\column[T]{0.85\textwidth}
+``A \textbf{population} is a large set of objects of a similar nature which is of interest as a whole''$^{[1]}$. It can be an actual set (e.g., all balls in the pool) or a hypothetical one (e.g., all possible outcomes for an experiment).
+\column[T]{0.15\textwidth}
+\includegraphics[width=\textwidth]{../figs/ballpool.png}
+\end{columns}
+\vone
+\begin{columns}
+\column[T]{0.12\textwidth}
+\includegraphics[width=\textwidth]{../figs/hand02.png}
+\column[T]{0.88\textwidth}
+\vhalf
+A \textbf{sample} is a subset of a population. ``A sample is chosen to make inferences about the population by examining or measuring the elements in the sample''$^{[2]}$.
+\end{columns}
+\vone\vhalf
+\begin{columns}
+\column[T]{0.88\textwidth}
+\vhalf
+An \textbf{observation} is a single element of a given sample, an individually collected data point. An observation can also be considered as a sample of size one.
+\column[T]{0.12\textwidth}
+\includegraphics[width=\textwidth]{../figs/greenball.png}
+\end{columns}
+\let\thefootnote\relax\footnote{\tiny Green ball: \url{http://goo.gl/Fb8Z68}}
+\let\thefootnote\relax\footnote{\tiny [1] Glossary of statistical terms: \url{http://www.statistics.com/glossary&term_id=812}}
+\let\thefootnote\relax\footnote{\tiny [2] Glossary of statistical terms: \url{http://www.statistics.com/glossary&term_id=274}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point and Interval Estimates}
+{Basic concepts}
+Two of the central concepts of statistical inference are \textit{point estimators} and \textit{statistical intervals}.
+\vone
+Both terms refer to using information obtained from a \textit{sample} to infer probable values about \textit{population} parameters;
+
+\bitems \textbf{Point estimate}: estimated value for a given population parameter;
+	\spitem \textbf{Statistical interval}: estimated interval of possible/probable values for a given population parameter; 
+\eitem
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Statistics and Sampling Distributions}
+{Definition}
+Suppose one wants to obtain a point estimate for an arbitrary parameter, e.g. the mean of a given population;
+\vone
+Randomly sampling from a population results in a random variable, and any function of these observations - that is, any \textit{statistic} - is consequently a random variable itself;
+\vhalf
+\begin{columns}
+\column[T]{0.25\textwidth}
+\includegraphics[width=\textwidth]{../figs/sam.png}
+\column[T]{0.75\textwidth}
+\vhalf
+Being random variables means that statistics also have their own probability distributions, called \textit{sampling distributions}$^{[3]}$. Sampling distributions have specific characteristics that we'll explore later.
+\end{columns}
+\let\thefootnote\relax\footnote{\tiny Image: \url{http://www.philender.com/courses/intro/notes2/sample.html}}
+\let\thefootnote\relax\footnote{\tiny [3] D.W. Stockburger: \url{http://www.psychstat.missouristate.edu/introbook/sbk19.htm}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Definition}
+A \textit{point estimator} is a statistic which provides the value of maximum plausibility for a given (unknown) population parameter $\theta$.
+\vone
+Consider a random variable $Y$ distributed according to a given $f(Y|\theta)$.
+\vone
+Considera also a random sample from this variable: $\mbf{y}=\{y_1,y_2,\ldots,y_N\}$;
+\vone
+A given function $\hat{\Theta}=h\left(\mbf{y}\right)$ is called a \textit{point estimator} of the parameter $\theta$, and a value returned by this function for a given sample is referred to as a \textit{point estimate} $\hat{\theta}$ of the parameter.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Usual cases}
+Point estimation problems arise frequently in all areas of science and engineering, whenever there is a need for estimating, e.g.,:
+
+\bitems a population  mean, $\mu$;
+	\item a population variance, $\sigma^2$;
+	\item a population proportion, $p$;
+	\item the difference in the means of two populations, $\mu_1-\mu_2$; 
+	\item etc..
+\eitem
+\vhalf
+In each case there are multiple ways of performing the estimation task, and the decision about which estimators to use is based on the mathematical properties of each statistic.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Unbiased estimators}
+A good estimator should consistently generate estimates that lie close to the real value of the parameter $\theta$.
+\vone
+A given estimator $\hat{\Theta}$ is said to be \textit{unbiased} for parameter $\theta$ if:
+\beqs
+E\left[\hat{\Theta}\right] = \theta
+\eqs
+\noindent or, equivalently:
+\beqs
+E\left[\hat{\Theta}\right] - \theta = 0
+\eqs
+\vone
+The difference $E\left[\hat{\Theta}\right] - \theta$ is referred to as the \textit{bias} of a given estimator.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Unbiased estimators}
+The usual estimators for mean and variance are unbiased estimators;
+\vone
+Let $y_1,\ldots,y_N$ be a random sample from a given population $Y$, characterized by its mean $\mu$ and variance $\sigma^2$. In this situation, it is possible to show that$^{[4]}$:
+\beqs
+E\left[\bar{y}\right] = E\left[\frac{1}{N}\sum\limits_{i=1}^{N}y_i\right] = \mu
+\eqs
+\noindent and:
+\beqs
+E\left[s^2\right] = E\left[\frac{1}{N-1}\sum\limits_{i=1}^{N}\left(y_i-\bar{y}\right)^2\right] = \sigma^2
+\eqs
+\let\thefootnote\relax\footnote{\tiny [4] See  \url{http://goo.gl/i7bg3V} for details.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Unbiased estimators}
+There usually exists more than one unbiased estimator for a given parameter $\theta$. The variances of these estimators may, however, be different
+\vone
+\begin{columns}[T]
+    \column{0.5\textwidth}\vspace{-1.5em} \includegraphics[width=1.2\textwidth]{../figs/ubes-var.png}
+    \column{0.5\textwidth} A logical choice is to try to obtain the unbiased estimator of minimal variance. This is generally called the \textit{minimal-variance unbiased estimator} (MVUE).
+\end{columns}
+\vone
+MVUE are generally chosen as estimators due to their ability of generating estimates $\hat{\theta}$ that are (relatively) close to the real value of $\theta$.
+\let\thefootnote\relax\footnote{\tiny Image: D.C.Montgomery,G.C. Runger, \textit{Applied Statistics and Probability for Engineers},Wiley 2003.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Standard error}
+The \textit{standard error} of an estimator $\hat{\Theta}$ corresponds to the standard deviation of that estimator,
+\beqs
+\sigma_{\hat{\Theta}} = \sqrt{Var\left[\hat{\Theta}\right]}
+\eqs
+\vone
+When the standard error is estimated from a given sample we refer to it as the \textit{estimated standard error},  $\hat{\sigma}_{\hat{\Theta}}$ (the notations $s_{\hat{\Theta}}$ and $se(\hat{\Theta})$ are also common).
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Point Estimators}
+{Standard error}
+For samples of Gaussian variables, it can be shown that:
+\beqs
+\hat{\sigma}_{\hat{\Theta}} = \frac{S}{\sqrt{n}}
+\eqs
+
+\vone
+Since the distribution of many point estimators is approximately Normal for relatively large sample sizes (the usual rule of thumb is $N > 30$), this is a quite useful result, as it allows the use of the well-known properties of the Gaussian distribution as asymptotic results for the distributions of the estimators.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Sampling Distributions}
+{Sampling distributions of means}
+Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values can be well modeled by a normal distribution, i.e., $Y\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
+\vone
+Also suppose a random sample of $25$ cables is taken from this production process and their resistance is measured. The sample mean of the observations taken,
+\beqs
+\bar{y} = \frac{1}{25}\sum\limits_{i=1}^{25}{y_i}
+\eqs
+
+\noindent is also normally distributed, with $E[\bar{y}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $s_{\bar{y}} = \sigma^2/25 = 0.16$.
+\let\thefootnote\relax\footnote{\tiny [5] Example inspired in \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
+\end{ftst}
+
+\begin{ftst}
+{Sampling Distributions}
+{The Central Limit Theorem}
+Even for arbitrary population distributions the sampling distribution of means tends to be approximately normal (with $E[\bar{y}] = \mu $ and $s_{\bar{y}} = \sigma^2/N$). 
+\vone
+More generally, let $y_1,\ldots,y_n$ be a sequence of \textit{independent and identically distributed} (\textbf{iid}) random variables, with mean $\mu$ and finite variance $\sigma^2$, and let $x = \sum{y_i}$. Then:
+\beqs
+z_n = \frac{x - n\mu}{\sqrt{n\sigma^2}}
+\eqs
+\noindent is distributed approximately as a standard normal variable, that is, $z_n\sim\mathcal{N}(0,1)$.
+\let\thefootnote\relax\footnote{\tiny For more details on the CLT, see \url{http://www.encyclopediaofmath.org/index.php/Central_limit_theorem}}
+\end{ftst}
+
+\begin{ftst}
+{Sampling Distributions}
+{The Central Limit Theorem}
+This result is known as the \textit{Central Limit Theorem}, and is one of the most useful properties for statistical inference. The CLT allows the use of techniques based on the Gaussian distribution, even when the population under study is not normal.
+\vone
+For ``well-behaved'' distributions (continuous, symmetrical, unimodal - the usual bell-shaped pdf we all know and love) even small sample sizes are commonly enough to justify invoking the CLT and using parametric techniques.
+\end{ftst}
+
+\begin{ftst}
+{Sampling Distributions}
+{The Central Limit Theorem}
+For an interactive demonstration of the CLT, check 
+{\small\url{http://drwho.cpdee.ufmg.br:3838/CLT/}}
+\vone
+{\centering\includegraphics[width=\textwidth]{../figs/CLTdemo.png}}
+\end{ftst}
+
+
+
+\begin{ftst}
+{Bibliography}
+{\ }
+\scriptsize
+\textbf{Required reading}
+
+\benums J.G. Ram\'irez, \textit{Statistical Intervals: Confidence, Prediction, Enclosure}: \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}
+\item D.C. Montgomery and G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Chapters 7-8. 3rd Ed., Wiley 2005.
+\eenum
+
+\textbf{Recommended reading}
+
+\benums R. Willett, \textit{ ECE 830 Estimation and Decision Theory, Spring 2014}, Chapters 13-15 - \url{http://willett.ece.wisc.edu/education.html}
+
+\eenum
+\end{ftst}
+
+%=====
+
+\begin{ftstf}{About this material}{Conditions of use and referencing}
+\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
+\vhalf
+\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
+\vone
+\footnotesize Please reference this work as:\\
+\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
+Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.\\
+
+\begin{Verbatim}[fontsize=\tiny]
+    @Misc{Campelo2015-01,
+      title={Lecture Notes on Design and Analysis of Experiments},
+      author={Felipe Campelo},
+      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
+      year={2015},
+      note={Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.},
+    }
+\end{Verbatim}
+
+\begin{tikzpicture} [remember picture,overlay]
+\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+
+\end{document}
