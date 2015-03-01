@@ -1,0 +1,128 @@
+\documentclass[t]{beamer}
+
+% Load general definitions
+\input{../defs/preamble.tex}
+
+% Specific definitions
+\title[]{Design and Analysis of Experiments}
+\subtitle[]{04 - Statistical Intervals}
+\author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
+\institute{Graduate Program in Electrical Engineering}
+\date{\scriptsize Belo Horizonte\\March 2015}
+
+\begin{document}
+
+% cover page
+\setbeamertemplate{footline}{}
+\begin{frame}
+\begin{flushright}
+\includegraphics[width=.25\textwidth]{../figs/principal_completa3_ufmg}
+\end{flushright}
+  \titlepage
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
+  \end{tikzpicture}  
+\end{frame}
+
+%=====
+
+% quotation page
+  \begin{frame}[b]
+		\frametitle{}
+\begin{columns}[T]
+\column{0.8\textwidth}
+\flushright{\small ``\textit{Science is an integral part of culture. It's not this foreign thing, done by an arcane priesthood. It's one of the glories of the human intellectual tradition.}''\\\ \\
+Stephen Jay Gould\\
+1941-2002\\
+American paleontologist}
+\column{0.2\textwidth}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=15pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/Gould.jpg}};
+\end{tikzpicture}
+\end{columns}
+\vhalf
+\let\thefootnote\relax\footnote{\tiny Image: Harvard University  /  AP }
+\end{frame}
+
+%=====
+
+% Main slides
+\begin{ftst}
+{Statistical Intervals}
+{Introduction}
+Statistical intervals are important in quantifying the uncertainty associated to a given estimate;
+\vone
+As an example, let's recap the coaxial cables example: \textit{a coaxial cable manufacturing operation produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$. Assume that the resistance values can be well modeled by a normal distribution}.
+\vone
+Let us now suppose that a sample mean of $25$ observations of resistance  yields $\bar{x} = 95$. Given the sampling variability, it is very likely that this value is not exactly the true value of $\mu$, but we are so far unable quantify how much uncertainty there is in this estimate.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Statistical Intervals}
+{Definition}
+\textit{Statistical intervals} define regions that are likely to contain the true value of an estimated parameter. 
+\vone
+More formally, it is generally possible to quantify the level of uncertainty associated with the estimation, thereby allowing the derivation of sound conclusions at predefined levels of certainty.
+\vone
+Three of the most common types of interval are:
+
+\bitems Confidence intervals;
+	\spitem Tolerance intervals;
+	\spitem Prediction intervals;
+\eitem
+\end{ftst}
+
+%=====
+
+
+
+
+\begin{ftst}
+{Bibliography}
+{\ }
+\scriptsize
+\textbf{Required reading}
+
+\benums J.G. Ram\'irez, \textit{Statistical Intervals: Confidence, Prediction, Enclosure}: \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}
+\item D.C. Montgomery and G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Chapter 8. 3rd Ed., Wiley 2005.
+\eenum
+
+\textbf{Recommended reading}
+
+\benums Simply Statistics (blog) - \url{http://simplystatistics.org}
+\item R. Dawkins, \textit{Climbing Mount Improbable}, W.W.Norton\&Co.,1997.
+\eenum
+\end{ftst}
+
+%=====
+
+\begin{ftstf}{About this material}{Conditions of use and referencing}
+\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
+\vhalf
+\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
+\vone
+\footnotesize Please reference this work as:\\
+\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
+Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.\\
+
+\begin{Verbatim}[fontsize=\tiny]
+    @Misc{Campelo2015-01,
+      title={Lecture Notes on Design and Analysis of Experiments},
+      author={Felipe Campelo},
+      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
+      year={2015},
+      note={Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.},
+    }
+\end{Verbatim}
+
+\begin{tikzpicture} [remember picture,overlay]
+\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+
+\end{document}
