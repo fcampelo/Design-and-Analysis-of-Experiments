@@ -9,5 +9,6 @@
 **/*.vrb
 
 # R files
+*.Rhistory
 *.RHistory
 *.RData
