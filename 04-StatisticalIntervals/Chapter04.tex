@@ -56,7 +56,7 @@ Statistical intervals are important in quantifying the uncertainty associated to
 \vone
 As an example, let's recap the coaxial cables example: \textit{a coaxial cable manufacturing operation produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$. Assume that the resistance values can be well modeled by a normal distribution}.
 \vone
-Let us now suppose that a sample mean of $25$ observations of resistance  yields $\bar{x} = 95$. Given the sampling variability, it is very likely that this value is not exactly the true value of $\mu$, but we are so far unable quantify how much uncertainty there is in this estimate.
+Let us now suppose that a sample mean of $N=25$ observations of resistance  yields $\bar{x} = 48$. Given the sampling variability, it is very likely that this value is not exactly the true value of $\mu$, but we are so far unable quantify how much uncertainty there is in this estimate.
 \end{ftst}
 
 %=====
@@ -78,8 +78,69 @@ Three of the most common types of interval are:
 
 %=====
 
+\begin{ftst}
+{Confidence Intervals}
+{Definition}
+Confidence intervals quantify the degree of uncertainty associated with the estimation of population parameters such as the mean or the variance.
+\vone
+Can be defined as ``\textit{the interval that contains the true value of a given population parameter with a confidence level of $100(1-\alpha)$}'';
 
+\bitems \textbf{Wrong}: ``there is a $95\%$ chance that the interval contains the true population mean.''
+\spitem \textbf{right}: ``The method used to derive the interval has a hit rate of $95\%$'' - i.e., the interval generated has a $95\%$ chance of ``capturing'' the true population parameter.
+\eitem
 
+Easier to understand if you think about the confidence level as a confidence in the \textbf{method}, not in the interval.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Confidence Intervals}
+{Example: 100 $CI_{.95}$ for a sample of 25 observations}
+\centering\includegraphics[width=\textwidth]{../figs/CIs.pdf}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Confidence Intervals}
+{CI on the Mean of a Normal Variable}
+The two-sided $CI_{(1-\alpha)}$ for the mean of a normal population with known variance $\sigma^2$ is given by:
+\beqs
+\bar{y}-\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}\leq\mu\leq\bar{y}+\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}
+\eqs
+\noindent wherein $(1-\alpha)$ is the confidence level and $z_{(\alpha/2)}$ is the $(1-\alpha/2)$-quantile of the standard normal distribution.
+\vone
+For the more usual case with an unknown variance,
+\beqs
+\bar{y}-\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}\leq\mu\leq\bar{y}+\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}
+\eqs
+\noindent wherein $t_{(\alpha/2;N-1)}$ is the corresponding quantile of the t distribution with $N-1$ degrees of freedom.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Confidence Intervals}
+{CI on the Variance of a Normal Variable}
+Similarly, a two-sided confidence interval on the variance of a normal variable can be easily calculated:
+\beqs
+\frac{(N-1)s^2}{\chi^2_{\alpha/2;N-1}}\leq\sigma^2\leq\frac{(N-1)s^2}{\chi^2_{1-\alpha/2;N-1}}
+\eqs
+\noindent wherein $\chi^2_{\alpha/2;N-1}$ and $\chi^2_{1-\alpha/2;N-1}$ are the upper and lower $(\alpha/2)$-quantiles of the $\chi^2$ distribution with $N-1$ degrees of freedom.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Tolerance Intervals}
+{Definition}
+``\textit{A tolerance interval is an \textbf{enclosure} interval for a specified proportion of the sampled population, not its mean or standard deviation. For a specified confidence level, you may want to determine lower and upper bounds such that 99 percent of
+the population is contained within them.}''$^{[1]}$.
+\vone
+
+\let\thefootnote\relax\footnote{\tiny [1] J.G. Ram\'irez: \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
+\end{ftst}
 
 \begin{ftst}
 {Bibliography}
@@ -107,7 +168,7 @@ Three of the most common types of interval are:
 \vone
 \footnotesize Please reference this work as:\\
 \footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.\\
+Version 2.11, Chapter 4; Creative Commons BY-NC-SA 4.0.\\
 
 \begin{Verbatim}[fontsize=\tiny]
     @Misc{Campelo2015-01,
@@ -115,7 +176,7 @@ Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.\\
       author={Felipe Campelo},
       howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
       year={2015},
-      note={Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.},
+      note={Version 2.11, Chapter 4; Creative Commons BY-NC-SA 4.0.},
     }
 \end{Verbatim}
 
