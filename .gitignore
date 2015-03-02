@@ -10,3 +10,4 @@
 
 # R files
 *.RHistory
+*.RData
