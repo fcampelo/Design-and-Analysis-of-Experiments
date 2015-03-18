@@ -39,7 +39,9 @@ Your report will be evaluated according to:
 - Structure of argumentation;
 - Correct use of language (grammar, orthography, etc.);
 
-The report **must** be produced using [R Markdown](http://rmarkdown.rstudio.com), and should contain the reproducible analysis code embedded as code blocks within the document. Please send me only the **.Rmd** file (the analysis should assume that the data file is in the same directory as the report file). Reports written in either Portuguese, English, or Spanish will be accepted.
+The report **must** be produced using [R Markdown](http://rmarkdown.rstudio.com), and should contain the reproducible analysis code embedded as code blocks within the document. Please send me only the **.Rmd** file (the analysis should assume that the data file is in the same directory as the report file). A template for the case study reports is available in our [GitHub repo](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Report%20template).
+
+Reports written in either Portuguese, English, or Spanish will be accepted.
 
 
 ### For undergrad (Systems Engineering) Students
