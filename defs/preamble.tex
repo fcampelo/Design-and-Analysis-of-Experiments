@@ -1,5 +1,7 @@
 % Preamble file - general definitions, package loading, etc.
 
+%=================================
+% Load packages
 \usepackage{amssymb,amsmath}
 \usepackage{graphicx}
 \usepackage{url}
@@ -12,7 +14,10 @@
 \usepackage{subfigure}
 \usepackage{times}
 \usepackage[T1]{fontenc}
+\usepackage{cancel}
 
+%=================================
+% Set mode
 \mode<presentation>
 {
 	\usetheme{Madrid}
@@ -27,23 +32,26 @@
 % Insert frame number at bottom of the page.
 \usefoottemplate{\hfil\tiny{\color{black!90}\insertframenumber}} 
 
-
+%=================================
+% Define new commands
 
 \newcommand\Real{{\mathbb{R}}}
-\newcommand{\vi}{\vspace{0.6\baselineskip}}
-\newcommand{\goodgap}{\hspace{\subfigtopskip}\hspace{\subfigbottomskip}}
-% Equation
+%\newcommand{\vi}{\vspace{0.6\baselineskip}}
+%\newcommand{\goodgap}{\hspace{\subfigtopskip}\hspace{\subfigbottomskip}}
+
+
+% Equation environments
 \newcommand{\beq}{\begin{equation}}
 \newcommand{\eq}{\end{equation}}
-
 \newcommand{\beqs}{\begin{equation*}}
 \newcommand{\eqs}{\end{equation*}}
-% Equation Array
 \newcommand{\beqn}{\begin{eqnarray}}
 \newcommand{\eqn}{\end{eqnarray}}
+
 % Bold variables
 \newcommand{\mbf}[1]{\ensuremath{\mathbf{#1}}}
 
+% Itemization
 \newcommand{\bitem}{\begin{itemize}}
 \newcommand{\eitem}{\end{itemize}}
 \newcommand{\spitem}{\vskip 1em\item}
@@ -51,31 +59,35 @@
 \newcommand{\benums}{\begin{enumerate}\item}
 \newcommand{\eenum}{\end{enumerate}}
 
+% color blocks
 \newenvironment{colorblock}[2]{%
 \setbeamercolor{block title}{#2}
 \begin{block}{#1}}{\end{block}}
-  
+
+% Vertical spacing
 \newcommand{\vone}{\vskip 1em}
 \newcommand{\vhalf}{\vskip .5em}
 
+% Frame environments
 \newenvironment{ftst}[3][t]{%
 \begin{frame}{environment=ftst,#1}
 \frametitle{#2}
 \framesubtitle{#3}}{\end{frame}}
-
 
 \newenvironment{ftstf}[2]{
 \begin{frame}[fragile,environment=ftstf]
 \frametitle{#1}
 \framesubtitle{#2}}{\end{frame}}
 
+% colors
 \definecolor{MyGray}{rgb}{0.5,0.5,0.5}
 \definecolor{MyDBGray}{rgb}{0.1,0.1,0.4}
-
-\renewcommand{\thefootnote}{\alph{footnote}}
-
 \def\defn#1{{\color{red} #1}}
 
+% Footnote
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+% Verbatim environment
 \DefineVerbatimEnvironment%
 {rcode}{Verbatim}
 {fontsize=\scriptsize}
