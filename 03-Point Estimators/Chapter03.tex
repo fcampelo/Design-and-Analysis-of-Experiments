@@ -142,11 +142,11 @@ Being random variables means that statistics also have their own probability dis
 {Definition}
 A \textit{point estimator} is a statistic which provides the value of maximum plausibility for a given (unknown) population parameter $\theta$.
 \vone
-Consider a random variable $Y$ distributed according to a given $f(Y|\theta)$.
+Consider a random variable $X$ distributed according to a given $f(X|\theta)$.
 \vone
-Considera also a random sample from this variable: $\mbf{y}=\{y_1,y_2,\ldots,y_N\}$;
+Considera also a random sample from this variable: $\mbf{x}=\{x_1,x_2,\ldots,x_N\}$;
 \vone
-A given function $\hat{\Theta}=h\left(\mbf{y}\right)$ is called a \textit{point estimator} of the parameter $\theta$, and a value returned by this function for a given sample is referred to as a \textit{point estimate} $\hat{\theta}$ of the parameter.
+A given function $\hat{\Theta}=h\left(\mbf{x}\right)$ is called a \textit{point estimator} of the parameter $\theta$, and a value returned by this function for a given sample is referred to as a \textit{point estimate} $\hat{\theta}$ of the parameter.
 \end{ftst}
 
 %=====
@@ -192,13 +192,13 @@ The difference $E\left[\hat{\Theta}\right] - \theta$ is referred to as the \text
 {Unbiased estimators}
 The usual estimators for mean and variance are unbiased estimators;
 \vone
-Let $y_1,\ldots,y_N$ be a random sample from a given population $Y$, characterized by its mean $\mu$ and variance $\sigma^2$. In this situation, it is possible to show that$^{[4]}$:
+Let $x_1,\ldots,x_N$ be a random sample from a given population $X$, characterized by its mean $\mu$ and variance $\sigma^2$. In this situation, it is possible to show that$^{[4]}$:
 \beqs
-E\left[\bar{y}\right] = E\left[\frac{1}{N}\sum\limits_{i=1}^{N}y_i\right] = \mu
+E\left[\bar{x}\right] = E\left[\frac{1}{N}\sum\limits_{i=1}^{N}x_i\right] = \mu
 \eqs
 \noindent and:
 \beqs
-E\left[s^2\right] = E\left[\frac{1}{N-1}\sum\limits_{i=1}^{N}\left(y_i-\bar{y}\right)^2\right] = \sigma^2
+E\left[s^2\right] = E\left[\frac{1}{N-1}\sum\limits_{i=1}^{N}\left(x_i-\bar{x}\right)^2\right] = \sigma^2
 \eqs
 \let\thefootnote\relax\footnote{\tiny [4] See  \url{http://goo.gl/i7bg3V} for details.}
 \end{ftst}
@@ -251,25 +251,25 @@ Since the distribution of many point estimators is approximately Normal for rela
 \begin{ftst}
 {Sampling Distributions}
 {Sampling distributions of means}
-Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values can be well modeled by a normal distribution, i.e., $Y\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
+Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values can be well modeled by a normal distribution, i.e., $X\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
 \vone
 Also suppose a random sample of $25$ cables is taken from this production process and their resistance is measured. The sample mean of the observations taken,
 \beqs
-\bar{y} = \frac{1}{25}\sum\limits_{i=1}^{25}{y_i}
+\bar{x} = \frac{1}{25}\sum\limits_{i=1}^{25}{x_i}
 \eqs
 
-\noindent is also normally distributed, with $E[\bar{y}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $s_{\bar{y}} = \sigma^2/25 = 0.16$.
+\noindent is also normally distributed, with $E[\bar{x}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $s_{\bar{x}} = \sqrt{\sigma^2/25} = 0.4$.
 \let\thefootnote\relax\footnote{\tiny [5] Example inspired in \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
 \end{ftst}
 
 \begin{ftst}
 {Sampling Distributions}
 {The Central Limit Theorem}
-Even for arbitrary population distributions the sampling distribution of means tends to be approximately normal (with $E[\bar{y}] = \mu $ and $s_{\bar{y}} = \sigma^2/N$). 
+Even for arbitrary population distributions the sampling distribution of means tends to be approximately normal (with $E[\bar{x}] = \mu $ and $s_{\bar{x}} = \sigma^2/N$). 
 \vone
-More generally, let $y_1,\ldots,y_n$ be a sequence of \textit{independent and identically distributed} (\textbf{iid}) random variables, with mean $\mu$ and finite variance $\sigma^2$, and let $x = \sum{y_i}$. Then:
+More generally, let $x_1,\ldots,x_n$ be a sequence of \textit{independent and identically distributed} (\textbf{iid}) random variables, with mean $\mu$ and finite variance $\sigma^2$. Then:
 \beqs
-z_n = \frac{x - n\mu}{\sqrt{n\sigma^2}}
+z_n = \frac{\sum\limits_{i=1}^{n}{(x_i)} - n\mu}{\sqrt{n\sigma^2}}
 \eqs
 \noindent is distributed approximately as a standard normal variable, that is, $z_n\sim\mathcal{N}(0,1)$.
 \let\thefootnote\relax\footnote{\tiny For more details on the CLT, see \url{http://www.encyclopediaofmath.org/index.php/Central_limit_theorem}}

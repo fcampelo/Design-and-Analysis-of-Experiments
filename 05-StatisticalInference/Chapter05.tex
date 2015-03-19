@@ -460,12 +460,12 @@ It can be shown that, if \textbf{if $H_0$ is true}, then
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance unknown}
-From the same data, $\bar{x} = 496.48$, $n=10$, $s = 6.97 g$:
+From the same data, $\bar{x} = 496.48 g$, $n=10$, $s = 6.97 g$:
 \beqs t_0 = \frac{496.48 - 500}{6.97/\sqrt{10}} = -1.5969\eqs
 \vhalf
 The critical value of this test statistic for the desired significance is $-t_{\alpha,n-1} = -t_{0.01,9} = -2.54$;
 \vone
-Given $t_0 > -2.54$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
+Given that $t_0 > -2.54$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -545,7 +545,7 @@ p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}(t_{9})dt
 {p-values, significance and effect sizes}
 Statistical $\times$ practical significance: p-values can be made arbitrarily small, if $n$ is big enough;
 \vone 
-As an example, suppose a test of $H_0: \mu=500$ against a two-sided alternative, with $n=5000, \bar{x}=499,\ s=5$. In this case we would have:
+As an example, suppose a test of $H_0: \mu=500g$ against a two-sided alternative, with $n=5000, \bar{x}=499g,\ s=5g$. In this case we would have:
 
 \bitems $t_0 = -14.142$;
 \item $p = 1.02\times 10^{-23}$;\eitem
@@ -565,7 +565,7 @@ While there are whole books on the subject \footnote[3]{\tiny See, for instance,
 Examples of effect size estimators include the simple point estimator for the difference $\bar{x} - \mu_0$, or the dimensionless \textit{d} estimator:
 
 \beqs
-d = \frac{\bar{y}-\mu_0}{s}
+d = \frac{\bar{x}-\mu_0}{s}
 \eqs
 
 \noindent which quantifies the difference in terms of sample standard deviations.
@@ -665,7 +665,7 @@ The same sample of $n=10$ packs is used. The estimated standard deviation for th
 \begin{rcode}
 One-sample t test power calculation 
 n = 10
-delta = 10
+delta = 5
 sd = 6.970382
 sig.level = 0.01
 power = 0.3474724
@@ -674,7 +674,7 @@ alternative = one.sided
 \end{columns}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\node[anchor=south east,yshift=28pt,xshift=-50pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{Power}};
+\node[anchor=south east,yshift=30pt,xshift=-48pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{Power}};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -701,7 +701,7 @@ alternative = one.sided
 We need at least 25 observations to detect a $-5g\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\node[anchor=south east,yshift=133pt,xshift=-185pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{(round this value up)}};
+\node[anchor=south east,yshift=140pt,xshift=-182pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{(round this value up)}};
 \end{tikzpicture}
 \end{ftstf}
 
