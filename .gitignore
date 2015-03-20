@@ -7,6 +7,7 @@
 **/*.synctex.gz
 **/*.toc
 **/*.vrb
+**/*.dvi
 
 # R files
 *.Rhistory
