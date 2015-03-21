@@ -10,8 +10,6 @@
 **/*.dvi
 
 # R files
-*.Rhistory
-*.RHistory
-*.RData
-
-*.dvi
+**/*.Rhistory
+**/*.RHistory
+**/*.RData
