@@ -30,7 +30,7 @@ t.test(sample,
        conf.level = 0.99)
 
 # Power analysis
-s<-sqrt(var(sample))
+s<-sd(sample)
 
 # Power for the 10-observation sample
 power.t.test(n=10, 
@@ -51,10 +51,16 @@ power.t.test(power=0.85,
 
 # Validation of the normality assumption
 # QQ plot
-qqnorm(sample,
-       pch=16,cex=2)
-qqline(sample,
-       lty=2,lwd=2)
+pdf("../figs/GraphNorm.pdf",
+    width=5,
+    height=5) # comment to open plot in R
+library(car)
+qqPlot(sample,
+       pch=16,
+       cex=1.5,
+       las=1)
+
+dev.off() # comment this if you commented the pdf command.
 
 # Shapiro-Wilk test of normality
 shapiro.test(sample)

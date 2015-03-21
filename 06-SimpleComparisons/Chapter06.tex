@@ -473,9 +473,46 @@ is greater than 0
 \end{tikzpicture}
 \end{ftstf}
 
+%=====
 
+\begin{ftst}
+{Comparison of two means}
+{Unequal variances}
+Suppose now a more general case, in which the variances of the two populations are unknown and cannot be assumed equal.
+\vone 
+For this cases, a modification on the t-test called \textit{Welch's t test} is usually employed. The Welch statistic can be calculated as:
+\beqs t^*_0 = \frac{\bar{y_1} - \bar{y_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\eqs
+\vhalf
+Under the null hypothesis $t^*_0$  is distributed approximately as a $t_{\nu}$ distribution, with:
+\beqs  \nu = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{\left(s_1^2/n_1\right)^2}{n_1-1} + \frac{\left(s_2^2/n_2\right)^2}{n_2-1}}\eqs
+\end{ftst}
 
+%=====
 
+\begin{ftstf}
+{Comparison of two means}
+{Unequal variances}
+To illustrate the use of this technique, we can use the same data from the previous example\footnote[2]{Notice that this would not be necessary, since the data collected in the previous example did not violate the equality of variances assumption.}:
+\vhalf
+\begin{Verbatim}[fontsize=\scriptsize]
+> with(y,
++      t.test(Length.error~Process,
++             alternative = "two.sided",
++             mu = 0,
++             var.equal = FALSE,
++             conf.level = 0.95))
+Welch Two Sample t-test
+data:  Length.error by Process
+t = -14.312, df = 28.386, p-value = 1.645e-14
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.09278780 -0.06956515
+sample estimates:
+mean in group new mean in group old 
+       0.07782353        0.15900000 
+\end{Verbatim}
+\vone
+\end{ftstf}
 
 
 
@@ -492,14 +529,14 @@ is greater than 0
 \scriptsize
 \textbf{Required reading}
 
-\benums %D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 9.\\5th ed., Wiley, 2010. 
-%\item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
+\benums D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 10. 5th ed., Wiley, 2010.; \textbf{OR}
+\item D.C. Montgomery, \textit{Design and Analysis of Experiments}, Ch. 2. 5th ed., Wiley, 2005;
 \eenum
 
 \textbf{Recommended reading}
 
-\benums %A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide} - {\tiny\url{http://www.statisticsdonewrong.com}}
-%\item E. Ernst and S. Singh, \textit{Trick or Treatment}, Norton \& Company, 2009.
+\benums P. Mathews, \textit{Sample Size Calculations: Practical Methods for Engineers and Scientists}, Ch. 1-2, 1st ed., MMB, 2010.
+\item Radiolab (podcast): \url{http://radiolab.org}
 \eenum
 \end{ftst}
 

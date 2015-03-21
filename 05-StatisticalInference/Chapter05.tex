@@ -653,7 +653,7 @@ The same sample of $n=10$ packs is used. The estimated standard deviation for th
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
-> s<-sqrt(var(sample))
+> s<-sd(sample)
 > power.t.test(n=10, 
 +        delta=5, 
 +        sd=s, 
@@ -725,14 +725,15 @@ It is interesting to use both whenever possible.
 Graphical/qualitative tests;
 \vone
 \begin{rcode}
-> qqnorm(sample,
-+        pch=16, cex=2)
-> qqline(sample,
-+        lty=2, lwd=2)
+> library(car)
+> qqPlot(sample,
++        pch=16,
++        cex=1.5,
++        las=1)
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.7\textwidth]{../figs/GraphNorm.pdf}};
-\node[anchor=south east,yshift=28pt,xshift=-128pt] at (current page.south east) {\color{red}$\longleftarrow$ \textit{outlier}?};
+\node[anchor=south east,yshift=42pt,xshift=-120pt] at (current page.south east) {\color{red}$\boldsymbol{\longleftarrow}$ \textit{outlier}?};
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
 \end{ftstf}

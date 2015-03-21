@@ -121,3 +121,12 @@ plot(resid,
      las=1)
 
 dev.off() # comment this if you commented the pdf command.
+
+
+# Perform two-sample t-test to compare means (without assuming equal variances)
+with(y,
+     t.test(Length.error~Process,
+            alternative = "two.sided",
+            mu = 0,
+            var.equal = FALSE,
+            conf.level = 0.95))
