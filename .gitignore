@@ -13,3 +13,5 @@
 *.Rhistory
 *.RHistory
 *.RData
+
+*.dvi
