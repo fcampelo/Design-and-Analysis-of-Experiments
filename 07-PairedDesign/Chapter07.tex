@@ -48,40 +48,30 @@ Neil deGrasse Tyson\\1958 - \\American astrophysicist and author.\\}
 \end{frame}
 
 %=====
-
 % Main slides
-\begin{ftst}
-{Comparison of two means}
-{Dependent samples}
-% Enter justification for pairing
-\end{ftst}
-
-%=====
 
 \begin{ftst}
 {Comparison of two means}
-{Dependent samples}
-% Enter justification for pairing
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Comparison of two means}
-{Paired design}
-Suppose the following situation: a young researcher develops an optimization algorithm (A) for a given family of problems, and wants to compare its converegence speed against a method that represents the state-of-the-art (B).
+{Dependent populations}
+Suppose the following situation: a young researcher develops an optimization algorithm (A) for a given family of problems, and wants to compare its convergence speed against a method that represents the state-of-the-art (B).
 \vone
-The researcher implements both methods and, after adjusting their parameters in a balanced way, performs a battery of tests on 11 representative instances of the family of problems she is interested in.
+The researcher implements both methods and wants to determine whether the proposed one has a better average performance for problems of that particular kind.
 \vone
-The measurements are made under homogeneous conditions (same computer, same operational conditions, etc.) and in randomized order, trying to avoid the contamination of the results by spurious influences. 20 repeated runs are performed for each algorithm on each problem.
+The measurements are made under homogeneous conditions (same computer, same operational conditions, etc.) and the time is measured in a way that is not sensitive to other processes running in the system.
+\vone
+\lfr{Image: \url{http://goo.gl/xwqig9}}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
+{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
+\end{tikzpicture}
 \end{ftst}
 
 %=====
 
 \begin{ftst}
 {Comparison of two means}
-{Paired design}
-Some important questions worth considering:
+{Dependent populations}
+This problem has some important questions worth considering:
 
 \bitems What is the actual question of interest?
 \spitem What is the \textit{population} for which that question is relevant?
@@ -95,17 +85,59 @@ Some important questions worth considering:
 \begin{ftst}
 {Comparison of two means}
 {Paired design}
-The \textit{variation among the test problems} is a source of a large spurious variation that can and must be controlled;
+The variability due to the different test problems is a strong source of spurious variation that can and must be controlled;
 \vone
 An elegant solution to eliminate the influence of this nuisance parameter is the \textit{pairing} of the measurements by problem:
 
 \bitems Observations are considered in pairs (A, B) for each problem; 
 \item Hypothesis testing is done on the sample of \textit{differences};
 \eitem
+\end{ftst}
 
-Let $y_{1j}$ and $y_{2j}$, $(j=1,\ldots,n)$ denote paired observations of average time for the proposed method (1) and the standard one (2), for each problem $j$;
-\vhalf 
-The \textit{paired differences} of the observations are calculated as $d_j = y_{1j} - y_{2j}$.
+%=====
+
+\begin{ftst}
+{Comparison of two means}
+{Paired design}
+Let $y_{Aj}$ and $y_{Bj}$ denote paired observations of average time for methods A and B, for each problem instance $j$. The \textit{paired differences} of the observations are simply $d_j = y_{Aj} - y_{Bj}$.
+\vone
+If we model our observations as an additive process:
+\beqs
+y_{ij} = \underbrace{\mu + \tau_i}_{\mu_i} + \beta_j + \varepsilon_{ij}
+\eqs
+\noindent where $\mu$ is the grand mean, $\tau_i$ is the effect of the $i$-th algorithm on the mean, $\beta_j$ is the effect of the $j$-th problem, and $\varepsilon_{ij}$ is the model residual, then:
+\beqs
+\begin{split}
+d_j &= \cancelto{0}{\left(\mu +\beta_j - \mu - \beta_j\right)} + \tau_A-\tau_B + \varepsilon_{Aj}-\varepsilon_{Bj}\\
+&=\mu_{D} + \varepsilon_j\\
+\end{split}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Comparison of two means}
+{Paired design}
+The hypotheses of interest can now be defined in terms of $\mu_D$, e.g.:
+\beqs\begin{cases}
+H_0: \mu_D = 0\\
+H_1: \mu_D \neq 0
+\end{cases}\eqs
+\noindent which can now be treated as a test of hypotheses for a single sample: the population of interest is the differences in average times until convergence for the problems under investigation.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Comparison of two means}
+{Paired design}
+Some other important questions worth considering:
+
+\bitems In this example the minimally interesting effect size $\delta^*$ must be expressed in terms of \textit{average time gains across problems} (not within individual instances);
+\spitem The most important sample size to consider in this situation refers to the \textit{number of problem instances}, and not necessarily to the number of within-problems repeated measures;
+\spitem The number of repetitions within each problem will have an impact on the uncertainty associated to each observation (that is, to each value of mean time to convergence for each algorithm on each problem), and should be selected with some care\footnote[2]{\tiny Alternatively, we can set it as arbitrarily large, particularly in cases where the within-instance variation is small compared to the between-instances variation. As much as I hate to admit it, the lazy heuristic of setting it as $\geq 30$ should be enough in most algorithmic studies, and much lower values are probably possible.}.
+\eitem
 \end{ftst}
 
 
