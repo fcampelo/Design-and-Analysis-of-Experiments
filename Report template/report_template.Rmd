@@ -26,6 +26,22 @@ if (!require(GGally, quietly = TRUE)){
 ## Summary
 This document provides a template for the Case Study reports. Reports should always start a short executive summary (call it an _Abstract_ if you want) to give the reader a general idea of the topic under investigation, the kind of analysis performed, the results obtained, and the general recommendations of the authors.
 
+There are (at least) two ways to render this document to **pdf** in R: one easy and one... well, less easy.
+
+### 1. The easy way
+Use [RStudio](http://rstudio.com/) as your editor, open the **.Rmd** file and click the _Knit PDF_ button at the top of the editor.
+
+### 2. The slightly-less-easy way
+If you're using any other R editor (such as the basic [R](http://cran.r-project.org) editor), you have to use the _render()_ function from the **rmarkdown** package:
+
+```{r, eval=F}
+install.packages("devtools")                    # you only have to install it once
+library(devtools)
+install_github("rstudio/rmarkdown")             # you only have to install it once
+library(rmarkdown)
+render("report_template.Rmd","pdf_document")    # this renders the pdf
+```
+
 ## Experimental design
 A section detailing the experimental setup. This is the place where you will define your test hypotheses, e.g.:
 $$\begin{cases} H_0: \mu = 10&\\H_1: \mu<10\end{cases}$$
