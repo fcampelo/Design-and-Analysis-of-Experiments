@@ -13,3 +13,6 @@
 **/*.Rhistory
 **/*.RHistory
 **/*.RData
+
+# Hide my secret app codes used to generate data for the case studies ;)
+CaseStudyApps/

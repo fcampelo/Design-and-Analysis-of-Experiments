@@ -1,10 +1,10 @@
 ---
-title             : "Case Study 00: This is a template"
-author            : "Author 1 and Author 2"
-date              : "March 00, 2015"
-output: 
-      pdf_document:
-            fig_caption : yes
+title: 'Case Study 00: This is a template'
+author: "Author 1 and Author 2"
+date: "March 00, 2015"
+output:
+  pdf_document:
+    fig_caption: yes
 ---
 
 ```{r setup,results='hide',warning=FALSE,echo=FALSE}
