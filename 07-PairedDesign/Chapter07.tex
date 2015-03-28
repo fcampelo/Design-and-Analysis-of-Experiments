@@ -55,7 +55,7 @@ Neil deGrasse Tyson\\1958 - \\American astrophysicist and author.\\}
 {Dependent populations}
 Suppose the following situation: a young researcher develops an optimization algorithm (A) for a given family of problems, and wants to compare its convergence speed against a method that represents the state-of-the-art (B).
 \vone
-The researcher implements both methods and wants to determine whether the proposed one has a better average performance for problems of that particular kind.
+The researcher implements both methods and wants to determine whether the proposed one has a better average performance for problems of that particular family, represented by a given benchmark set.
 \vone
 The measurements are made under homogeneous conditions (same computer, same operational conditions, etc.) and the time is measured in a way that is not sensitive to other processes running in the system.
 \vone
@@ -124,7 +124,10 @@ The hypotheses of interest can now be defined in terms of $\mu_D$, e.g.:
 H_0: \mu_D = 0\\
 H_1: \mu_D \neq 0
 \end{cases}\eqs
-\noindent which can now be treated as a test of hypotheses for a single sample: the population of interest is the differences in average times until convergence for the problems under investigation.
+\noindent which can now be treated as a test of hypotheses for a single sample: the population of interest is the differences in average times until convergence for the problems under investigation. The test statistic is given by:
+\beqs T_0 = \frac{\bar{D}}{S_D/\sqrt{N}}\eqs 
+\vhalf
+which is distributed under the null hypothesis as a Student-t variable with $N-1$ degrees of freedom (where $N$ is the number of test problem instances in the experiment);
 \end{ftst}
 
 %=====
@@ -136,9 +139,68 @@ Some other important questions worth considering:
 
 \bitems In this example the minimally interesting effect size $\delta^*$ must be expressed in terms of \textit{average time gains across problems} (not within individual instances);
 \spitem The most important sample size to consider in this situation refers to the \textit{number of problem instances}, and not necessarily to the number of within-problems repeated measures;
-\spitem The number of repetitions within each problem will have an impact on the uncertainty associated to each observation (that is, to each value of mean time to convergence for each algorithm on each problem), and should be selected with some care\footnote[2]{\tiny Alternatively, we can set it as arbitrarily large, particularly in cases where the cost of repetitions is small. As much as I hate to admit it, the lazy heuristic of setting it as $\geq 30$ should be enough in most algorithmic studies. A more methodologically sound approach to setting this is under development, and will be included in future versions of these lecture notes.}.
+\spitem The number of repetitions within each problem will have an impact on the uncertainty associated to each observation (that is, to each value of mean time to convergence for each algorithm on each problem), and should be selected with some care\footnote[1]{\tiny Alternatively, we can set it as arbitrarily large, particularly in cases where the cost of repetitions is small. As much as I hate to admit it, the lazy heuristic of setting it as $\geq 30$ should be enough in most algorithmic studies. A more methodologically sound approach to setting this is under development, and will be included in future versions of these lecture notes.}.
 \eitem
 \end{ftst}
+
+%=====
+
+\begin{ftst}
+{Comparison of two means}
+{Paired design}
+Some other important questions worth considering:
+
+\bitems Pairing removes the effects of controllable nuisance factors from the analysis.
+\spitem
+Strongly indicated in cases with strong correlations between samples (e.g., heterogeneous experimental conditions).
+\eitem
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Comparison of two means}
+{Paired design}
+Going back to our example, assume the following facts about the desired comparison:
+
+\bitems The benchmark set is composed of seven problems ($N=7$);
+\spitem The researcher is interested in finding differences in mean time to convergence greater than ten seconds ($\delta^*=10$) with a power of at least $(1-\beta)=0.8$;
+\spitem The researcher performs $n=30$ repeated runs\footnote[2]{\tiny Not that I recommend this number, but it is generally an easy alternative if you don't want to\\justify your choices to less statistically-savvy reviewers.} of each algorithm in each problem, from random initial conditions.
+\eitem
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
+{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
+\end{tikzpicture}
+\end{ftst}
+
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+\begin{rcode}
+> data<-read.table("soltime.txt",header=T)
+> x<-data[data$Algorithm=="Campelo",]
+> y<-data[data$Algorithm=="SOTA",]
+
+> t.test(x$Avg.Time, y$Avg.Time,
+         alternative = "two.sided",
+         mu = 0, conf.level = 0.95, 
+         paired=T)
+
+Paired t-test
+data:  x$Avg.Time and y$Avg.Time
+t = -3.1845, df = 10, p-value = 0.009745
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.8542064 -0.3276118
+sample estimates:
+mean of the differences 
+              -1.090909 
+ \end{rcode}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=100pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.22\textwidth]{../figs/soltimeR.png}};
+%\end{tikzpicture}
+\end{ftstf}
 
 
 
