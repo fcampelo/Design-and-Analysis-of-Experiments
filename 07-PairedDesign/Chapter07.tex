@@ -164,8 +164,8 @@ Strongly indicated in cases with strong correlations between samples (e.g., hete
 Going back to our example, assume the following facts about the desired comparison:
 
 \bitems The benchmark set is composed of seven problems ($N=7$);
-\spitem The researcher is interested in finding differences in mean time to convergence greater than ten seconds ($\delta^*=10$) with a power of at least $(1-\beta)=0.8$;
-\spitem The researcher performs $n=30$ repeated runs\footnote[2]{\tiny Not that I recommend this number, but it is generally an easy alternative if you don't want to\\justify your choices to less statistically-savvy reviewers.} of each algorithm in each problem, from random initial conditions.
+\spitem The researcher is interested in finding differences in mean time to convergence greater than ten seconds ($\delta^*=10$) with a power of at least $(1-\beta)=0.8$, using a significance level $\alpha=0.05$;
+\spitem The researcher performs $n=30$ repeated runs\footnote[2]{\tiny Not that I necessarily recommend this number, but it is generally an easy alternative if you don't\\want to keep justifying your choices to less statistically-savvy reviewers.} of each algorithm in each problem, from random initial conditions.
 \eitem
 
 \begin{tikzpicture}[remember picture,overlay]
@@ -177,37 +177,142 @@ Going back to our example, assume the following facts about the desired comparis
 \begin{ftstf}
 {Comparison of two means}
 {Paired design}
+Step 1: load and precondition the data.
 \begin{rcode}
-> data<-read.table("soltime.txt",header=T)
-> x<-data[data$Algorithm=="Campelo",]
-> y<-data[data$Algorithm=="SOTA",]
+> # Read data
+> data<-read.table("../data files/soltimes.csv",
++                  header=T)
 
-> t.test(x$Avg.Time, y$Avg.Time,
-         alternative = "two.sided",
-         mu = 0, conf.level = 0.95, 
-         paired=T)
+# "Problem" is a categorical variable, not a contiunous one
+> data$Problem<-as.factor(data$Problem)
 
-Paired t-test
-data:  x$Avg.Time and y$Avg.Time
-t = -3.1845, df = 10, p-value = 0.009745
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -1.8542064 -0.3276118
-sample estimates:
-mean of the differences 
-              -1.090909 
- \end{rcode}
-%\begin{tikzpicture}[remember picture,overlay]
-%\node[anchor=south east,yshift=100pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.22\textwidth]{../figs/soltimeR.png}};
-%\end{tikzpicture}
+# Summarize within-problem observations by mean
+> aggdata<-aggregate(Time~Problem:Algorithm,
++                    data=data,
++                    FUN=mean)
+> summary(aggdata)
+ Problem Algorithm      Time       
+ 1:2     A:7       Min.   : 37.63  
+ 2:2     B:7       1st Qu.:109.45  
+ 3:2               Median :178.73  
+ 4:2               Mean   :175.48  
+ 5:2               3rd Qu.:245.25  
+ 6:2               Max.   :296.79  
+ 7:2                               
+
+\end{rcode}
 \end{ftstf}
 
+%=====
+
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+Step 2: analysis
+\begin{rcode}
+> # Perform paired t-test
+> t.test(Time~Algorithm,
++        paired=T,
++        data=aggdata)
+
+Paired t-test
+data:  Time by Algorithm
+t = -9.1585, df = 6, p-value = 9.54e-05
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -21.85862 -12.64118
+sample estimates:
+mean of the differences 
+               -17.2499 
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+Alternatively, we could have done:
+\begin{rcode}
+> difTimes<-with(aggdata,
++             Time[1:7]-Time[8:14])
+> t.test(difTimes)
 
 
+One Sample t-test
+data:  difTimes
+t = -9.1585, df = 6, p-value = 9.54e-05
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -21.85862 -12.64118
+sample estimates:
+mean of x 
+ -17.2499 
+\end{rcode}
+\end{ftstf}
 
+%=====
 
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+Verify assumptions:
+\begin{rcode}
+> shapiro.test(difTimes)
 
+Shapiro-Wilk normality test
+data:  difTimes
+W = 0.8387, p-value = 0.09655
 
+# Redo test without outlier
+> indx<-which(difTimes==max(difTimes))
+> t.test(difTimes[-indx])$p.value
+[1] 6.179743e-06
+> t.test(difTimes[-indx])$conf.int
+[1] -21.41856 -16.48037
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.5\textwidth]{../figs/soltimesqq.pdf}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+What happens if we fail to consider the problem effects?
+\begin{rcode}
+> t.test(Time~Algorithm,data=aggdata)
+
+Welch Two Sample t-test
+data:  Time by Algorithm
+t = -0.3609, df = 11.993, p-value = 0.7245
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -121.40320   86.90341
+sample estimates:
+mean in group A mean in group B 
+       166.8527        184.1026 
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Comparison of two means}
+{Paired design}
+Paired designs can require smaller sample sizes for equivalent power in cases where the between-units (in our example, the between-problems) variation is relatively high;
+\vhalf
+More specifically, if the within-level variation is given by $\sigma_\epsilon$ and the between-units variation is $\sigma_u$, we have that, for large enough $N$\\(e.g., $N\geq 10$),
+\beqs
+\frac{N_{\mbox{\tiny unpaired}}}{N_{\mbox{\tiny paired}}}\approx\sqrt{2\left[\left(\frac{\sigma_u}{\sigma_\epsilon}\right)^2+1\right]}
+\eqs
+\vhalf
+Failure to consider inter-unit variability can result in the masking of relevant effects by the nuisance factor.
+\vhalf
+Similarly, failure in recognizing the dependence structure of within-unit measurements yields tests with artificially inflated degrees of freedom, which results in the inflation of the effective value of $\alpha$.
+\end{ftstf}
 
 %=====
 
@@ -217,13 +322,14 @@ mean of the differences
 \scriptsize
 \textbf{Required reading}
 
-\benums 
-\item J.P. Simmons, L.D. Nelson, and U. Simonsohn, \textit{False-Positive Psychology : Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant}, Psychological Science 22(11):1359-1366, 2011 - \url{http://goo.gl/9e0cdw}
+\benums D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 10. 5th ed., Wiley, 2010. 
+\item M.J. Crawley, \textit{The R Book}, Ch. 8. 1st ed., Wiley, 2007;
 \eenum
 
 \textbf{Recommended reading}
 
 \benums L. Lehe and V. Powell, \textit{Simpson's Paradox} - \url{http://vudlab.com/simpsons/} 
+\item J.P. Simmons, L.D. Nelson, and U. Simonsohn, \textit{False-Positive Psychology : Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant}, Psychological Science 22(11):1359-1366, 2011 - \url{http://goo.gl/9e0cdw}
 \eenum
 \end{ftst}
 
@@ -236,7 +342,7 @@ mean of the differences
 \vone
 \footnotesize Please reference this work as:\\
 \footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 6; Creative Commons BY-NC-SA 4.0.\\
+Version 2.11, Chapter 7; Creative Commons BY-NC-SA 4.0.\\
 
 \begin{Verbatim}[fontsize=\tiny]
     @Misc{Campelo2015-01,
@@ -244,7 +350,7 @@ Version 2.11, Chapter 6; Creative Commons BY-NC-SA 4.0.\\
       author={Felipe Campelo},
       howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
       year={2015},
-      note={Version 2.11, Chapter 6; Creative Commons BY-NC-SA 4.0.},
+      note={Version 2.11, Chapter 7; Creative Commons BY-NC-SA 4.0.},
     }
 \end{Verbatim}
 
