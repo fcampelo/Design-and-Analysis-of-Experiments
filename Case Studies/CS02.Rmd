@@ -34,7 +34,7 @@ Your analysis should follow a simple procedure:
 
 1. Describe the experimental design required to answer the technical question of interest. Detail the hypotheses being tested and the relevant design for testing those hypotheses.
 2. Calculate the required sample size for the experiment. For the sake of simplicity you can consider equal sample sizes for both .
-3. Simulate your data collection procedure using the app available [here](http://fcampelo.github.io/labdata) (also available in [this mirror](http://150.164.32.10:3838/labdata) )
+3. Simulate your data collection procedure using the app available [here](http://fcampelo.shinyapps.io/labdata) (also available in [this mirror](http://150.164.32.10:3838/labdata) )
 4. Perform the statistical analysis using the observations contained in the data file that you generated using the app. This includes:
       a. Perform the actual test of statistical significance;
       b. Estimate the effect size (including the confidence interval);
