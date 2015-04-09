@@ -1,0 +1,186 @@
+\documentclass[t]{beamer}
+
+% Load general definitions
+\input{../defs/preamble.tex}
+
+% Specific definitions
+\title[]{Design and Analysis of Experiments}
+\subtitle[]{08 - Testing Equivalence and Non-Inferiority}
+\author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
+\institute{Graduate Program in Electrical Engineering}
+\date{\scriptsize Belo Horizonte\\April 2015}
+
+\begin{document}
+
+% cover page
+\setbeamertemplate{footline}{}
+\begin{frame}
+\begin{flushright}
+\includegraphics[width=.25\textwidth]{../figs/principal_completa3_ufmg}
+\end{flushright}
+  \titlepage
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
+  \end{tikzpicture}  
+\end{frame}
+
+%=====
+
+% quotation page
+  \begin{frame}[b]
+		\frametitle{}
+\begin{columns}[T]
+\column{0.77\textwidth}
+\flushright{\small ``\textit{Distinctions drawn by the mind\\
+are not necessarily equivalent\\
+to distinctions in reality.}''\\\vskip 4.3em
+Thomas Aquinas\\1225 - 1274 \\Italian philosopher and theologian.\\}
+\column{0.23\textwidth}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=25pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/aquinas.png}};
+\end{tikzpicture}
+\end{columns}
+\vhalf
+\lfr{Image: \url{http://www.bfriars.ox.ac.uk/hall/aquinas-ins/}}
+\end{frame}
+
+%=====
+% Main slides
+
+\begin{ftst}
+{Testing equivalence}
+{Introduction}
+The tests introduced in the preceding chapters deal with situations in which one is interested in detecting \textit{differences} between a population parameter $\theta$ -- e.g., a population mean $\mu$ or a difference between population means $(\mu_1-\mu_2)$ -- and its nominal value $\theta_0$ under a null hypothesis;
+\vone
+Another useful class of experiments in engineering and science is one in which the experimenter is interesting in investigating \textit{equivalence} (within a given error margin), for instance:
+
+\bitems Conformity/compliance testing (industrial certification);
+\spitem Equivalence of effects (pharmaceutical industry);
+\eitem
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=5pt,xshift=-5pt] at (current page.south east)
+{\includegraphics[width=0.3\textwidth]{../figs/EquivDrugs.png}};
+\end{tikzpicture}
+\lfr{Image adapted from: \url{http://goo.gl/iXeCiY}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Testing equivalence}
+{Introduction}
+In principle, one could express this as a shift in focus from trying to establish whether a population parameter is different from a given reference to trying to determine whether it is equal to that reference. 
+\vone
+In usual (two-sided) comparative studies, the alternative hypothesis (i.e., the one that presents novelty in relation to the current state of knowledge) is the one of difference between the parameters of interest - that is, unless there is strong evidence of differences, one cannot rule out the null hypothesis of equality;
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Testing equivalence}
+{Introduction}
+In equivalence testing, the situation is reversed: the (approximate) equality of two parameters is the novelty one hopes to establish. 
+\vone
+Consequently, the burden of proof shifts to providing evidence that there is no difference.
+\vone
+The term \textit{equivalent} is not used strictly, but to mean the absence of practical differences - that is, any differences that might exist fall within an \textit{equivalence margin} or \textit{limit of practical significance} $\delta^*$.
+\vone
+Using this approach, the equivalence of two parameters can be established if a sample provides enough evidence that the true difference is smaller than $\delta^*$ units.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Testing Non-inferiority}
+{Definition}
+A similar concept to equivalence testing is the definition of non-inferiority of a given treatment/ process/ method in relation to another (e.g., a standard solution).
+\vone
+In non-inferiority tests, one can declare that a given process is not worse than a standard one only if enough evidence is provided to conclude that the performance of the proposed process is no more than $\delta^*$ units worse than that of the standard.
+\vone
+In the case of non-inferiority tests, one can in principle use a regular test of differences with a one-sided alternative (which would be equivalent to setting $\delta^* = 0$).
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Comparison of studies}
+{\ }
+\includegraphics[width=\textwidth]{../figs/TOST.png}
+\lfr{Image: Walker and Nowacki (2011), J. General Internal Medicine 26(2):192-196.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Testing Equivalence}
+{Quick-and-dirty approach}
+A simple way of thinking about testing equivalence consists in thinking about confidence intervals instead of p-values:
+
+\begin{colorblock}{}{bg=green!30,fg=black}
+\centering ``\textit{Equivalence can be established}''
+\end{colorblock}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Methodology}
+{Equivalence test for a single mean}
+An equivalence test 
+
+\end{ftst}
+
+%=====
+
+
+
+
+
+%=====
+
+\begin{ftst}
+{Bibliography}
+{\ }
+\scriptsize
+\textbf{Required reading}
+
+\benums  E. Walker, A.S. Nowacki, \textit{Understanding Equivalence and Noninferiority Testing}, Journal of General Internal Medicine 26(2):192-196, 2011.
+\eenum
+
+\textbf{Recommended reading}
+
+\benums P. Mathews, \textit{Sample Size Calculations: Practical Methods for Engineers and Scientists}, Ch. 2.4, 1st ed., MMB, 2010.
+\eenum
+\end{ftst}
+
+%=====
+
+\begin{ftstf}{About this material}{Conditions of use and referencing}
+\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
+\vhalf
+\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
+\vone
+\footnotesize Please reference this work as:\\
+\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
+Version 2.11, Chapter 8; Creative Commons BY-NC-SA 4.0.\\
+
+\begin{Verbatim}[fontsize=\tiny]
+    @Misc{Campelo2015-01,
+      title={Lecture Notes on Design and Analysis of Experiments},
+      author={Felipe Campelo},
+      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
+      year={2015},
+      note={Version 2.11, Chapter 8; Creative Commons BY-NC-SA 4.0.},
+    }
+\end{Verbatim}
+
+\begin{tikzpicture} [remember picture,overlay]
+\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+
+\end{document}
