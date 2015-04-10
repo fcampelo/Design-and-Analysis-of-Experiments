@@ -54,7 +54,7 @@ Thomas Aquinas\\1225 - 1274 \\Italian philosopher and theologian.\\}
 {Introduction}
 The tests introduced in the preceding chapters deal with situations in which one is interested in detecting \textit{differences} between a population parameter $\theta$ -- e.g., a population mean $\mu$ or a difference between population means $(\mu_1-\mu_2)$ -- and its nominal value $\theta_0$ under a null hypothesis;
 \vone
-Another useful class of experiments in engineering and science is one in which the experimenter is interesting in investigating \textit{equivalence} (within a given error margin), for instance:
+Another useful class of experiments in engineering and science is one in which the experimenter is interesting in investigating \textit{equivalence} (within a given margin of error), for instance:
 
 \bitems Conformity/compliance testing (industrial certification);
 \spitem Equivalence of effects (pharmaceutical industry);
@@ -81,9 +81,7 @@ In usual (two-sided) comparative studies, the alternative hypothesis (i.e., the 
 \begin{ftst}
 {Testing equivalence}
 {Introduction}
-In equivalence testing, the situation is reversed: the (approximate) equality of two parameters is the novelty one hopes to establish. 
-\vone
-Consequently, the burden of proof shifts to providing evidence that there is no difference.
+In equivalence testing, the situation is reversed: the (approximate) equality of two parameters is the novelty one hopes to establish. Consequently, the burden of proof shifts to providing evidence that there is no difference.
 \vone
 The term \textit{equivalent} is not used strictly, but to mean the absence of practical differences - that is, any differences that might exist fall within an \textit{equivalence margin} or \textit{limit of practical significance} $\delta^*$.
 \vone
@@ -99,7 +97,7 @@ A similar concept to equivalence testing is the definition of non-inferiority of
 \vone
 In non-inferiority tests, one can declare that a given process is not worse than a standard one only if enough evidence is provided to conclude that the performance of the proposed process is no more than $\delta^*$ units worse than that of the standard.
 \vone
-In the case of non-inferiority tests, one can in principle use a regular test of differences with a one-sided alternative (which would be equivalent to setting $\delta^* = 0$).
+In the case of non-inferiority tests, one can in principle use a regular test of differences with a one-sided alternative (which would be equivalent to setting $\delta^* = 0$), or define the null hypothesis in a way that includes $\delta^*$ in its formulation.
 \end{ftst}
 
 %=====
@@ -116,11 +114,16 @@ In the case of non-inferiority tests, one can in principle use a regular test of
 \begin{ftst}
 {Testing Equivalence}
 {Quick-and-dirty approach}
-A simple way of thinking about testing equivalence consists in thinking about confidence intervals instead of p-values:
+A simple way of thinking about testing equivalence of two means is to observe confidence intervals instead of p-values:
 
-\begin{colorblock}{}{bg=green!30,fg=black}
-\centering ``\textit{Equivalence can be established}''
+\begin{colorblock}{}{bg=green,fg=black}
+\centering ``\textit{Equivalence can be established at the $\alpha$ significance level if a $(1-2\alpha)$-confidence interval for the difference between the two means is contained within a interval $\pm\delta^*$.}''
 \end{colorblock}
+
+The difference between testing for differences and for equivalence can be easily illustrated using this approach:
+
+\centering\includegraphics[width=.8\textwidth]{../figs/DiffVxEquiv.png}
+\lfr{Image: Walker and Nowacki (2011), J. General Internal Medicine 26(2):192-196.}
 
 \end{ftst}
 
@@ -129,8 +132,56 @@ A simple way of thinking about testing equivalence consists in thinking about co
 \begin{ftst}
 {Methodology}
 {Equivalence test for a single mean}
-An equivalence test 
+An equivalence test for a single population mean can be expressed by the hypotheses:
+\beqs
+\begin{cases}
+H_0: &\left|\mu-\mu_0\right|\geq\delta^*\\
+H_1: &\left|\mu-\mu_0\right|<\delta^*
+\end{cases}
+\eqs
+\vhalf
+The most usual way of testing these hypotheses is the TOST (\textit{two one-sided tests}) method. As the name suggests, two one-sided significance tests are constructed so that the desired statistical properties can be achieved. Using our standard notation:
+\begin{columns}[T]
+\column{0.5\textwidth}
+\beqs
+\begin{cases}
+H_0^1: &\mu-\mu_0 = -\delta^*\\
+H_1^1: &\mu-\mu_0 > -\delta^*
+\end{cases}
+\eqs
+\column{0.5\textwidth}
+\beqs
+\begin{cases}
+H_0^2: &\mu-\mu_0 = \delta^*\\
+H_1^2: &\mu-\mu_0 < \delta^*
+\end{cases}
+\eqs
+\end{columns}
+\vone
+If both tests reject their respective $H_0$, then equivalence (within the equivalence margin $\delta^*$) can be declared with significance level $\alpha$.
+\end{ftst}
 
+%=====
+
+\begin{ftst}
+{Methodology}
+{Equivalence test for a single mean}
+\vskip 1em
+\centering\includegraphics[width=.9\textwidth]{../figs/TOST-errors.png}
+\lfr{Image: Matthews (2010), Sample Size Calculations, MMB. pg. 46}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Equivalence of a single mean}
+{Sample size}
+Sample sizes for testing equivalence of a single mean can be derived using essentially the same considerations used for the usual tests. In the case of a single sample:
+\beqs
+n\geq\left(\frac{\left(t_{(1-\alpha)}+t_{(1-\beta)}\right)\hat{\sigma}}{\delta^* - (\mu-\mu_0)}\right)^2
+\eqs
+\vone
+As in the previous cases, iteration is needed to solve for $n$ (since the quantiles of the t distribution depend on $n$). Use $t_x$ = $z_x$ for the first iteration.
 \end{ftst}
 
 %=====
