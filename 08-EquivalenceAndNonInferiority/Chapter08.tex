@@ -286,20 +286,17 @@ After collecting the observations, we proceed to the analysis:
 > data<-read.table("../data files/labdata-example.csv",
 +                  header = T, sep = ",")
 
-> # Perform two one-sided t-tests
-> t.test(HoleArea~Place, data = data, 
-+        alternative = "less", conf.level = 0.99)$p.value
-[1] 0.9603321
+> # Two one-sided t-tests
+> t.test(HoleArea~Place,  data = data,  alternative = "less", mu = 4,
++        conf.level = 0.99)$p.value
+[1] 0.00304124
+> t.test(HoleArea~Place, data = data, alternative = "greater", mu = -4,
++        conf.level = 0.99)$p.value
+[1] 6.586193e-10
 
-> t.test(HoleArea~Place, data = data, 
-+        alternative = "greater", conf.level = 0.99)$p.value
-[1] 0.03966786
- 
-> # Get CI and verify that it is indeed contained within (-delta,delta)
-> t.test(HoleArea~Place, 
-+        data = data, 
-+        conf.level = 0.99)$conf.int
-[1] -0.7362059  3.8488818
+> # Get (1-2*alpha) CI 
+> t.test(HoleArea~Place, data = data,  conf.level = 0.98)$conf.int
+[1] -0.5117627  3.6244386
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/labdata.png}};

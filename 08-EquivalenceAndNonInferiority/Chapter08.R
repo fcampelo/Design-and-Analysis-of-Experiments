@@ -40,16 +40,18 @@ dev.off()
 t.test(HoleArea~Place, 
        data = data, 
        alternative = "less", 
+       mu = 4,
        conf.level = 0.99)$p.value
 t.test(HoleArea~Place, 
        data = data, 
        alternative = "greater", 
+       mu = -4,
        conf.level = 0.99)$p.value
 
-# Get 99% CI and verify that it is indeed contained within (-delta,delta)
+# Get (1-2*alpha) CI and verify that it is indeed contained within (-delta,delta)
 t.test(HoleArea~Place, 
        data = data, 
-       conf.level = 0.99)$conf.int
+       conf.level = 0.98)$conf.int
 
 
 # Check test assumptions
