@@ -51,16 +51,17 @@ power.t.test(power=0.85,
 
 # Validation of the normality assumption
 # QQ plot
-pdf("../figs/GraphNorm.pdf",
-    width=5,
-    height=5) # comment to open plot in R
+
+# pdf("../figs/GraphNorm.pdf",
+#     width=5,
+#     height=5) # comment to open plot in R
 library(car)
 qqPlot(sample,
        pch=16,
        cex=1.5,
        las=1)
 
-dev.off() # comment this if you commented the pdf command.
+# dev.off() # comment this if you commented the pdf command.
 
 # Shapiro-Wilk test of normality
 shapiro.test(sample)

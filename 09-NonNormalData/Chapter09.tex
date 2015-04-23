@@ -32,49 +32,154 @@
 		\frametitle{}
 \begin{columns}[T]
 \column{0.77\textwidth}
-\flushright{\small ``\textit{Distinctions drawn by the mind\\
-are not necessarily equivalent\\
-to distinctions in reality.}''\\\vskip 4.3em
-Thomas Aquinas\\1225 - 1274 \\Italian philosopher and theologian.\\}
+\flushright{\small ``\textit{Nothing has such power to broaden the mind\\
+as the ability to investigate systematically and truly
+\\all that comes under thy observation in life.}''\\\ \\
+Marcus Aurelius Antoninus Augustus\\
+121 -- 180\\
+Roman emperor and stoic philosopher.\\}
 \column{0.23\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=25pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/aquinas.png}};
+{\includegraphics[width=2\textwidth]{../figs/aurelius.png}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: \url{http://www.bfriars.ox.ac.uk/hall/aquinas-ins/}}
+\lfr{Image: \url{http://www.yourbest100.com/people/top-100-philosophers/}}
 \end{frame}
 
 %=====
 % Main slides
 
-% Part I: Data transformations
-
-% Part 2: Rank-based methods
-
-% Part 3: Bootstrap methods
-
-
-%\begin{ftst}
-%{Testing equivalence}
-%{Introduction}
-%The tests introduced in the preceding chapters deal with situations in which one is interested in detecting \textit{differences} between a population parameter $\theta$ -- e.g., a population mean $\mu$ or a difference between population means $(\mu_1-\mu_2)$ -- and its nominal value $\theta_0$ under a null hypothesis;
-%\vone
-%Another useful class of experiments in engineering and science is one in which the experimenter is interesting in investigating \textit{equivalence} (within a given margin of error), for instance:
-%
-%\bitems Conformity/compliance testing (industrial certification);
-%\spitem Equivalence of effects (pharmaceutical industry);
-%\eitem
-%\begin{tikzpicture}[remember picture,overlay]
-%\node[anchor=south east,yshift=5pt,xshift=-5pt] at (current page.south east)
-%{\includegraphics[width=0.3\textwidth]{../figs/EquivDrugs.png}};
-%\end{tikzpicture}
-%\lfr{Image adapted from: \url{http://goo.gl/iXeCiY}}
-%\end{ftst}
+\begin{ftst}
+{Simple comparisons}
+{Non-normal data}
+Up to this point, we have been using methods that rely on strong distributional assumptions - particularly on the assumption of \textit{normality} - to perform inference on mean values;
+\vone
+The Central Limit Theorem allows this assumption to be relaxed in some cases (e.g., large sample sizes, unimodal symmetrical distributions, etc.); 
+\vone
+However, scientists and engineers frequently have to deal with data that does not conform with the normality assumption (relaxed or not) of traditional t-tests.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=.27\textwidth]{../figs/logn_qq.png}};
+\node[anchor=south east,yshift=0pt,xshift=-100pt] at (current page.south east)
+{\includegraphics[width=.25\textwidth]{../figs/expdata.png}};
+\end{tikzpicture}
+\end{ftst}
 
 %=====
 
+\begin{ftst}
+{Simple comparisons}
+{Non-normal data}
+The most common strategies to deal with non-normal samples are:
+
+\bitems Data transformation;
+\spitem Rank-based methods;
+\spitem Bootstrap-based methods;
+\spitem Distribution-specific methods.
+\eitem
+\vone
+In this lecture we'll introduce the first three approaches. The use of distribution-specific methods (e.g., generalized linear models) will be discussed in future versions of this course.
+\end{ftst}
+
+%=====
+% Part I: Data transformations
+\begin{ftst}
+{Data transformations}
+{Main concepts}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Data transformations}
+{Log transformation}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Data transformations}
+{Square root transformation}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Data transformations}
+{Other transformations}
+
+\end{ftst}
+
+%=====
+% Part 2: Rank-based methods
+\begin{ftst}
+{Rank-based methods}
+{Main concepts}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Rank-based methods}
+{Inference on one median}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Rank-based methods}
+{Inference on two medians}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Rank-based methods}
+{Paired design}
+
+\end{ftst}
+
+%=====
+% Part 3: Bootstrap methods
+\begin{ftst}
+{Bootstrap}
+{Main concepts}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Bootstrap}
+{Confidence intervals}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Bootstrap}
+{Inference using bootstrap}
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Final remarks}
+{Some considerations}
+
+\end{ftst}
+
+%=====
 
 
 \begin{ftst}

@@ -42,11 +42,12 @@ t.test(difTimes)
 
 # Check for deviations of normality
 # 1: Normal QQplot
-library(car)
-pdf("../figs/soltimesqq.pdf",
-    width=5,
-    height=5) # comment to open plot in R
 
+#pdf("../figs/soltimesqq.pdf",
+#    width=5,
+#    height=5) # comment to open plot in R
+
+library(car)
 qqPlot(difTimes,
        pch=16,
        cex=1.5,
@@ -57,7 +58,7 @@ indx<-which(difTimes==max(difTimes))
 pt<-qqnorm(difTimes,plot.it=F)
 points(pt$x[indx],pt$y[indx],pch=1,cex=2,col=2)
 
-dev.off() # comment this if you commented the pdf command.
+#dev.off() # comment this if you commented the pdf command.
 
 # 2. Shapiro-Wilk test
 shapiro.test(difTimes)

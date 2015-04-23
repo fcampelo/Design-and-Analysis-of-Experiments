@@ -27,7 +27,8 @@ isout<-(CI_lower>mu)|(CI_upper<mu)  # Flag for which CIs that do not contain the
                                     # true parameter value
 
 ## Plot the CIs
-#pdf("../figs/CIs.pdf",width=12,height=8)
+# pdf("../figs/CIs.pdf",width=12,height=8)
+
 plot(0,0,type="n",
      xlim=c(0,K),ylim=c(47,53),
      ylab="Resistance",
@@ -41,7 +42,8 @@ for (i in 1:K){
 }
 points(c(0,K),c(mu,mu),
        lty=2,lwd=3,type="l")
-#dev.off()
+
+# dev.off()
 
 #=====
 
@@ -63,7 +65,7 @@ shade3 <- rbind(c(xlow,0),
 
 # Generate plot (using ggplot2)
 library(ggplot2)
-#pdf("../figs/enclosure.pdf",width=12,height=5)
+# pdf("../figs/enclosure.pdf",width=12,height=5)
 qplot(x=data$x, y=data$y,geom="line", xlim=c(42,58))+
     geom_segment(aes(x=xup,y=0,xend=xup,yend=ytop))+
     geom_segment(aes(x=xlow,y=0,xend=xlow,yend=ytop))+
@@ -73,5 +75,5 @@ qplot(x=data$x, y=data$y,geom="line", xlim=c(42,58))+
     xlab("Resistance") + ylab("Probability density") +
     ggtitle("90% enclosure of a N(50,2) population")+
     theme(text = element_text(size=20))
-#dev.off()
+# dev.off()
 

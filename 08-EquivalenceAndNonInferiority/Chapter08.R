@@ -28,13 +28,13 @@ calcN_tost2(alpha = 0.01,
 data<-read.table("../data files/labdata-example.csv",
                  header=T,
                  sep=",")
-png("../figs/labdata.png", width = 600, height = 300)
+#png("../figs/labdata.png", width = 600, height = 300)
 library(ggplot2)
 ggplot(data) + 
     geom_boxplot(mapping = aes(x=Place,
                                y=HoleArea,
                                fill=Place))
-dev.off()
+#dev.off()
 
 # Two one-sided t-tests
 t.test(HoleArea~Place, 
@@ -56,8 +56,8 @@ t.test(HoleArea~Place,
 
 # Check test assumptions
 # Normality
+#png("../figs/labdata-qqplots.png", width = 600, height = 300)
 library(car)
-png("../figs/labdata-qqplots.png", width = 600, height = 300)
 par(mfrow=c(1,2))
 qqPlot(subset(data,
               Place=="Lab")[,2],
@@ -69,13 +69,13 @@ qqPlot(subset(data,
        pch=20,
        main = "Dept. Defence",
        ylab = " ")
-dev.off()
+#dev.off()
 
 # Independence
 library(lmtest)
 dwtest(HoleArea~Place, data=data)
 
-png("../figs/labdata-resplot.png", width = 600, height = 300)
+#png("../figs/labdata-resplot.png", width = 600, height = 300)
 par(mfrow=c(1,2))
 plot(seq_along(subset(data, Place=="Lab")[,2]),
      subset(data, Place=="Lab")[,2],
@@ -95,4 +95,4 @@ plot(seq_along(subset(data, Place=="DepDef")[,2]),
      ylab = " ",
      xlab = "Observation order")
 grid(NA,NULL,lwd=2)
-dev.off()
+#dev.off()

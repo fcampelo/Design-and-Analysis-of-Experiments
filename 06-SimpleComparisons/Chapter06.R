@@ -75,9 +75,9 @@ resid<-y$Length.error - rep(means[2:1],
 # Normality: Shapiro-Wilk test
 shapiro.test(resid)
 
-pdf("../figs/steelrodsqq.pdf",
-    width=5,
-    height=5) # comment to open plot in R
+# pdf("../figs/steelrodsqq.pdf",
+#     width=5,
+#     height=5) # comment to open plot in R
 
 library(car)
 qqPlot(resid,
@@ -85,16 +85,16 @@ qqPlot(resid,
        cex=1.5,
        las=1)
 
-dev.off() # comment this if you commented the pdf command.
+# dev.off() # comment this if you commented the pdf command.
 
 
 # Equality of variances: Fligner-Killeen test
 with(y,
      fligner.test(Length.error~Process))
 
-pdf("../figs/steelrodsvar.pdf",
-    width=5,
-    height=5) # comment to open plot in R
+# pdf("../figs/steelrodsvar.pdf",
+#     width=5,
+#     height=5) # comment to open plot in R
 
 plot(x=rep(means[2:1],
            each=n),
@@ -104,15 +104,15 @@ plot(x=rep(means[2:1],
      cex=1.5,
      las=1)
 
-dev.off() # comment this if you commented the pdf command.
+# dev.off() # comment this if you commented the pdf command.
 
 library(lmtest)
 with(y,
      dwtest(Length.error~Process))
 
-pdf("../figs/steelrodsind.pdf",
-    width=5,
-    height=5) # comment to open plot in R
+# pdf("../figs/steelrodsind.pdf",
+#     width=5,
+#     height=5) # comment to open plot in R
 
 plot(resid,
      pch=16,
@@ -120,7 +120,7 @@ plot(resid,
      type="b",
      las=1)
 
-dev.off() # comment this if you commented the pdf command.
+# dev.off() # comment this if you commented the pdf command.
 
 
 # Perform two-sample t-test to compare means (without assuming equal variances)
