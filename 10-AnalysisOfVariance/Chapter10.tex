@@ -53,6 +53,10 @@ Polish-French physicist and chemist.\\}
 %=====
 % Main slides
 
+%% Things to add in the future:
+% Sample size calculations for ANOVA (first) with additional observations for post-hoc tests (if needed)
+% Heteroscedasticity correction - Welch ANOVA 
+
 \begin{ftst}
 {Comparison of multiple means}
 {Introduction}
@@ -60,10 +64,610 @@ In the previous sections, we have (hopefully) developed a solid understanding of
 \vone
 There are many cases, however, in which one may want to perform inferences about differences of the means of multiple populations;
 \vone
+We will develop the main concepts and ideas related with this kind of test by examining a simple example, related to a paper manufacturing operation.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=10pt,xshift=-10pt] at (current page.south east)
+{\includegraphics[width=.3\textwidth]{../figs/paper.jpg}};
+\end{tikzpicture}
+\lfr{Image: \url{http://goo.gl/xYVW0M}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Example: paper manufacturing}
+{Problem definition}
+Tensile strength (TS) is an important characteristic for certain types of paper for industrial use;
+\vone
+A reasonable conjecture is that this characteristic is influenced by the kind of hardwood used in the manufacturing process.
+\vone
+The process engineer wants to investigate whether four different hardwoods result in papers with relevant differences of TS, using a pilot plant as his experimental unit.
+\lfr{Example inspired by Montgomery \& Runger (2010), Ch. 13.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Example: paper manufacturing}
+{Problem definition}
+The total budget allocated for the experiment allows the execution of six production runs for each kind of hardwood.
+\vone
+Under these specifications, the experiment has a single experimental \textit{factor} (\textit{Hardwood type}) with $a = 4$ \textit{levels} (hardwood types \textit{A}, \textit{B}, \textit{C} and \textit{D}) and $n = 6$ \textit{replicates} at each level.
+\vone
+The response variable will be the tensile strength of paper (measured in kPa). The engineering team is interested in finding out whether any hardwood leads to an increase in the mean TS value of the paper. 
+\vone
+The minimum difference of practical meaning is defined as $5 kPa$, and a reasonable upper estimate for the standard deviation of this process is $\hat{\sigma} = 6 kPa$. Desired error levels are defined as $\alpha = 0.1$ and $\beta = 0.2$.
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Example: paper manufacturing}
+{Exploratory data analysis}
+\begin{rcode}
+> paper   <- read.table(file = "../data files/paper_strength.csv", 
++                       header = TRUE, 
++                       sep = ",")
+>
+> summary(paper)
+ Hardwood     TS_kPa     
+ A:6      Min.   : 9.88  
+ B:6      1st Qu.:13.90  
+ C:6      Median :15.35  
+ D:6      Mean   :15.56  
+          3rd Qu.:17.77  
+          Max.   :20.00  
+> 
+> boxplot(TS_kPa~Hardwood, 
++         data = paper, 
++         xlab = "Hardwood",
++         ylab = "TS (kPa)", 
++         main = "Paper strength data",
++         pch  = 16,
++         col  = "gray")
+\end{rcode}
+%\vhalf
+%Graphical analysis suggests the existence of an effect of the factor on the response variable;
+%\vhalf
+%Besides, a relative symmetry and a fairly consistent variance can be observed in all samples.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor= east,yshift=-17pt,xshift=0pt] at (current page.east) {\includegraphics[width=.5\textwidth]{../figs/paperbox.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Example: paper manufacturing}
+{Exploratory data analysis}
+The boxplot suggests the existence of differences among the factor levels;
+\vone
+Besides, we can also observe a small variability in the spread of different levels; some suggestion of asymmetry in level \textit{B}; and a possible outlier in level \textit{C}.
+\vone
+These characteristics will need to be\\
+taken into account during the analysis.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor= south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/paperbox.png}};
+\end{tikzpicture}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Example: paper manufacturing}
+{Statistical model}
+This data can be described by a linear statistical model of the form:
+\beqs
+y_{ij} = \underbrace{\mu_i + \epsilon_{ij}}_{\mbox{\scriptsize Means model}} = \underbrace{\mu + \tau_i + \epsilon_{ij}}_{\mbox{\scriptsize Effects model}}\begin{cases}i=1,\ldots,a\\j=1,\ldots,n\end{cases}
+\eqs
+\vhalf
+\noindent where $\mu$ is the overall mean, $\tau_i$ represents the effect of the $i$-th level, and $\epsilon_{ij}$ is the residual (random error, or unmodeled variability);
+\vhalf
+In the derivation of the statistical test for the existence of differences in the group means, we will employ the effects model, and initially consider a few assumptions about the residuals:
+\beqs
+y_{ij} = \mu + \tau_i + \epsilon_{ij}\begin{cases}i=1,\ldots,a\\j=1,\ldots,n\end{cases},\ \ \ \mbox{with }\epsilon_{ij} \overset{\mbox{\tiny i.i.d.}}{\sim}\mathcal{N}\left(0,\sigma^2\right)
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Example: tensile strength}
+{Statistical model}
+If these assumptions are correct, the populations are expected to be distributed as:
+
+\includegraphics[width=0.7\textwidth]{../figs/models.png}
+
+Since we are interested in testing our data for differences in the mean values of each population, the test hypotheses can be described as:
+\beqs
+\begin{cases}
+H_0: \tau_i = 0,\ \ \forall i\in\left\{1,2,\ldots,a\right\}\\
+H_1: \exists\ \tau_i \neq 0
+\end{cases}\ \ \ \ \ \ \ 
+\eqs
+
+If data collection is performed in random order, under constant experimental conditions, we have a \textit{completely randomized design}.
+\lfr{Image: Montgomery\&Runger (2010), Ch. 13}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{The Fixed Effects Model}
+{Definition}
+This approach to modeling the mean effects of specific factor levels is known as the \textit{fixed effects model};
+\vone
+This approach is appropriate to testing hypotheses in situations when factor levels are arbitrarily defined by the experimenter;
+\vone
+For these cases, the inference is made over the mean values for each level, and cannot be extended to similar levels that were not tested (e.g., other types of hardwood);
+\vone
+Other situations may require different kinds of modeling, such as \textit{random} or \textit{mixed effects models}, but these will not be explored here.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{The Fixed Effects Model}
+{Development}
+As mentioned earlier, we will use the \textit{effects model} for describing the development of the statistical test: 
+\beqs y_{ij} = \mu + \tau_i + \epsilon_{ij}\begin{cases}i=1,\ldots,a\\j=1,\ldots,n\end{cases}\eqs
+\vhalf
+\noindent where treatment effects are seen as deviations from the grand mean $\mu$.
+\vone
+By construction, we have that:
+\beqs
+\sum_{i=1}^{a}\tau_i = 0;
+\eqs 
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{The Fixed Effects Model}
+{Development}
+The total variability of the data can be expressed by the \textit{total sum of squares}, which represents the sum of the squared deviations between each observation and the overall sample mean:
+\beqs
+SS_T = \sum_{i=1}^{a}{\sum_{j=1}^{n}{\left(y_{ij} - \bar{y}_{\bullet\bullet}\right)^2}}
+\eqs
+With some relatively simple algebra, the $SS_T$ can be divided into two terms, representing the within-group and the between-group variability:
+\beqs
+SS_T = \sum_{i=1}^{a}{\sum_{j=1}^{n}{\left(y_{ij} - \bar{y}_{\bullet\bullet}\right)^2}}=\underbrace{n\sum_{i=1}^{a}{\left(\bar{y}_{i\bullet} - \bar{y}_{\bullet\bullet}\right)^2}}_{SS_{\mbox{\tiny\textit{Levels}}}} + \underbrace{\sum_{i=1}^{a}{\sum_{j=1}^{n}{\left(y_{ij}- \bar{y}_{i\bullet}\right)^2}}}_{SS_E}
+\eqs
+\vhalf
+\noindent where $\bullet$ indicates the summation over an index, and $\bar{\ \ }$ indicates an averaging operation.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{The Fixed Effects Model}
+{Development}
+Dividing the sums of squares by their respective number of degrees of freedom yields quantities known as \textit{mean squares}.
+\vhalf
+The relevant means squares for our test will be the \textit{levels mean square} and the \textit{residual mean square}:
+\beqs
+MS_E = \frac{SS_E}{a\left(n-1\right)}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+MS_{\mbox{\tiny\textit{Levels}}} = \frac{SS_{\mbox{\tiny\textit{Levels}}}}{a-1}
+\eqs
+\vhalf
+The expected values of these quantities are:
+\beqs
+E\left[MS_E\right] = \sigma^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ E\left[MS_{\mbox{\tiny\textit{Levels}}}\right] = \sigma^2 + \frac{n\sum_{i=1}^{a}{\tau_i^2}}{a-1}
+\eqs
 
 \end{ftst}
 
 %=====
+
+\begin{ftst}
+{The Fixed Effects Model}
+{Development}
+\beqs
+E\left[MS_E\right] = \sigma^2\ \ \ \ \ \ \ \ \ \ \ \ \ \ E\left[MS_{\mbox{\tiny\textit{Levels}}}\right] = \sigma^2 + \frac{n\sum_{i=1}^{a}{\tau_i^2}}{a-1}
+\eqs
+\vone
+Notice that $MS_E$ is an unbiased estimator for the common variance of the residuals, while $MS_{\mbox{\tiny\textit{Levels}}}$ is biased by a term that is proportional to the squared values of the $\tau_i$ coefficients.
+\vone
+However, under $H_0$ we have that $\tau_i=0$ for all $i$, that is, $E\left[MS_{\mbox{\tiny\textit{Levels}}}\right] = E\left[MS_{E}\right] = \sigma^2$. \alert{\textit{But only if the null hypothesis is true}}.
+\end{ftst}
+
+%=====
+
+\begin{ftst}{The Fixed Effects Model}{Development}
+It can be shown that, if $H_0$ is true, the statistic
+\beqs
+F_0 = \frac{MS_{\mbox{\tiny\textit{Levels}}}}{MS_E} 
+\eqs
+\vhalf
+\noindent is distributed according to an $F$ distribution with $a-1$ degrees of freedom for the numerator and $a(n-1)$ for the denominator.  The usual notation is $F_{\left(a-1\right),a(n-1)}$
+\vone
+If $H_0$ is false, the expected value of $MS_{\mbox{\tiny\textit{Levels}}}$ is larger than that of $MS_E$, which results in larger values of $F_0$ and defines the critical region for our test:
+\vhalf
+\begin{block}{}
+\centering Reject $H_0$ at the $\alpha$ significance level if\\$f_0>F_{\alpha;(a-1),a(n-1)}$
+\end{block}
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Example: paper manufacturing}
+{Computational analysis}
+\begin{rcode}
+> model <- aov(TS_kPa~Hardwood, data = paper)
+> summary.aov(model)
+            Df Sum Sq Mean Sq F value   Pr(>F)    
+Hardwood     3 110.77   36.92   13.62 4.56e-05 ***
+Residuals   20  54.24    2.71                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{rcode}
+\vhalf
+The \textit{ANOVA table} provides information on the sources of variation, together with their corresponding degrees of freedom, sums of squares and mean square values. The table also informs the values of the test statistic and the corresponding p-value of the test ($Pr(>F)$).
+\vone
+In this case, the low p-value ($p = 4.56\times 10^{-5}$) suggests the rejection of the null hypothesis in favor of the alternative. But what does that mean?
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Example: paper manufacturing}
+{Computational analysis}
+Recall the null and alternative hypotheses for the ANOVA:
+\beqs
+\begin{cases}
+H_0: \tau_i = 0,\ \ \forall i\\
+H_1: \exists\ \tau_i \neq 0
+\end{cases}
+\eqs
+\vhalf
+The rejection of the null hypothesis leads to the conclusion that \textit{there is at least one level with an effect significantly different from zero}. But which one?
+\vhalf
+For this analysis to be complete, we still need to answer two questions:
+\vhalf
+\bitems Can we verify the assumptions of the test?
+\spitem Which means are different from which, and by how much?
+\eitem
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Assumptions}
+{Model validation}
+As mentioned earlier, the ANOVA model is based on three assumptions on the behavior of the residuals:
+\bitems \textit{Independence};
+\item \textit{Homoscedasticity}, i.e., equality of variances across groups;
+\item \textit{Normality};
+\eitem
+\vhalf
+The residuals of the model can be easily obtained as:
+\beqs
+e_{ij} = y_{ij} - \hat{y}_{ij} = y_{ij} - \left(\hat{\mu} + \hat{\tau_i}\right) = y_{ij}-\bar{y}_{i\bullet}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Assumptions}
+{Model validation}
+The normality assumption can be tested using the Shapiro-Wilk test coupled with a normal QQ plot of the residuals:
+\begin{rcode}
+> shapiro.test(model$residuals)
+Shapiro-Wilk normality test
+data:  model$residuals
+W = 0.9722, p-value = 0.7225
+
+> library(car)
+> qqPlot(model$residuals, 
+pch = 16, 
+lwd = 3, 
+cex = 2, 
+las = 1)
+\end{rcode}
+\vskip 3em
+The ANOVA is relatively robust to moderate violations of normality, as long as the other assumptions are verified or the sample size is large enough.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=50pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/paperqq.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Assumptions}
+{Model validation}
+The homoscedasticity assumption can be verified by the Fligner-Killeen test, together with plots of residuals by fitted values:
+\begin{rcode}
+> fligner.test(TS_kPa~Hardwood, data = paper)
+Fligner-Killeen test of homogeneity of
+variances
+data:  TS_kPa by Hardwood
+Fligner-Killeen:
+med chi-squared = 1.0622, df = 3, 
+p-value = 0.7862
+>
+> plot(x = model$fitted.values,
++ y = model$residuals, 
++ ...)
+\end{rcode}
+\vhalf
+ANOVA is relatively robust to modest\\
+violations of homoscedasticity, as far\\
+as the sample is \textit{balanced}.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north east,yshift=-80pt,xshift=0pt] at (current page.north east) {\includegraphics[width=.5\textwidth]{../figs/papervar.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Assumptions}
+{Model validation}
+As usual, the independence assumption should be guaranteed (to the best of the experimenter's knowledge) on the design phase;
+\vhalf
+To test for serial correlations, we can use the Durbin-Watson test:
+\vhalf
+\begin{rcode}
+> durbinWatsonTest(model)
+ lag Autocorrelation D-W Statistic p-value
+   1    -0.008996302      1.872801   0.868
+ Alternative hypothesis: rho != 0
+
+> plot(x    = seq_along(model$residuals),
++      y    = model$residuals,
++      type = "l", ...)
+> points(x    = seq_along(model$residuals),
++        y    = model$residuals,
++        type = "p",
++        col  = as.numeric(paper[,1]), ...)
+\end{rcode}
+\vhalf
+The ANOVA is sensitive to violations of independence. Randomization and attention to possibly influential factors can help avoiding violations of this assumption.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=north east,yshift=-78pt,xshift=0pt] at (current page.north east) {\includegraphics[width=.43\textwidth]{../figs/paperind.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Assumptions}
+{Outliers}
+A common situation is the presence of an (\textit{outlier}) in an apparently regular sample. Such points can seriously distort the analysis;
+\vone
+However, the common practice to discard outliers for statistical convenience is not an acceptable approach, as it usually leads to distortions that reinforce the bias of the experimenter;
+\vone
+It is important to try to rule out experimental or coding errors. Ouliers may be discarded only if a good (non-statistical) reason is found to assume that it represents a spurious data point.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{The need for multiple comparisons}
+If the ANOVA assumptions are verified (i.e., if we have solid grounds for trusting the result of the test), we usually need to determine \textit{which} levels of the factor are significantly different\footnote[1]{\tiny Of course this is only necessary if we rejected $H_0$ in the original test. For more on how to proceed with nonsignificant results, see Ellis(2010).};
+\vone
+Whenever possible, the planning of which comparisons will be after an analysis of variance procedure should be defined \textit{a priori}. Post-hoc definition of hypotheses (a.k.a.  HARKing\footnote[2]{\tiny\textbf{H}ypothesizing \textbf{A}fter the \textbf{R}esults are \textbf{K}nown. See Kerr(1998).}) are a common entry point for researcher biases into the analysis, and should be dealt with very carefully.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{Types of comparisons}
+The planning of multiple comparisons must be guided by the technical question underlying the experiment.
+\vone
+Whenever possible, the researcher should opt to perform the smallest number of comparisons needed to adequately answer his or her question. This will require the smallest sample size, or result in the largest power for a given experimental setup.
+\vone
+Usual questions involve (but are not limited to):
+
+\bitems\textit{How does one level compare to the others?}
+\spitem\textit{How does each level compare to the grand mean?}
+\spitem\textit{How do the levels compare to each other (all vs. all)?}
+\eitem
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{MHT considerations}
+The multiple comparisons performed after an ANOVA are essentially composed of a series of t-tests for the difference between two population means, with some slight modifications;
+\vone
+If the assumptions of the ANOVA are verified, we already have some information about the data: we know, for instance, that the groups are homoscedastic, and that their common variance is estimated by $MS_E$ (with $a(n-1)$ degrees of freedom);
+\vone
+We also know that, if we are going to perform multiple tests on the same data set, that the probability of a type-I error on each test is $\alpha$. If we want to to keep our overall error rate controlled at a given level, we will need to correct the $\alpha$ value used for each test.%
+%\footnote{\tiny This value is the one that should be used in sample size calculations. There are ways to estimate sample sizes for the omnibus ANOVA, but we'll (almost) always want to pinpoint the differences afterwards.}.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{MHT corrections}
+There are a number of ways of adjusting the $\alpha$ value of the pairwise comparisons in order to maintain the \textit{familywise error rate} (FWER) at a controlled level\footnote[3]{\tiny The methods presented here work well for a relatively small number of comparison. For more on MHT with hundreds or thousands of hypotheses, see Schaffer(1995)'s discussion on controlling the False Discovery Rate.}.
+\vhalf
+Two of the most common (and most conservative) are the Bonferroni and the \v{S}id\'ak corrections.
+\vhalf
+Assuming $K$ planned comparisons, the Bonferroni method tests each individual hypothesis with:
+\beqs
+\alpha_{adj}=\frac{\alpha_{\mbox{\scriptsize \textit{family}}}}{K}
+\eqs
+\vhalf
+\noindent while the \v{S}id\'ak correction uses:
+\beqs
+\alpha_{adj}=1 - \left(1-\alpha_{\mbox{\scriptsize \textit{family}}}\right)^{1/K}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. all}
+Pairwise comparisons of the \textit{all vs. all} type appear whenever we are simply interested in detecting which levels are significantly different from which, without any prior information or special interest in one specific level or ordering.
+\vone
+In these cases, the number of comparisons is $K=a(a-1)/2$, where $a$ is the number of levels.
+\vone
+The sample size calculations for this case follow the same equations used for the t test for two independent samples, but with the $\alpha$ value corrected for multiple hypotheses and the number of degrees of freedom of the reference distribution equal to those of the residual term in the ANOVA, i.e., $a(n-1)$.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. all}
+For performing \textit{all vs. all} multiple comparisons, a common alternative is to use Tukey's \textit{Honest Significant Difference} (HSD) approach. This method is generally chosen because it provides a slightly higher power when compared to the Bonferroni correction\footnote[4]{\tiny The difference is due to Tukey's approach using a modified value for the $t_{\beta}$ term in the power calculations. See Mathews (2011) and Montgomery (2010) for details.}. 
+\vhalf
+The usual approach is to calculate the sample size using Bonferroni (or \v{S}id\'ak)-corrected $\alpha$-values (for simplicity), and performing the tests using Tukey's HSD corrections (for increased power):
+\vhalf
+\beqs
+n = 2\left(\frac{\left(t_{(\alpha_{adj}/2)}+t_{\beta}\right)\hat{\sigma}}{\delta^*}\right)^2
+\eqs
+\vhalf
+\noindent with $a(n-1)$ degrees of freedom for the $t$ variables.
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Multiple comparisons}
+{All vs. all}
+Suppose that was the case for our hardwood example:
+
+\begin{rcode}
+> library(multcomp)
+> paper_tukey <- glht(model, linfct = mcp(Hardwood = "Tukey"))
+> paper_tukey_CI <- confint(paper_tukey, level = 0.95)
+
+Simultaneous Confidence Intervals
+Multiple Comparisons of Means: Tukey Contrasts
+Fit: aov(formula = TS_kPa ~ Hardwood, data = paper)
+Quantile = 2.7989
+95% family-wise confidence level
+Linear Hypotheses:
+           Estimate lwr     upr    
+B - A == 0 -1.9867  -4.6478  0.6745
+C - A == 0  3.6500   0.9889  6.3111
+D - A == 0  2.2333  -0.4278  4.8945
+C - B == 0  5.6367   2.9755  8.2978
+D - B == 0  4.2200   1.5589  6.8811
+D - C == 0 -1.4167  -4.0778  1.2445
+
+> plot(paper_tukey_CI, ...)
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=.42\textwidth]{../figs/papertukey.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. one}
+Pairwise comparisons of the \textit{all vs. one} type usually emerge in the context of comparing levels against a control:
+\vhalf
+\bitems Comparison of a proposed approach vs. existing ones;
+\vhalf\item Comparison of different approaches vs. a standard one (or a placebo-like group);
+\eitem
+\vhalf
+In these cases, the number of comparisons is $K = a-1$, where $a$ is the number of levels. Each test can again be performed using the $t_0$ test statistic:
+
+\beqs
+t^i_0 = \frac{\bar{y}_i - \bar{y}_0}{\hat{\sigma}\sqrt{\left(\frac{1}{n_i}+\frac{1}{n_0}\right)}}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. one}
+There are two main approaches to calculating sample size for \textit{all vs. one} comparisons:
+
+\bitems Balanced design;
+\spitem Optimal allocation of units.
+\eitem
+\vone
+With a balanced design (that is, all levels have the same number of observations), the calculation of $n$ follows the same approach as the \textit{all vs. all} comparisons, but correcting $\alpha$ for only $a-1$ comparisons.
+\vone
+For the optimal allocation of units, an unbalanced design is used.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. one - optimal allocation}
+As several levels will be compared against the single control group, the relative importance of the latter is greater and therefore it should have a larger sample size.
+\vhalf
+To maximize the power of this multiple comparisons procedure, the sample size of the control group should be:
+\beqs
+n_0 = n_i\sqrt{K}
+\eqs
+\vhalf
+\noindent where $n_i$ is the common sample size for the non-control levels:
+\beqs
+n_i = \left(1 + \frac{1}{\sqrt{K}}\right)\left(\frac{(t_{(\alpha_{adj}/2)}+t_{\beta})\hat{\sigma}}{\delta^*}\right)^2
+\eqs
+\lfr{A good free software for doing sample size calculations and power analysis in nontrivial contexts such as this one is G*Power 3, \url{http://www.gpower.hhu.de/} . It is also not difficult to implement these calculations in R.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. one - \textbf{Dunnett's test}}
+As in the case of \textit{all vs. all} comparisons, there is a test that is usually employed for its superior sensitivity: Dunnett's test.
+\vone
+The control group sample size $n_0$ calculated assuming that Bonferroni-corrected t-tests will be used is slightly overestimated in relation to the required $n_0$ for Dunnett's test, but in practice the differences are small enough not to matter;
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Multiple comparisons}
+{All vs. one}
+Assuming that in our example the \textit{B} level is the standard one, against which the other ones are to be compared:
+\vhalf
+\begin{rcode}
+> paper$Hardwood   <- relevel(paper$Hardwood, ref = "B")
+> model2           <- aov(TS_kPa~Hardwood, data = paper)
+> paper_dunnett    <- glht(model2, linfct = mcp(Hardwood = "Dunnett"))
+> paper_dunnett_CI <- confint(paper_dunnett, level = 0.95)
+
+Simultaneous Confidence Intervals
+Multiple Comparisons of Means: Dunnett Contrasts
+Fit: aov(formula = TS_kPa ~ Hardwood, 
+         data = paper)
+Quantile = 2.5394
+95% family-wise confidence level
+Linear Hypotheses:
+           Estimate lwr     upr    
+A - B == 0  1.9867  -0.4277  4.4011
+C - B == 0  5.6367   3.2223  8.0511
+D - B == 0  4.2200   1.8056  6.6344
+
+> plot(paper_dunnett_CI, ...)
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/paperdunnett.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{Some final considerations}
+The kind of comparisons that are to be performed after an ANOVA should be planned in advance, as it influences your data collection and sample size calculations. There are of course sample size formulas for the pure ANOVA, but these are usually of limited use since researchers frequently want to know where the detected differences lie.
+\vone
+There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow he ideas outlined above: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
+\end{ftst}
 
 
 
@@ -73,13 +677,16 @@ There are many cases, however, in which one may want to perform inferences about
 \scriptsize
 \textbf{Required reading}
 
-\benums  %E. Walker, A.S. Nowacki, \textit{Understanding Equivalence and Noninferiority Testing}, Journal of General Internal Medicine 26(2):192-196, 2011.
+\benums  D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 13. 5th ed., Wiley, 2010.
+\item N.L. Kerr, \textit{HARKing: Hypothesizing After the Results are Known}, Personality and Social Psychology Reviews 2(3): 196--217, 1998.
 \eenum
 
 \textbf{Recommended reading}
 
-\benums %P. Mathews, \textit{Sample Size Calculations: Practical Methods for Engineers and Scientists}, Ch. 2.4, 1st ed., MMB, 2010.
-\item %P. Zhang, \textit{A Simple Formula for Sample Size Calculation in Equivalence Studies}, Journal of Biopharmaceutical Statistics 13(3):529-538, 2003.
+\benums P. D. Ellis, \textit{The Essential Guide to Effect Sizes}. 1st ed., Cambridge, 2010.
+\item J.P. Schaffer, \textit{Multiple Hypothesis Testing}, Annual Reviews on Psychology 46, 561--584, 1995.
+\item P. Mathews, \textit{Sample Size Calculations: Practical Methods for Engineers and Scientists}. Ch. 8, 1st ed., MMB, 2010.
+\item T. Hothorn, F. Bretz, P. Westfall, \textit{Simultaneous Inference in General Parametric Models}. Biometrical  Journal 50(3), 346--363, 2008.
 \eenum
 \end{ftst}
 
