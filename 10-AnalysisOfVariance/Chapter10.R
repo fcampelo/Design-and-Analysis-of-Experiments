@@ -137,3 +137,39 @@ plot(paper_dunnett_CI,
      cex        = 2)
 # dev.off()
 
+#==========
+
+## Sample size calculations for anova
+a       <- 4
+alpha   <- 0.05
+sigma   <- 7
+delta   <- 12
+beta    <- 0.2
+
+# Case 1: two levels symmetrically biased about the grand mean
+tau <- c(-delta/2, 
+         delta/2, 
+         rep(0, a-2)) # define tau vector
+n   <- 2        # initial n
+
+while (qf(1 - alpha, a - 1, a*(n - 1)) > 
+           qf(beta, a - 1, a*(n - 1), n*sum(tau^2)/sigma^2)) n <- n + 1
+
+# Using power.anova.test():
+vartau <- var(tau)
+power.anova.test(groups = 4, 
+                 between.var = vartau, 
+                 within.var = sigma^2, 
+                 sig.level = alpha, 
+                 power = 1-beta)$n
+
+
+# Case 2: one levels biased relative to the others
+tau <- c(-delta*(a - 1)/a, 
+         rep(delta/a, a-1)) # define tau vector
+vartau <- var(tau)
+power.anova.test(groups = 4, 
+                 between.var = vartau, 
+                 within.var = sigma^2, 
+                 sig.level = alpha, 
+                 power = 1-beta)$n

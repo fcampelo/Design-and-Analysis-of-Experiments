@@ -434,18 +434,6 @@ The ANOVA is sensitive to violations of independence. Randomization and attentio
 %=====
 
 \begin{ftst}
-{Assumptions}
-{Outliers}
-A common situation is the presence of an (\textit{outlier}) in an apparently regular sample. Such points can seriously distort the analysis;
-\vone
-However, the common practice to discard outliers for statistical convenience is not an acceptable approach, as it usually leads to distortions that reinforce the bias of the experimenter;
-\vone
-It is important to try to rule out experimental or coding errors. Ouliers may be discarded only if a good (non-statistical) reason is found to assume that it represents a spurious data point.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
 {Multiple comparisons}
 {The need for multiple comparisons}
 If the ANOVA assumptions are verified (i.e., if we have solid grounds for trusting the result of the test), we usually need to determine \textit{which} levels of the factor are significantly different\footnote[1]{\tiny Of course this is only necessary if we rejected $H_0$ in the original test. For more on how to proceed with nonsignificant results, see Ellis(2010).};
@@ -488,7 +476,7 @@ We also know that, if we are going to perform multiple tests on the same data se
 \begin{ftst}
 {Multiple comparisons}
 {MHT corrections}
-There are a number of ways of adjusting the $\alpha$ value of the pairwise comparisons in order to maintain the \textit{familywise error rate} (FWER) at a controlled level\footnote[3]{\tiny The methods presented here work well for a relatively small number of comparison. For more on MHT with hundreds or thousands of hypotheses, see Schaffer(1995)'s discussion on controlling the False Discovery Rate.}.
+There are a number of ways of adjusting the $\alpha$ value of the pairwise comparisons in order to maintain the \textit{familywise error rate} (FWER) at a controlled level\footnote[3]{\tiny The methods presented here work well for a relatively small number of comparison. For more on MHT, see Schaffer(1995)'s discussion on controlling the False Discovery Rate.}.
 \vhalf
 Two of the most common (and most conservative) are the Bonferroni and the \v{S}id\'ak corrections.
 \vhalf
@@ -669,7 +657,105 @@ The kind of comparisons that are to be performed after an ANOVA should be planne
 There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow he ideas outlined above: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
 \end{ftst}
 
+%=====
 
+\begin{ftst}
+{More on sample sizes}
+{Sample size formulas for ANOVA}
+If one is interested in calculating the required sample size for the ANOVA procedure (without worrying about the eventual post-hoc testing), the formulas are almost as simple as those used for the t tests.
+\vone
+Essentially, the power/sample size calculations for the ANOVA boil down to the equality:
+
+\beqs
+F_{(1-\alpha)} = F_{\beta;\phi}
+\eqs
+
+with both $F$ distributions having $(a-1)$ degrees of freedom in the numerator and $a(n-1)$ in the denominator. The noncentrality parameter $\phi$ is given by:
+
+\beqs
+\phi = \frac{n\sum\limits_{i=1}^{a}\tau_i^2}{\hat{\sigma}^2}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{More on sample sizes}
+{Sample size formulas for ANOVA}
+To ilustrate the sample size calculation procedure, imagine an experimental design with $a = 4,\ \alpha = 0.05,\ \hat{\sigma} = 7$, and suppose that the researcher wants to be able to detect whether any two means present differences of magnitude $\delta^* = 12$ with power $(1-\beta)=0.8$.
+\vone
+Under these conditions, two scenarios tend to be of interest: the first is if we have two levels biased symmetrically about the grand mean, and all the others equal to zero:
+
+$$ \tau = \left\{-\frac{\delta^*}{2}, \frac{\delta^*}{2}, 0, 0\right\}$$
+
+\noindent and the second is if we have one level biased in relation to all others:
+
+$$ \tau = \left\{-\frac{(a-1)\delta^*}{a}, \frac{\delta^*}{a}, \frac{\delta^*}{a}, \frac{\delta^*}{a}\right\}$$
+
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{More on sample sizes}
+{Sample size formulas for ANOVA}
+For the first case we have a noncentrality parameter of:
+
+$$\phi = \frac{4\left(6^2+6^2+0+0\right)}{7^2} = 5.88$$
+
+Which allows us to calculate the required sample size by iterating on $n$ until:
+
+$$F_{(1-\alpha)} \leq F_{\beta;\phi}$$
+
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{More on sample sizes}
+{Sample size formulas for ANOVA}
+Doing it manually:
+\begin{rcode}
+> a       <- 4
+> alpha   <- 0.05
+> sigma   <- 7
+> delta   <- 12
+> beta    <- 0.2
+>
+> tau <- c(-delta/2, delta/2, rep(0, a - 2)) # define tau vector
+> n   <- 2
+> while (qf(1 - alpha, a - 1, a*(n - 1)) > 
++        qf(beta, a - 1, a*(n - 1), n*sum(tau^2)/sigma^2)) n <- n + 1
+> print(n)
+[1] 9
+\end{rcode}
+\vhalf
+Using \verb|power.anova.test()|:
+\begin{rcode}
+> vartau <- var(tau)
+> power.anova.test(groups = 4, between.var = vartau, 
++                  within.var = sigma^2, sig.level = alpha, 
++                  power = 1 - beta)$n
+[1] 8.463358
+\end{rcode}
+\end{ftstf}
+
+\begin{ftstf}
+{More on sample sizes}
+{Sample size formulas for ANOVA}
+The second case (one level biased in relation to all others) is also quite easy to calculate manually, but lets keep it simple:
+
+\begin{rcode}
+> tau <- c(-delta*(a - 1)/a, rep(delta/a, a - 1))
+> vartau <- var(tau)
+> power.anova.test(groups = 4, between.var = vartau, 
++                  within.var = sigma^2, sig.level = alpha, 
++                  power = 1 - beta)$n
+[1] 6.018937
+\end{rcode}
+\vone
+It is important to remember that these are the sample sizes required for the ANOVA only - any multiple comparisons procedure executed afterwards to pinpoint the significant differences will have smaller power for same-sized effects (unless more observations are added). This is one reason why it is common to design experiments calculating the sample sizes based on the multiple comparisons procedure, instead of using the ANOVA formulas.
+\end{ftstf}
 
 \begin{ftst}
 {Bibliography}
