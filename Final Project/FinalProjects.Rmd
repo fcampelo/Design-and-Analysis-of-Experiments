@@ -1,0 +1,35 @@
+---
+title: "Final Project"
+header-includes:
+   - \usepackage{framed}
+output: pdf_document
+---
+\definecolor{shadecolor}{rgb}{0.94, 0.97, 1.0}
+
+## Summary
+The students (individually or in pairs) must choose an experimental question of interest for investigation. While designed experiments are preferred, observation or retrospective studies are also accepted). The final project consists of:
+
+- Definition of the experimental question;
+- Review of the relevant literature;
+- Experimental design (for designed experiments) or data cleaning and preconditioning (otherwise);
+- Data collection according to the design (for designed experiments)
+- Statistical modeling and analysis of the data;
+- Drawing of conclusions from the data.
+
+## Report
+The report must be prepared using [R Markdown]
+
+\subsection{Relatório}
+O relatório deverá seguir o template... Embora a organização do relatório seja livre, é sugerida uma estrutura contendo:
+
+\begin{itemize}
+\item Introdução;
+\item Descrição sucinta do problema;
+\item Descrição do planejamento pré-experimental, contendo materiais e métodos, discussão sobre a necessidade de restrições à aleatorização (blocagem, etc) e outros aspectos de planejamento;
+\item Descrição do experimento, contendo quaisquer observações a respeito da condução do mesmo, a análise dos dados obtidos, a validação das premissas dos testes utilizados e uma discussão sobre os resultados observados;
+\item Conclusões sobre o experimento (\textbf{atenção: \underline{não} é para escrever conclusões sobre a utilidade da disciplina ou dos conceitos de PAE, mas sim sobre o experimento realizado!})
+\end{itemize}
+
+\subsection{Seminário}
+Além do relatório, o aluno deverá apresentar seu trabalho em seminário. Esta apresentação deverá ter entre 10 e 15 minutos de duração, em formato livre. A ordem das apresentações será definida aleatoriamente.
+\end{document}
