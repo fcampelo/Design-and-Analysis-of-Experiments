@@ -1,5 +1,5 @@
 ---
-title: "Case Study 2"
+title: "Case Study 3"
 author: "Effect of sewage disposal in river biodiversity"
 header-includes:
    - \usepackage{framed}
