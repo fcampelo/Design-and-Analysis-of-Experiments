@@ -7,7 +7,7 @@ output: pdf_document
 \definecolor{shadecolor}{rgb}{0.94, 0.97, 1.0}
 
 ## Summary
-The students (individually or in pairs) must choose an experimental question of interest for investigation. While designed experiments are preferred, observation or retrospective studies are also accepted). The final project consists of:
+The students (individually or in pairs) must choose an experimental question of interest for investigation. While designed experiments are preferred, observation or retrospective studies are also accepted. The final project consists of:
 
 - Definition of the experimental question;
 - Review of the relevant literature;
@@ -17,19 +17,23 @@ The students (individually or in pairs) must choose an experimental question of 
 - Drawing of conclusions from the data.
 
 ## Report
-The report must be prepared using [R Markdown]
+The report must be prepared using the same [R Markdown template](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Report%20template) used for the case studies. The report should contain:
 
-\subsection{Relatório}
-O relatório deverá seguir o template... Embora a organização do relatório seja livre, é sugerida uma estrutura contendo:
+- Summary;
+- Introduction, including the description of the _research question_ being investigated and a brief literature review on the topic;
+- Experimental design, including materials and methods, data collection protocols, criteria for including/excluding observations, etc.;
+- Experimental results, including any observations about the actual data gathering, exploratory data analysis, statistical inference, model validation, quantification of effect sizes, and discussion of the results;
+- Conclusions and recommendations (**note**: conclusions about the _experiment_. I'm not interested in comments about "the importance of design of experiments" - I know it's important - but instead I want to know what conclusions can you draw about your question of interest.)
 
-\begin{itemize}
-\item Introdução;
-\item Descrição sucinta do problema;
-\item Descrição do planejamento pré-experimental, contendo materiais e métodos, discussão sobre a necessidade de restrições à aleatorização (blocagem, etc) e outros aspectos de planejamento;
-\item Descrição do experimento, contendo quaisquer observações a respeito da condução do mesmo, a análise dos dados obtidos, a validação das premissas dos testes utilizados e uma discussão sobre os resultados observados;
-\item Conclusões sobre o experimento (\textbf{atenção: \underline{não} é para escrever conclusões sobre a utilidade da disciplina ou dos conceitos de PAE, mas sim sobre o experimento realizado!})
-\end{itemize}
 
-\subsection{Seminário}
-Além do relatório, o aluno deverá apresentar seu trabalho em seminário. Esta apresentação deverá ter entre 10 e 15 minutos de duração, em formato livre. A ordem das apresentações será definida aleatoriamente.
-\end{document}
+The report will be evaluated according to the following criteria:
+
+- Justification for the experiment (i.e., how well you can justify your question of interest);
+- Compliance with the required format;
+- Reproducibility of results;
+- Technical correctness and methodological soundness;
+- Structure of argumentation;
+- Correct use of language (grammar, orthography, etc.);
+
+## Seminar
+The student/pair will present his/her/their work in a seminar. The format for this seminar is free, but the time limit is 12 minutes. The order of the presentations will be defined randomly on the first day of the seminars.
