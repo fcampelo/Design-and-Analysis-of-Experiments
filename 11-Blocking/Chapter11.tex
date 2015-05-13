@@ -54,7 +54,7 @@ Irish astrophysicist\\}
 % Main slides
 
 \begin{ftst}
-{Randomized Complete Block Design}
+{Blocking}
 {Nuisance factors}
 In the completely randomized design (CRD) introduced in the last chapter, the observations are assigned - as the name implies -in a completely random manner.
 \vone
@@ -66,7 +66,7 @@ In some situations, however, the experiment may present other factors that are n
 %=====
 
 \begin{ftst}
-{Randomized Complete Block Design}
+{Blocking}
 {Nuisance factors}
 The generalization of the \textit{paired design} for an arbitrary number of factor levels is called \textit{blocking}, which is an elegant way configure the data collection in order to enable the modeling and exclusion of the effects of nuisance factors.
 \vone
@@ -96,7 +96,7 @@ In fact, it can be argued that the systematic use of blocking is beneficial even
 %=====
 
 \begin{ftst}
-{Randomized Complete Block Design}
+{Blocking}
 {Blocking \textit{versus} Randomizing}
 The idea behind randomization is trying to prevent unknown factors to bias our observations;
 \vone
@@ -156,8 +156,8 @@ The RCBD assumes:
 \spitem independent blocks;
 \spitem independent within-block randomization. 
 \eitem
-
-The RCBD assumes that each block is independent from all others - failure to account for dependency structures can result in pseudoreplication, i.e., the use of the incorrect number of degrees-of-freedom in the test statistics.
+\vhalf
+Failure to account for dependency structures (i.e., using blocks that are not independent) can result in pseudoreplication, i.e., the use of the incorrect number of degrees-of-freedom in the test statisticsm, which usually results in an inflation of the type-I error rate.
 \end{ftst}
 
 %=====
@@ -169,6 +169,16 @@ To comply with these requirements, we consider as our response variable the aver
 \vone
 The performance of each algorithm will be averaged within each individual instance (mean of 30 runs), and then within each group (mean of 5 instances), so that each algorithm has 36 independent observations.
 \end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Example: algorithm comparison}
+{RCBD}
+\begin{rcode}
+
+\end{rcode}
+\end{ftstf}
 
 %=====
 

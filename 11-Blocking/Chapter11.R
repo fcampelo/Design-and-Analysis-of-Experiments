@@ -12,4 +12,17 @@ rm(list=ls())
 
 # Load data
 data <- read.table("../data files/algo.csv",
-                   header = TRUE)
+                   header = TRUE,
+                   colClasses = c(rep("factor", 4),
+                                  "numeric"))
+
+# Aggregate data (algorithm means by instance group)
+aggdata <- with(data,
+                aggregate(x   = Result,
+                          by  = list(Algorithm, Instance),
+                          FUN = mean))
+names(aggdata) <- c("Algorithm", 
+                    "Instance_Group",
+                    "Y")
+
+# 
