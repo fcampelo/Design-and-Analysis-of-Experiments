@@ -115,6 +115,10 @@ Blocking comes into play whenever we know from the beginning that certain factor
 A Ph.D. student decides to compare a standard optimization algorithm with six modified versions for the solution of a certain family of Vehicle Routing Problems (VRPs). His intention is to verify whether any of the modified versions is systematically better than the standard one.
 \vone
 The algorithms are applied for the solution of 180 problem instances, divided in 36 groups of five homogeneous instances. The algorithms are run 30 times on each instance, and the cost value found after each run is recorded.
+\vone
+The student wants an experiment with $\alpha = 0.05$ and\\
+power $\pi = 1-\beta = 0.8$ for a minimally interesting\\
+effect $\delta^* = 50$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=-10pt,xshift=5pt] at (current page.south east)
 {\includegraphics[width=.27\textwidth]{../figs/phdStudent.png}};
@@ -174,10 +178,47 @@ The performance of each algorithm will be averaged within each individual instan
 
 \begin{ftstf}
 {Example: algorithm comparison}
-{RCBD}
+{Data loading and preprocessing}
 \begin{rcode}
+# Load data
+> data <- read.table("../data files/algo.csv", header = TRUE)
+# Aggregate data (algorithm means by instance group)
+> aggdata <- with(data, aggregate(x   = Result, 
+                                  by  = list(Algorithm, Group), 
+                                  FUN = mean))
+# Rename columns and coerce factor variables
+> names(aggdata) <- c("Algorithm", "Instance_Group", "Y")
+> for (i in 1:2) aggdata[, i] <- as.factor(aggdata[, i])
 
+> levels(aggdata$Algorithm) <- c("Original", 
+                                 unlist(lapply(X   = "Mod", 
+                                               FUN = paste0, 1:6)))
+> summary(aggdata)
+    Algorithm  Instance_Group       Y         
+ Original:36   1      :  7    Min.   : 227.3  
+ Mod1    :36   2      :  7    1st Qu.: 440.0  
+ Mod2    :36   3      :  7    Median : 756.8  
+ Mod3    :36   4      :  7    Mean   : 821.0  
+ Mod4    :36   5      :  7    3rd Qu.:1020.5  
+ Mod5    :36   6      :  7    Max.   :2743.6  
+ Mod6    :36   (Other):210$
 \end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Example: algorithm comparison}
+{Exploratory data analysis}
+\begin{rcode}
+library(ggplot2)
+> p <- ggplot(aggdata, aes(x = Instance_Group, y = Y, 
+                           group = Algorithm, colour = Algorithm))
+
+> p + geom_line(linetype=2) + geom_point(size=5)
+\end{rcode}
+\vone
+\centering\includegraphics[width=\textwidth]{../figs/algo_lineplot.png}
 \end{ftstf}
 
 %=====
@@ -262,6 +303,74 @@ The critical region for the test is therefore given by
 
 %=====
 
+\begin{ftstf}
+{Analysis of the RCBD}
+{Statistical model}
+\begin{rcode}
+# First model
+> model <- aov(Y~Algorithm+Instance_Group, data=aggdata)
+
+> summary(model)
+                Df   Sum Sq Mean Sq F value Pr(>F)    
+Algorithm        6   359949   59991   41.75 <2e-16 ***
+Instance_Group  35 60438639 1726818 1201.86 <2e-16 ***
+Residuals      210   301725    1437                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+> summary.lm(model)$r.squared
+[1] 0.9950618
+\end{rcode}
+
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Analysis of the RCBD}
+{Statistical model - residuals}
+\begin{rcode}
+> par(mfrow = c(2, 2))
+> plot(model, pch = 20, las = 1)
+\end{rcode}
+\centering\includegraphics[width=\textwidth]{../figs/algo_res1.png}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Analysis of the RCBD}
+{Statistical model - data transformation}
+\begin{rcode}
+# Trying with log-transformed response variable
+> model2 <- aov(log(Y)~Algorithm+Instance_Group, data=aggdata)
+
+> summary(model2)
+                Df Sum Sq Mean Sq F value Pr(>F)    
+Algorithm        6   0.60  0.1002   120.4 <2e-16 ***
+Instance_Group  35  89.92  2.5690  3089.0 <2e-16 ***
+Residuals      210   0.17  0.0008                   
+---
+
+> summary.lm(model2)$r.squared
+[1] 0.9980742
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Analysis of the RCBD}
+{Statistical model - residuals}
+\begin{rcode}
+> par(mfrow = c(2, 2))
+> plot(model2, pch = 20, las = 1)
+\end{rcode}
+\centering\includegraphics[width=\textwidth]{../figs/algo_res2.png}
+\end{ftstf}
+
+%=====
+
 \begin{ftst}
 {Analysis of the RCBD}
 {Multiple blocking factors}
@@ -283,7 +392,7 @@ The relative efficiency can be calculated from the mean squares returned in the 
 E = \frac{(b-1)MS_{\mbox{\tiny Blocks}} + b(a-1)MS_{\mbox{\tiny E}}}{(ab-1)MS_{\mbox{\tiny E}}}
 \eqs
 \vhalf
-A value of 1.3, for instance, would indicate that the CRD would have required $30\%$ more observations to achieve the same power.
+A value of 1.3, for instance, would indicate that the CRD would have required $30\%$ more observations to achieve the same power. For the running example, this value can be calculated from the summary table: $ E = 431.6$
 \end{ftst}
 
 %=====
@@ -308,6 +417,36 @@ Paired t-tests are used for the pairwise comparisons, with $df_E = (a-1)(b-1)$ a
 As with the CRD, it may be convenient to use the post-hoc pairwise comparison procedures as the basis for sample size calculations, particularly in cases where the cost of observations is relatively low.
 \end{ftst}
 
+%=====
+
+\begin{ftstf}
+{Analysis of the RCBD}
+{Multiple comparisons}
+\begin{rcode}
+> library(multcomp)
+> duntest     <- glht(model2, linfct = mcp(Algorithm = "Dunnett"))
+> duntestCI   <- confint(duntest)
+> par(mar = c(5, 8, 4, 2), las = 1)
+> plot(duntestCI, xlab = "Mean difference (log scale)")
+\end{rcode}
+\centering\includegraphics[width=\textwidth]{../figs/algo_mcp.png}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Randomized complete block designs}
+{Final considerations}
+The RCBD is a generalization of the pairing concept used with t-tests, and provides an elegant way to remove nuisance effects from the analysis;
+\vone
+The consequence of using a blocking design is an increased sensitivity of the test, which means smaller sample sizes.
+\vone
+In practice, running an experiment as a RCBD results in little experimental overhead, and should be preferred over the CRD whenever possible.
+\vone
+The design and analysis of incomplete block designs (e.g., with missing observations) are also relatively simple\footnote{\tiny See Montgomery (2005) for details.}.
+\end{ftst}
+
+%=====
 
 \begin{ftst}
 {Bibliography}
@@ -315,12 +454,13 @@ As with the CRD, it may be convenient to use the post-hoc pairwise comparison pr
 \scriptsize
 \textbf{Required reading}
 
-\benums  
+\benums D.C. Montgomery, \textit{Design and Analysis of Experiments}, Ch. 4-5, 5th ed., Wiley, 2005;
+\item M. Christman, R. Littell, \textit{STA166 - Statistical Methods Research I: RCBD ANOVA Notes II} - \url{http://goo.gl/KrpbKL}
 \eenum
 
 \textbf{Recommended reading}
-
-\benums 
+\benums R. Dawkins, \textit{Unweaving the Rainbow: Science, Delusion and the Appetite for Wonder}, Mariner Books, 2000.
+\item J. Morgan and C. Albon, \textit{Partially Derivative} (podcast) - \url{http://www.partiallyderivative.com}
 \eenum
 \end{ftst}
 
