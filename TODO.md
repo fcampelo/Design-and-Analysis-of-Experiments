@@ -18,4 +18,5 @@ List of things to include (possibly) in future versions of these lecture notes
             - **essential**: Sample size and power calculations for log-transformed data
       - classical nonparametrical methods
       - bootstrap
-      
+
+- Chapter 6: sample size estimation as a function of Cohen's d coefficient (for when variance is too hard to estimate)

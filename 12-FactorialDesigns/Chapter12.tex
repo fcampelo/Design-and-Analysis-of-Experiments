@@ -1,0 +1,397 @@
+\documentclass[t]{beamer}
+
+% Load general definitions
+\input{../defs/preamble.tex}
+
+% Specific definitions
+\title[]{Design and Analysis of Experiments}
+\subtitle[]{12 - Factorial Designs}
+\author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
+\institute{Graduate Program in Electrical Engineering}
+\date{\scriptsize Belo Horizonte\\May 2015}
+
+\begin{document}
+
+% cover page
+\setbeamertemplate{footline}{}
+\begin{frame}
+\begin{flushright}
+\includegraphics[width=.25\textwidth]{../figs/principal_completa3_ufmg}
+\end{flushright}
+  \titlepage
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
+  \end{tikzpicture}  
+\end{frame}
+
+%=====
+
+% quotation page
+  \begin{frame}[b]
+		\frametitle{}
+\begin{columns}[T]
+\column{0.77\textwidth}
+\flushright{\small ``\textit{We did not evolve to understand or\\
+comprehend reality. We evolved to survive it.\\
+For understanding we need science.}''
+\vskip 4.5em
+Mark A. Crislip\\
+1952-\\
+American infectologist\\}
+\column{0.23\textwidth}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=23pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/markcrislip.jpg}};
+\end{tikzpicture}
+\end{columns}
+\vhalf
+\lfr{Image: \url{http://boards.medscape.com/.29f3af03/}}
+\end{frame}
+
+%=====
+% Main slides
+
+\begin{ftst}
+{Factorial Designs}
+{Basic definitions}
+Many experiments involve more than a single \textit{factor} of interest - that is, multiple independent variables that can influence a response variable.
+\vone
+In general, an effective way to explore the main effects and interactions of multiple factors is the use of a \textit{factorial design} in which all level combinations are evaluated at each experimental replicate;
+\vone
+In this context, the \textbf{main effect} of a factor quantifies the mean change in the response variable due to changing between the levels of that factor;
+\vone
+An \textbf{interaction effect} represents the mean change in the response variable due to the simultaneous change of levels of two or more factors.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Example: Electrical current in motors}
+\begin{columns}
+\column[T]{0.2\textwidth}
+\vspace{-1.5em}\ \ \ \includegraphics[width=.8\textwidth]{../figs/ventilador.png}
+\column[T]{0.8\textwidth} Two engineers wish to investigate factors that may affect the electrical current demanded by the single-phase motors used for ventilation in an industrial chicken coop.
+\end{columns}
+\vhalf
+Previous observations suggest that the current varies considerably from motor to motor, and process knowledge suggests two likely candidates for explaining this variability: the \textit{Manufacturer} (A, B or C) and the \textit{State} (original or rewinded) of each motor.
+\vone
+To investigate this question, the engineers decide to sample 40 motors from each manufacturer, with 20 in the original state and 20 being rewinded motors.
+\lfr{Adapted from M.H.Costa and T.L. Vieira's course project for the Design and Analysis of Experiments Course, PPGEE-UFMG, November 2013. The data used in this example is not necessarily the original one.}
+\lfr{Image: \url{http://refrigelms.com.br/ventilador-para-aviario-qla85-grade-p-1734.html}}
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Exploratory data analysis}
+{Example: Electrical current in motors}
+\begin{rcode}
+> data <- read.table("../data files/motors.txt", header = TRUE)
+> library(ggplot2)
+> p <- ggplot(data, aes(x    = Manufacturer,
++                       y    = Current.Amperes,
++                       fill = Manufacturer))
+> p + geom_boxplot() + facet_grid(.~State) + ...
+\end{rcode}
+
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
+{\includegraphics[width=\textwidth]{../figs/motors_box1.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Example: Electrical current in motors}
+The exploratory plot suggests a relatively large effect for the \textit{State} factor, but is inconclusive with regards to the \textit{Manufacturer} effect. Any interaction effect is also likely to by small.
+\vhalf
+Lets assume for this example that the engineers want $\alpha = 0.05$, $\beta = 0.2$ and $\delta^* = 0.1 A$.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
+{\includegraphics[width=\textwidth]{../figs/motors_box1.png}};
+\end{tikzpicture}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+In the general case for a completely randomized factorial design we have:
+
+\bitems \textit{a} levels for factor \textbf{A};
+\item \textit{b} levels for the factor \textbf{B};
+\item \textit{n} replicates within each combination of levels;
+\item Completely randomized collection of observations;
+\eitem
+
+The effects model for a set of observations collected following this design can be expressed as:
+
+\beqs y_{ijk} = \mu+\tau_i+\beta_j+(\tau\beta)_{ij}+\epsilon_{ijk}\begin{cases}
+i=1,\ldots,a\\
+j=1,\ldots,b\\
+k=1,\ldots,n
+\end{cases}\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+\beqs y_{ijk} = \mu+\tau_i+\beta_j+(\tau\beta)_{ij}+\epsilon_{ijk}\begin{cases}
+i=1,\ldots,a\\
+j=1,\ldots,b\\
+k=1,\ldots,n
+\end{cases}\eqs
+\vone
+As before, effects are treated as deviations from the grand mean.\\By construction:
+\vhalf
+\beqs \sum\limits_{i=1}^{a}\tau_i=0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \sum\limits_{j=1}^{b}\beta_j=0\eqs
+\vhalf
+\beqs \sum\limits_{i=1}^{a}(\tau\beta)_{ij} = \sum\limits_{j=1}^{b}(\tau\beta)_{ij} = 0\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+The factorial design emerges whenever we wish to model both the main and the interaction effects of multiple factors. This means that, for the two-factor case, the hypotheses that can be tested are:
+
+\begin{align*}
+\mbox{Factor $A$, main effect:}&\begin{cases}
+H_0: \tau_i = 0,\ \forall i\\
+H_1: \exists\tau_i \neq 0\\
+\end{cases}\\
+& \\
+\mbox{Factor $B$, main effect:}&\begin{cases}
+H_0: \beta_j = 0,\ \forall j\\
+H_1: \exists\beta_j \neq 0\\
+\end{cases}\\
+& \\
+\mbox{Interaction effect, $AB$:}&\begin{cases}
+H_0: (\tau\beta)_{ij} = 0,\ \forall i,j\\
+H_1: \exists(\tau\beta)_{ij} \neq 0\\
+\end{cases}
+\end{align*}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+The test statistics for these hypotheses will, as usual, be derived from the partition of the total variability into specific components:
+\begin{align*}
+SST &= \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}\sum\limits_{k=1}^{n}\left(y_{ijk} - \bar{y}_{\cdot\cdot\cdot}\right)^2\\
+&= \underbrace{bn\sum\limits_{i=1}^{a}\left(\bar{y}_{i\cdot\cdot} - \bar{y}_{\cdot\cdot\cdot}\right)^2}_{SS_A} + \underbrace{an\sum\limits_{j=1}^{b}\left(\bar{y}_{\cdot j\cdot} - \bar{y}_{\cdot\cdot\cdot}\right)^2}_{SS_B}\\
+&+\underbrace{n\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}\left(\bar{y}_{ij\cdot} -\bar{y}_{i\cdot\cdot}-\bar{y}_{\cdot j\cdot}+ \bar{y}_{\cdot\cdot\cdot}\right)^2}_{SS_{AB}} + \underbrace{\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}\sum\limits_{k=1}^{n}\left(y_{ijk} - \bar{y}_{ij\cdot}\right)^2}_{SS_E}
+\end{align*}
+\lfr{To distinguish $SS_{AB}$ from $SS_{E}$ we need $n\geq 2$.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+The mean squares are also calculated as usual:
+\begin{align*}
+MS_A		&= \frac{SS_A}{a-1} 				& E\left[MS_A\right] 	& = \sigma^2 + \frac{bn\sum\limits_{i=1}^{a}\tau_i^2}{a-1}\\
+MS_B		&= \frac{SS_B}{b-1} 				& E\left[MS_B\right] 	& = \sigma^2 + \frac{an\sum\limits_{j=1}^{b}\beta_j^2}{b-1}\\
+MS_{AB} 	&= \frac{SS_{AB}}{(a-1)(b-1)}	&E\left[MS_{AB}\right] & =\sigma^2 + \frac{n\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}(\tau\beta)_{ij}^2}{(a-1)(b-1)}\\
+\ \\
+MS_E 		&= \frac{SS_E}{ab(n-1)}			&E\left[MS_E\right] 	&= \sigma^2\\
+\end{align*}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Factorial Designs}
+{Statistical model for two factors}
+If the usual assumptions ($\epsilon_{ijk}$ i.i.d. $\mathcal{N}(0, \sigma^2)$) hold, the fractions:
+
+\begin{align*}
+F_0^{(A)} &= \frac{MS_A}{MS_E}\\
+\ \\
+F_0^{(B)} &= \frac{MS_B}{MS_E}\\
+\ \\
+F_0^{(AB)} &= \frac{MS_{AB}}{MS_E}
+\end{align*}
+\vhalf
+
+are distributed under their respective null hypotheses as $F$ variables (each with their respective degrees of freedom), and the hypotheses can be tested in the usual manner (i.e., comparing the obtained value of $F_0$ against the critical value of $F_{\alpha;df_1;df_2}$).
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Example: Electrical current in motors}
+{Statistical model for two factors}
+\begin{rcode}
+> model <- aov(Current.Amperes~State*Manufacturer,
++              data = data)
+> summary(model)
+                    Df Sum Sq Mean Sq F value   Pr(>F)    
+State                1 12.956  12.956 2798.41  < 2e-16 ***
+Manufacturer         2  0.118   0.059   12.71 1.04e-05 ***
+State:Manufacturer   2  0.114   0.057   12.27 1.49e-05 ***
+Residuals          114  0.528   0.005                     
+---
+
+> summary.lm(model)$r.squared
+[1] 0.9615174
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Example: Electrical current in motors}
+{Statistical model for two factors}
+As usual, the assumptions can be verified by means of residual analysis, like in the one-way ANOVA (except for a little adjustment needed for the Fligner-Killeen test)
+\vhalf
+\begin{rcode}
+> shapiro.test(model$residuals)
+W = 0.9857, p-value = 0.2392
+
+> fligner.test(Current.Amperes ~ interaction(State, Manufacturer), 
++              data = data)
+med chi-squared = 10.1721, df = 5, p-value = 0.0705
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/motors_res.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Factorial designs}
+{Multiple Comparisons}
+If the ANOVA indicates the existence of significant effects, we can perform pairwise comparisons between levels to investigate specific differences;
+\vhalf
+When the interaction effect is not significant, the comparisons between factor levels can be done in a straightforward manner, using the estimated level means. For instance, the test statistic for comparing the means of levels 2 and 3 of factor A could be calculated as:
+\beqs
+t_0 = \frac{\bar{y}_{2\cdot\cdot} - \bar{y}_{3\cdot\cdot}}{\sqrt{2\frac{MS_E}{n'}}}
+\eqs
+\vhalf
+\noindent where $n'$ is the number of specific replicates for the comparison under consideration.
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Factorial designs}
+{Multiple Comparisons}
+More generally,
+\beqs
+t_0 = \frac{\Delta\bar{y}}{\sqrt{2\frac{MS_E}{n'}}}
+\eqs
+\vhalf
+For comparisons of factor levels (main effects), the value of $n'$ is the total number of observations under that level;
+\vhalf
+For comparisons of level combinations (interaction effects), it is the number of observations within each combination group;
+\vhalf
+\begin{rcode}
+> replications(Current ~ State*Manufacturer,
++              data = data)
+             State       Manufacturer State:Manufacturer 
+                60                 40                 20 
+\end{rcode}
+\vhalf
+Also, the $\alpha$ value for the comparisons has to be adjusted to prevent inflation of the type-I error rate.
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Factorial designs}
+{Multiple Comparisons}
+The usual routines for performing multiple comparisons in \textit{R} are applicable. For instance, performing \textit{all vs all} comparisons using Tukey's method yields, for the \textit{Manufacturer} factor:
+\vhalf
+\begin{rcode}
+> mcp.manuf<-glht(model,
++                 linfct = mcp(Manufacturer = "Tukey"))
+Warning message:
+In mcp2matrix(model, linfct = linfct) :
+  covariate interactions found 
+  -- default contrast might be inappropriate
+
+> plot(confint(mcp.manuf),
++      cex.axis   = 1.2,
++      cex        = 2)
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=.4\textwidth]{../figs/motors_mcpManuf.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Factorial designs}
+{Multiple Comparisons}
+The comparison of means for the interaction groups requires a little more work, but nothing too complex:
+\vhalf
+\begin{rcode}
+
+\end{rcode}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=6pt, xshift=0pt] at (current page.north east) {\includegraphics[width=.1\textwidth]{../figs/ventilador.png}};
+%\end{tikzpicture}
+\end{ftstf}
+
+
+\begin{ftst}
+{Bibliography}
+{\ }
+\scriptsize
+\textbf{Required reading}
+
+\benums %D.C. Montgomery, \textit{Design and Analysis of Experiments}, Ch. 4-5, 5th ed., Wiley, 2005;
+\item 
+\eenum
+
+\textbf{Recommended reading}
+\benums 
+\item 
+\eenum
+\end{ftst}
+
+%=====
+
+\begin{ftstf}{About this material}{Conditions of use and referencing}
+\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
+\vhalf
+\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
+\vone
+\footnotesize Please reference this work as:\\
+\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
+Version 2.11, Chapter 11; Creative Commons BY-NC-SA 4.0.\\
+
+\begin{Verbatim}[fontsize=\tiny]
+    @Misc{Campelo2015-01,
+      title={Lecture Notes on Design and Analysis of Experiments},
+      author={Felipe Campelo},
+      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
+      year={2015},
+      note={Version 2.11, Chapter 11; Creative Commons BY-NC-SA 4.0.},
+    }
+\end{Verbatim}
+
+\begin{tikzpicture} [remember picture,overlay]
+\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+
+\end{document}
