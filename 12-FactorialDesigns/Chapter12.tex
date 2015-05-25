@@ -340,16 +340,346 @@ In mcp2matrix(model, linfct = linfct) :
 \begin{ftstf}
 {Factorial designs}
 {Multiple Comparisons}
-The comparison of means for the interaction groups requires a little more work, but nothing too complex:
+The comparison of means for the interaction groups requires a little more work, but nothing too complex. Here, we assume that we want to compare all groups versus the one with the smallest sample average.
 \vhalf
 \begin{rcode}
-
+> # Create meta-factor for interaction groups
+> interfac <- with(data, 
++                  interaction(State, Manufacturer))
+> 
+> # Use group with the smallest sample mean as the reference
+> with(data, which.min(tapply(Current.Amperes, interfac, mean)))
+Original.B 
+         3 
+> interfac <- relevel(interfac, ref = "Original.B")
+> 
+> # ReFit model
+> model2 <- aov(Current.Amperes ~ interfac,
++               data = data)
+> 
+> # Multiple comparisons
+> mcp.inter <- glht(model2,
++                 linfct = mcp(interfac = "Dunnett"))
 \end{rcode}
-%\begin{tikzpicture}[remember picture,overlay]
-%\node[anchor=north east,yshift=6pt, xshift=0pt] at (current page.north east) {\includegraphics[width=.1\textwidth]{../figs/ventilador.png}};
-%\end{tikzpicture}
 \end{ftstf}
 
+%=====
+
+\begin{ftstf}
+{Factorial designs}
+{Multiple Comparisons}
+\begin{rcode}
+> par(mar = c(5,12,4,2))
+> plot(confint(mcp.inter), 
++      xlim       = c(-0.2,1),
++      cex.axis   = 1.2,
++      cex        = 2)
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
+{\includegraphics[width=\textwidth]{../figs/motors_mcpDun.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Example: Electrical current in motors}
+{Final Considerations}
+For this example, the engineers would have now enough data to draw recommendations. For example, the data clearly shows that rewinded motors result in much larger currents drawn, which results in extra operational and structural (wiring, protection equipment, etc.) costs.
+\vone
+The engineers will factor economic and performance factors to reach conclusions about whether they should start gradually replacing all ventilation motors for new ones from manufacturer B, and whether it is better to fix or scrap the motors in need of rewinding.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Experiments with more than 2 factors}
+In the general case, the factorial design assumes:
+
+\bitems \textit{a} levels of the factor \textbf{A};
+\item \textit{b} levels of the factor \textbf{B};
+\item \textit{c} levels of the factor \textbf{C};
+\item\ldots
+\eitem
+\vhalf
+If we consider an experiment with $n\geq 2$ replicates, the total number of observations required is given by $abc\ldots n$;
+\lfr{It is actually possible to design an experiment with a single replicate (particularly for larger designs).  This will be discussed later.}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Experiments with more than 2 factors}
+The modeling and analysis of these experiments are easily obtained from the generalization of the design with 2 factors. For example, for 3 factors we have:
+\begin{columns}
+\column[T]{0.15\textwidth}
+\column[T]{0.2\textwidth}
+\begin{align*} y_{ijkl} &= \mu\\
+&+ \tau_i + \beta_j + \gamma_k\\
+&+(\tau\beta)_{ij} + (\tau\gamma)_{ik} + (\beta\gamma)_{jk}\\
+&+ (\tau\beta\gamma)_{ijk}\\
+&+ \epsilon_{ijkl}\\
+&i=1,\ldots,a;\\
+&j=1,\ldots,b;\\
+&k=1,\ldots,c;\\
+&l=1,\ldots,n;
+\end{align*}
+\column[T]{0.5\textwidth}
+\begin{align*} &\longleftarrow\mbox{Grand mean}\\
+&\longleftarrow\mbox{Main effects}\\
+&\longleftarrow\mbox{2nd order interactions}\\
+&\longleftarrow\mbox{3rd order interaction}\\
+&\longleftarrow\mbox{Residual}\\
+\end{align*}
+\column[T]{0.15\textwidth}
+\end{columns}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Sum of squares: total and main effects}
+\begin{align*}
+SS_T &= \sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}\sum\limits_{k=1}^{c}\sum\limits_{l=1}^{n}{y_{ijkl}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn}\\
+SS_A &=\frac{1}{bcn}\sum\limits_{i=1}^{a} {y_{i\cdot\cdot\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn}\\
+SS_B &=\frac{1}{acn}\sum\limits_{j=1}^{b} {y_{\cdot j\cdot\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn}\\
+SS_C &=\frac{1}{abn}\sum\limits_{k=1}^{c} {y_{\cdot\cdot k\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn}\\
+\end{align*}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Sum of squares: 2nd order interactions}
+\begin{align*}
+SS_{AB} &=\frac{1}{cn}\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}{y_{ij\cdot\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn} -SS_A-SS_B\\
+SS_{AC} &=\frac{1}{bn}\sum\limits_{i=1}^{a}\sum\limits_{k=1}^{c}{y_{i\cdot k\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn} -SS_A-SS_C\\
+SS_{BC} &=\frac{1}{an}\sum\limits_{j=1}^{b}\sum\limits_{k=1}^{c}{y_{\cdot jk\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn} -SS_B-SS_C\\
+\end{align*}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Sum of squares: 3rd order interaction and residual}
+\begin{align*}
+SS_{ABC} = &\frac{1}{n}\sum\limits_{i=1}^{a}\sum\limits_{j=1}^{b}\sum\limits_{k=1}^{c}{y_{ijk\cdot}^2} - \frac{y_{\cdot\cdot\cdot\cdot}^2}{abcn}\\
+&-SS_A -SS_B -SS_C\\&- SS_{AB} -SS_{AC} -SS_{BC}\\
+& \\
+SS_{E} = &SS_T \\&-SS_A -SS_B -SS_C\\&- SS_{AB} -SS_{AC} -SS_{BC}\\&-SS_{ABC}
+\end{align*}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Example: intraocular lenses}
+The standard surgical intervention for the treatment of cataracts consists in the removal of the crystalline lens and implantation of an artificial intraocular lens (IOL). IOLs are generally manufactured using a high precision CNC lathe, in which a circular piece of biocompatible material is carved to the desired lens shape with a diamond cutting tool.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=36pt,xshift=5pt] at (current page.south east) {\includegraphics[width=0.45\textwidth]{../figs/lens02.png}};
+\end{tikzpicture}
+
+\lfr{Adapted from L.M. Carvalho e D.F. Filgueiras' course project for the Design and Analysis of Experiments Course, PPGEE-UFMG, June 2013. The data used in this example is not necessarily the original one.}
+\lfr{Eye image: \url{http://www.peruenvideos.com/implante-lentes-intraoculares-curacion-cataratas/}}
+\lfr{Lens image: \url{http://www.allaboutvision.com/conditions/iols.htm}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Example: intraocular lenses}
+Before being marketed each lens is tested for the compliance of their optical properties, and the ones that fail to meet the required specifications are discarded.
+\vone
+Based on their knowledge of this process, two engineers designed an experiment for the preliminary investigation of the influential factors on the percentage of lenses that meet the specifications.
+\vone
+Three factors were selected for this preliminary study, each one with two levels. The resources allocated to the study were enough for the execution of exactly eight batches of lenses - in other words, a \textit{single replicate} for each combination of levels.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Example: intraocular lenses}
+Factors and levels:
+\bitems Lathe time (in minutes): [$2.35; 3.15$];
+\item Polishing time (in days): [$5; 7$];
+\item Age of the cutting tool (in cycles): [$\approx 400; \approx 1200$];
+\eitem
+\vhalf
+For each combination of levels a batch of 30 lenses was produced, and the proportion of lenses in conformity with specification was recorded  as the response variable.
+\vhalf
+The experiment was conducted in a completely randomized way, with partial blinding (lathe operators and technical inspectors did not know which level combination they were dealing with). 
+\vhalf
+The significance level was set as $\alpha=0.05$, and the researchers were interested in detecting any effects equal or larger than $0.1$ with a power of $0.8$.
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{General Factorial Designs}
+{Example: intraocular lenses}
+Since there is only one replicate, there are not enough degrees of freedom to calculate $MS_E$. Consequently, the test of hypotheses becomes unfeasible.
+
+\begin{rcode}
+> data <- read.table("../data files/lio.txt",
++                    header = TRUE)
+
+> model<-aov(Conf.rate ~ .^3,
++            data = data)
+> summary(model)
+                                        Df Sum Sq Mean Sq
+CNCTime.min                              1 0.5151  0.5151
+PolTime.days                             1 0.0861  0.0861
+ToolAge.cycles                           1 0.0105  0.0105
+CNCTime.min:PolTime.days                 1 0.0036  0.0036
+CNCTime.min:ToolAge.cycles               1 0.0001  0.0001
+PolTime.days:ToolAge.cycles              1 0.0001  0.0001
+CNCTime.min:PolTime.days:ToolAge.cycles  1 0.0036  0.0036
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Model simplification}
+To perform the test we need some degrees of freedom for the error term. In cases with single replicates, the most usual way of doing this is by discarding low-influence terms from the model. But which ones should be discarded?
+\vone
+A good way to proceed in these cases is to start by removing the highest-order interactions from the model, so that these terms are absorbed for the calculation of $MS_E$. 
+\vone
+This heuristic is based on the \textit{sparsity principle}, which states that most systems are dominated by main effects and low-order interactions;
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Model simplification}
+A qualitative way of verifying the possibility of excluding some effects is the examination of a plot known as \textit{Daniel's effects plot}, which consists on plotting effect estimators obtained from a \textit{saturated} model on a normal QQ plot.
+\vone
+Strong effects will appear as outliers, while weak or insignificant effects will apper around the expected Normal line. By examining this plot we can obtain a simplified model, containing only the relevant effects.
+\vone
+Daniel plots work only in designs with only 2 levels per factor ($2^k$ \textit{designs}).
+\lfr{For a more general effects plot, check Whitcomb and Oehlert (2007), \textit{Graphical Selection of Effects in General Factorials}: \url{http://goo.gl/6dw7dn}}
+\end{ftst}
+
+%=====
+
+\begin{ftstf}
+{Example: intraocular lenses}
+{Model simplification}
+\begin{rcode}
+> effect.est <- as.numeric(model$effects[-1])
+> qq.text    <- rownames(summary.aov(model)[[1]])
+> qq.obj     <- qqnorm(effect.est, datax = TRUE, ...)
+> qqline(effect.est, datax = TRUE)
+> text(qq.obj$x, qq.obj$y, labels = qq.text,...)
+\end{rcode}
+\vhalf
+The effects plot suggests that the higher\\
+order effects have little influence over\\
+the response variable;
+\vhalf
+Factor \textbf{CNCTime} seems to be\\
+the most important, with \textbf{PolTime}\\
+also a possibly interesting effect.
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=0.48\textwidth]{../figs/lio_Daniel.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Example: intraocular lenses}
+{Model simplification}
+Discarding the interaction effects, we can suggest a simplified model:
+\begin{rcode}
+> model2 <- aov(Conf.rate ~ .,
++               data = data)
+> summary(model2)
+            Df Sum Sq Mean Sq F value   Pr(>F)    
+CNCTime      1 0.5151  0.5151 276.570 7.66e-05 ***
+PolTime      1 0.0861  0.0861  46.235  0.00244 ** 
+ToolAge      1 0.0105  0.0105   5.644  0.07634 .  
+Residuals    4 0.0074  0.0019                     
+
+> summary.lm(model2)$r.squared
+[1] 0.9879681
+
+> shapiro.test(model2$residuals)
+W = 0.9271, p-value = 0.4902
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Example: intraocular lenses}
+{Exploring Specific Differences}
+\begin{rcode}
+> summary(glht(model2, 
++              linfct = mcp(CNCTime = "Tukey")))
+Linear Hypotheses:
+                  Estimate Std. Error t value Pr(>|t|)    
+short - long == 0 -0.50750    0.03052  -16.63 7.66e-05 ***
+
+> summary(glht(model2, 
++              linfct = mcp(PolTime = "Tukey")))
+Linear Hypotheses:
+                  Estimate Std. Error t value Pr(>|t|)   
+short - long == 0 -0.20750    0.03052    -6.8  0.00244 **
+\end{rcode}
+\end{ftstf}
+
+%=====
+
+\begin{ftstf}
+{Example: intraocular lenses}
+{Exploring Specific Differences}
+\begin{rcode}
+> library(effects)
+> lio.effs <- allEffects(model2)
+> plot(lio.effs)
+\end{rcode}
+\begin{tikzpicture}[remember picture,overlay]
+\node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=0.6\textwidth]{../figs/lio_effs.png}};
+\end{tikzpicture}
+\end{ftstf}
+
+%=====
+
+\begin{ftst}
+{Example: intraocular lenses}
+{Some conclusions}
+The effect of greatest impact on the quality of the process if the lathe time. The proportion of lenses in conformity with the specifications goes from $0.36$ to $0.87$, which strongly suggests the use of larger lathe times as a good strategy.
+\vone
+The polishing time  also presented a significant impact, with a jump from $0.51$ (5 days) to $0.71$ (7 days) on the proportion of compliant lenses.
+\vone
+No significant difference was detected between ``old'' and ``new'' lenses. This may have been due to an absence of effect, or due to the low sample size employed in this test. 
+\vone
+It is probably interesting to explore CNC lathe times further, and to include manufacturing cost considerations into this discussion.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{General Factorial Designs}
+{Some considerations about blocking}
+The inclusion of blocking variables in factorial designs essentially as simple as the single-factor case.
+\vone
+The RCBD will contain one full experimental replicate per block. The modeling and analysis aspects can be easily derived from the last two chapters.
+\vone
+
+\end{ftst}
 
 \begin{ftst}
 {Bibliography}
@@ -357,13 +687,13 @@ The comparison of means for the interaction groups requires a little more work, 
 \scriptsize
 \textbf{Required reading}
 
-\benums %D.C. Montgomery, \textit{Design and Analysis of Experiments}, Ch. 4-5, 5th ed., Wiley, 2005;
-\item 
+\benums D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, 3rd ed., 2003 - Chapter 14;
+\item P. Hoff, \textit{Applied Statistics and Experimental Design}, Chapter 6 (Factorial Designs), \url{http://goo.gl/NiyVCX} 
 \eenum
 
 \textbf{Recommended reading}
-\benums 
-\item 
+\benums R. Feynman, \textit{Surely you're joking, Mr. Feynman}, W.W. Norton\&Company, 1997.
+\item H. Wickham, \textit{ggplot2: Elegant Graphics for Data Analysis}, Springer 2009.
 \eenum
 \end{ftst}
 
@@ -376,7 +706,7 @@ The comparison of means for the interaction groups requires a little more work, 
 \vone
 \footnotesize Please reference this work as:\\
 \footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 11; Creative Commons BY-NC-SA 4.0.\\
+Version 2.11, Chapter 12; Creative Commons BY-NC-SA 4.0.\\
 
 \begin{Verbatim}[fontsize=\tiny]
     @Misc{Campelo2015-01,
@@ -384,7 +714,7 @@ Version 2.11, Chapter 11; Creative Commons BY-NC-SA 4.0.\\
       author={Felipe Campelo},
       howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
       year={2015},
-      note={Version 2.11, Chapter 11; Creative Commons BY-NC-SA 4.0.},
+      note={Version 2.11, Chapter 12; Creative Commons BY-NC-SA 4.0.},
     }
 \end{Verbatim}
 
