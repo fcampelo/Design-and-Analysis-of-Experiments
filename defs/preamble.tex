@@ -17,32 +17,6 @@
 \usepackage{color}
 \usepackage{listings}
 
-
-%=================================
-% Listings package options for R syntax highlighting
- \lstset{ 
-  language=R,                    		 	% the language of the code
-  basicstyle=\tiny\ttfamily, 			% the size of the fonts that are used for the code
-  numbers=left,                   			% where to put the line-numbers
-%  numberstyle=\tiny\color{blue},	% the style that is used for the line-numbers
-stepnumber=1,                   		% the step between two line-numbers. If it's 1, each line
-                                  					% will be numbered
-  numbersep=5pt,                  		% how far the line-numbers are from the code
-  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
-  showspaces=false,               			% show spaces adding particular underscores
-  showstringspaces=false,         		% underline spaces within strings
-  showtabs=false,                 			% show tabs within strings adding particular underscores
-  frame=single,                   			% adds a frame around the code
-  rulecolor=\color{black},        		% if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
-  tabsize=2,                      				% sets default tabsize to 2 spaces
-  captionpos=b,                   			% sets the caption-position to bottom
-  breaklines=true,               			 % sets automatic line breaking
-  breakatwhitespace=false,        			% sets if automatic breaks should only happen at whitespace
-%  keywordstyle=\color{RoyalBlue},      % keyword style
-%  commentstyle=\color{YellowGreen},   % comment style
-%  stringstyle=\color{ForestGreen}      % string literal style
-} 
-
 %=================================
 % Set mode
 \mode<presentation>
@@ -109,20 +83,30 @@ stepnumber=1,                   		% the step between two line-numbers. If it's 1
 % colors
 \definecolor{MyGray}{rgb}{0.5,0.5,0.5}
 \definecolor{MyDBGray}{rgb}{0.1,0.1,0.4}
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+\definecolor{black}{rgb}{0,0,0}
 \def\defn#1{{\color{red} #1}}
 
 % Footnote
 \renewcommand{\thefootnote}{\alph{footnote}}
 
-% Verbatim environment - using FANCYVRB package
-\DefineVerbatimEnvironment%
-{rcode}{Verbatim}
-{fontsize=\scriptsize}
-
-% Verbatim environment - using LISTINGS package
-%\newenvironment{rcode}[#1]{
-%\begin{lstlisting}[language=R, ]}{\end{lstlings}}
-
-
 % Relaxed footnotes
 \newcommand{\lfr}[1]{\let\thefootnote\relax\footnote{\tiny #1}}
+
+% Verbatim environment - using FANCYVRB package
+%\DefineVerbatimEnvironment%
+%{rcode}{Verbatim}
+%{fontsize=\scriptsize}
+
+% Verbatim environment - using LISTINGS package
+\lstnewenvironment{rcode} {\lstset{ language = R,
+                                                        basicstyle = \tiny\ttfamily,
+                                                        showspaces = false,
+                                                        showstringspaces = false,
+                                                        showtabs = false,
+                                                        keywordstyle = \color{black}\bfseries,
+                                                        commentstyle = \color{darkgreen}\bfseries,
+                                                        numbers = none,
+                                                        otherkeywords={<-,<<-},
+                                                        deletekeywords={data,model}}}%
+{}

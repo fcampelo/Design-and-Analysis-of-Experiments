@@ -90,14 +90,12 @@ To investigate this question, the engineers decide to sample 40 motors from each
 \begin{rcode}
 > data <- read.table("../data files/motors.txt", header = TRUE)
 > library(ggplot2)
-> p <- ggplot(data, aes(x    = Manufacturer,
-+                       y    = Current.Amperes,
-+                       fill = Manufacturer))
+> p <- ggplot(data, aes(x = Manufacturer, y = Current.Amperes, fill = Manufacturer))
 > p + geom_boxplot() + facet_grid(.~State) + ...
 \end{rcode}
 
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
+\node[anchor=south,yshift=20pt,xshift=0pt] at (current page.south)
 {\includegraphics[width=\textwidth]{../figs/motors_box1.png}};
 \end{tikzpicture}
 \end{ftstf}
@@ -318,8 +316,7 @@ Also, the $\alpha$ value for the comparisons has to be adjusted to prevent infla
 The usual routines for performing multiple comparisons in \textit{R} are applicable. For instance, performing \textit{all vs all} comparisons using Tukey's method yields, for the \textit{Manufacturer} factor:
 \vhalf
 \begin{rcode}
-> mcp.manuf<-glht(model,
-+                 linfct = mcp(Manufacturer = "Tukey"))
+> mcp.manuf <- glht(model, linfct = mcp(Manufacturer = "Tukey"))
 Warning message:
 In mcp2matrix(model, linfct = linfct) :
   covariate interactions found 
@@ -664,7 +661,7 @@ The effect of greatest impact on the quality of the process if the lathe time. T
 \vone
 The polishing time  also presented a significant impact, with a jump from $0.51$ (5 days) to $0.71$ (7 days) on the proportion of compliant lenses.
 \vone
-No significant difference was detected between ``old'' and ``new'' lenses. This may have been due to an absence of effect, or due to the low sample size employed in this test. 
+No significant difference was detected between ``old'' and ``new'' cutting tools. This may have been due to an absence of effect, or due to the low sample size employed in this test. 
 \vone
 It is probably interesting to explore CNC lathe times further, and to include manufacturing cost considerations into this discussion.
 \end{ftst}
