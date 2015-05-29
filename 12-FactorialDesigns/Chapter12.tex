@@ -95,7 +95,7 @@ To investigate this question, the engineers decide to sample 40 motors from each
 \end{rcode}
 
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south,yshift=20pt,xshift=0pt] at (current page.south)
+\node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
 {\includegraphics[width=\textwidth]{../figs/motors_box1.png}};
 \end{tikzpicture}
 \end{ftstf}
@@ -367,10 +367,7 @@ Original.B
 {Multiple Comparisons}
 \begin{rcode}
 > par(mar = c(5,12,4,2))
-> plot(confint(mcp.inter), 
-+      xlim       = c(-0.2,1),
-+      cex.axis   = 1.2,
-+      cex        = 2)
+> plot(confint(mcp.inter), xlim = c(-0.2, 1), cex.axis = 1.2, cex = 2)
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south,yshift=0pt,xshift=0pt] at (current page.south)
@@ -526,11 +523,9 @@ The significance level was set as $\alpha=0.05$, and the researchers were intere
 Since there is only one replicate, there are not enough degrees of freedom to calculate $MS_E$. Consequently, the test of hypotheses becomes unfeasible.
 
 \begin{rcode}
-> data <- read.table("../data files/lio.txt",
-+                    header = TRUE)
+> data <- read.table("../data files/lio.txt", header = TRUE)
 
-> model<-aov(Conf.rate ~ .^3,
-+            data = data)
+> model<-aov(Conf.rate ~ .^3, data = data)
 > summary(model)
                                         Df Sum Sq Mean Sq
 CNCTime.min                              1 0.5151  0.5151
@@ -600,8 +595,7 @@ also a possibly interesting effect.
 {Model simplification}
 Discarding the interaction effects, we can suggest a simplified model:
 \begin{rcode}
-> model2 <- aov(Conf.rate ~ .,
-+               data = data)
+> model2 <- aov(Conf.rate ~ ., data = data)
 > summary(model2)
             Df Sum Sq Mean Sq F value   Pr(>F)    
 CNCTime      1 0.5151  0.5151 276.570 7.66e-05 ***
@@ -623,14 +617,12 @@ W = 0.9271, p-value = 0.4902
 {Example: intraocular lenses}
 {Exploring Specific Differences}
 \begin{rcode}
-> summary(glht(model2, 
-+              linfct = mcp(CNCTime = "Tukey")))
+> summary(glht(model2, linfct = mcp(CNCTime = "Tukey")))
 Linear Hypotheses:
                   Estimate Std. Error t value Pr(>|t|)    
 short - long == 0 -0.50750    0.03052  -16.63 7.66e-05 ***
 
-> summary(glht(model2, 
-+              linfct = mcp(PolTime = "Tukey")))
+> summary(glht(model2, linfct = mcp(PolTime = "Tukey")))
 Linear Hypotheses:
                   Estimate Std. Error t value Pr(>|t|)   
 short - long == 0 -0.20750    0.03052    -6.8  0.00244 **

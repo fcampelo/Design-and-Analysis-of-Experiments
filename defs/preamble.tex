@@ -94,19 +94,28 @@
 \newcommand{\lfr}[1]{\let\thefootnote\relax\footnote{\tiny #1}}
 
 % Verbatim environment - using FANCYVRB package
-%\DefineVerbatimEnvironment%
-%{rcode}{Verbatim}
-%{fontsize=\scriptsize}
+\DefineVerbatimEnvironment%
+{rcode}{Verbatim}
+{fontsize=\scriptsize}
 
 % Verbatim environment - using LISTINGS package
-\lstnewenvironment{rcode} {\lstset{ language = R,
-                                                        basicstyle = \tiny\ttfamily,
-                                                        showspaces = false,
-                                                        showstringspaces = false,
-                                                        showtabs = false,
-                                                        keywordstyle = \color{black}\bfseries,
-                                                        commentstyle = \color{darkgreen}\bfseries,
-                                                        numbers = none,
-                                                        otherkeywords={<-,<<-},
-                                                        deletekeywords={data,model}}}%
-{}
+%\lstnewenvironment{rcode} {\lstset{ language = R,
+%                                                        basicstyle = \tiny\ttfamily,
+%                                                        showspaces = false,
+%                                                        showstringspaces = false,
+%                                                        showtabs = false,
+%                                                        keywordstyle = \color{black},
+%                                                        commentstyle = \color{darkgreen}\bfseries,
+%                                                        numbers = none,
+%                                                        otherkeywords={<-,
+%                                                                                ggplot,
+%                                                                                geom_boxplot,
+%                                                                                facet_grid,
+%                                                                                shapiro.test,
+%                                                                                fligner.test,
+%                                                                                glht,
+%                                                                                with
+%                                                                                },
+%                                                        deletekeywords={data,model,residuals,c,axis},
+%                                                        }}%
+%{}
