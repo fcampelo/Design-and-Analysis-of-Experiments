@@ -90,7 +90,8 @@ To investigate this question, the engineers decide to sample 40 motors from each
 \begin{rcode}
 > data <- read.table("../data files/motors.txt", header = TRUE)
 > library(ggplot2)
-> p <- ggplot(data, aes(x = Manufacturer, y = Current.Amperes, fill = Manufacturer))
+> p <- ggplot(data, aes(x = Manufacturer, y = Current.Amperes, 
+                        fill = Manufacturer))
 > p + geom_boxplot() + facet_grid(.~State) + ...
 \end{rcode}
 
