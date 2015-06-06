@@ -20,3 +20,9 @@ List of things to include (possibly) in future versions of these lecture notes
       - bootstrap
 
 - Chapter 6: sample size estimation as a function of Cohen's d coefficient (for when variance is too hard to estimate)
+
+- Chapters 10-12: improve sample size and effect size considerations
+
+- Add chapter(s) on linear regression (simple/multiple)
+
+- Add chapter on ANCOVA
