@@ -7,8 +7,9 @@ I am releasing these lecture notes under a [Creative Commons BY-NC-SA 4.0](https
 
 As far as I am aware, these notes are also being used (be it as a whole, in part, or adapted) by:
 
-- [Professor Claus Aranha, Tsukuba University](https://github.com/caranha/ExperimentDesignLectureNotes)
-- [Professor Vicente Machado Neto, Universidade Tecnológica Federal do Paraná](http://www.energiapura.net.br/alunos/planejamento_experimentos/Aulas_PAE/)
+- [Prof. Claus Aranha, Tsukuba University, Japan](https://github.com/caranha/ExperimentDesignLectureNotes)
+- [Prof. Vicente Machado Neto, Universidade Tecnológica Federal do Paraná, Brazil](http://www.energiapura.net.br/alunos/planejamento_experimentos/Aulas_PAE/)
+- [Prof. Elizabeth F. Wanner, CEFET-MG, Brazil](http://lattes.cnpq.br/2243256075052322)
 
 The lectures are fully developed in Beamer, with R as the statistical software of choice. All example files and datasets will also be made available here.
 
