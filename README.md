@@ -13,6 +13,19 @@ As far as I am aware, these notes are also being used (be it as a whole, in part
 
 The lectures are fully developed in Beamer, with R as the statistical software of choice. All example files and datasets will also be made available here.
 
+*****
+### Citation Info
+If you're using these notes in any way, please let them know your source:
+
+Felipe Campelo (2015), _Lecture Notes on Design and Analysis of Experiments_. Online: [http://git.io/v3Kh8](http://git.io/v3Kh8) Version 2.11; Creative Commons BY-NC-SA 4.0.
+
+    @Misc{Campelo2015-LNDoE,
+    title={Lecture Notes on Design and Analysis of Experiments},
+    author={Felipe Campelo}, 
+    howPublished={\url{http://git.io/v3Kh8}}, 
+    year={2015},
+    note={Version 2.11; Creative Commons BY-NC-SA 4.0.}}
+
 Cheers,  
 Felipe Campelo  
 fcampelo@gmail.com
