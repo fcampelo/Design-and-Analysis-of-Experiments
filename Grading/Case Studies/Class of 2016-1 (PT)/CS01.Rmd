@@ -1,5 +1,5 @@
 ---
-title: "Estudo de Caso 01"
+title: "EEE933 - Estudo de Caso 01"
 author: "BMI médio dos alunos do PPGEE"
 output: pdf_document
 ---
@@ -23,7 +23,7 @@ e é dado em unidades de $kg/m^2$. Usualmente, o valor obtido é utilizado para 
 		- Obese class II	35.00 - 39.99
 		- Obese class III	$\geq$ 40.00
 
-O professor Felipe Campelo, do Departamento de Engenharia Elétrica da UFMG, reporta estar atualmente com um valor de $BMI = 26.3 kg/m^2$. Neste estudo de caso vamos buscar responder à pergunta: _Os alunos do PPGEE estão, em média, mais "acima do peso" do que este professor?_ Para isso, os alunos da disciplina foram solicitados a reportar seu peso e estatura de forma anonimizada, formando uma nase de dados com a qual pretende-se realizar a inferência estatística.
+O professor Felipe Campelo, do Departamento de Engenharia Elétrica da UFMG, reporta estar atualmente com um valor de $BMI = 26.3 kg/m^2$. Neste estudo de caso vamos buscar responder à pergunta: _Os alunos do curso de Engenharia de Sistemas estão, em média, mais "acima do peso" (de acordo com o BMI) do que este professor?_ Para isso, os alunos da disciplina foram solicitados a reportar seu peso e estatura de forma anonimizada, formando uma nase de dados com a qual pretende-se realizar a inferência estatística.
 
 ## Atividades
 
@@ -31,11 +31,12 @@ O professor Felipe Campelo, do Departamento de Engenharia Elétrica da UFMG, rep
 - Consolidação dos dados coletados em uma base comum. Os grupos deverão entrar em acordo sobre o formato de dados a utilizar, e acertar uma forma de compartilhamento destes dados entre os grupos.
 - Estimação do tamanho do efeito e do intervalo de confiança _bilateral_ na grandeza de interesse (note que deseja-se um intervalo de confiança bilateral, mesmo que a hipótese alternativa seja direcional);
 - Verificação e discussão das premissas do teste;
-- Derivação de conlcusões e recomendações.
+- Derivação de conclusões e recomendações.
+- Discussão sobre a potência do teste (se aplicável).
 - Discussão sobre possíveis formas de melhorar este experimento.
 
 ## Relatório
-Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. As instruções e requerimentos para a redação do relatório são dadas abaixo:
+Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. As instruções e requerimentos para a redação do relatório são dadas abaixo.
 
 Seu relatório será avaliado de acordo com os seguintes critérios:
 
@@ -50,15 +51,8 @@ O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http:
 - O arquivo **.Rmd** do relatório.
 - O arquivo de dados utilizado.
 
-O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis no [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Report%20template) e [aqui]().
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis no [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). 
 
-Reports written in either Portuguese, English, or Spanish will be accepted.
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
 
-
-### For undergrad (Systems Engineering) Students
-Your report will be evaluated according to:
-
-- Technical correctness;
-- Correct use of language (grammar, orthography, etc.);
-
-The report has no particular template. [R Markdown](http://rmarkdown.rstudio.com) is suggested, but not mandatory. Please send me the **.pdf** file (**NO** .doc, .odt, or other exotic formats please) and the **.R** analysis file.
+Relatórios serão aceitos em português, inglês ou espanhol.
