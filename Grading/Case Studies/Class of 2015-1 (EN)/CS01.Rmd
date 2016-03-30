@@ -1,0 +1,53 @@
+---
+title: "Case Study 1"
+author: "Evaluation of the average download speed of a broadband service provider"
+output: pdf_document
+---
+
+## The Experiment^[Adapted from R.F.O. Costa's course project for the Design and Analysis of Experiments Course, PPGEE-UFMG, June 2012. The data used in this case study is not the original one.]
+
+According to Brazilian regulation agency ANATEL, the average download speed can be considered in conformity with the contracted value as long as it is superior to 60% of the nominal value. In this case study, we wish to investigate whether a given provider is fulfilling this condition in a 10MBps residential connection.
+
+Twenty measurements of download speed were collected using [SpeedTest](http://www.speedtest.net/) under homogeneous usage conditions (same computer, same browser, automatic update services disabled, no other software being used besides the browser). The collected data is available in our [GitHub repo](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/data%20files).
+
+
+## Activities
+
+Your task is to analyze this experimental data in order to answer the following question: 
+
+\begin{center}\textit{Is the actual average download speed in accordance with the regulations?}\end{center} 
+
+Your analysis should include:
+
+- Definition of the test hypotheses;
+- Test of the hypotheses;
+- Estimation of the effect size and confidence interval on the relevant value;
+- Verification of the assumptions of the test;
+- Drawing of conclusions and recommendations.
+
+Remember that your conclusions should always be placed in the context of the original technical/scientific question.
+
+## Report
+You must deliver a short report detailing your analysis and the results obtained.  Instructions for writing your report depend on the course you're taking, and are given below:
+
+### 1) For graduate (PPGEE) Students
+Your report will be evaluated according to:
+
+- Compliance with the required format (see below);
+- Reproducibility of results;
+- Technical correctness;
+- Structure of argumentation;
+- Correct use of language (grammar, orthography, etc.);
+
+The report **must** be produced using [R Markdown](http://rmarkdown.rstudio.com), and should contain the reproducible analysis code embedded as code blocks within the document. Please send me only the **.Rmd** file (the analysis should assume that the data file is in the same directory as the report file). A template for the case study reports is available in our [GitHub repo](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Report%20template).
+
+Reports written in either Portuguese, English, or Spanish will be accepted.
+
+
+### For undergrad (Systems Engineering) Students
+Your report will be evaluated according to:
+
+- Technical correctness;
+- Correct use of language (grammar, orthography, etc.);
+
+The report has no particular template. [R Markdown](http://rmarkdown.rstudio.com) is suggested, but not mandatory. Please send me the **.pdf** file (**NO** .doc, .odt, or other exotic formats please) and the **.R** analysis file.

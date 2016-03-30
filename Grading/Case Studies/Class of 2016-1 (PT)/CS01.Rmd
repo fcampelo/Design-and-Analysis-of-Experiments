@@ -1,0 +1,64 @@
+---
+title: "Estudo de Caso 01"
+author: "BMI médio dos alunos do PPGEE"
+output: pdf_document
+---
+
+## O Experimento
+O BMI (_body mass index_, ou índice de massa corporal) é um indicador frequentemente utilizado em avaliações clínicas de questões relacionadas ao peso do índivíduo. Este índice é calculado como a razão entre o peso (em kg) e o quadrado da estatura (em metros):
+
+$$bmi = \frac{m}{h^2}$$
+
+e é dado em unidades de $kg/m^2$. Usualmente, o valor obtido é utilizado para classificar o indivíduo em algumas categorias [[1](http://apps.who.int/bmi/index.jsp?introPage=intro_3.html)]:
+
+- Underweight	<18.50
+	- Severe thinness	<16.00
+	- Moderate thinness 16.00 - 16.99
+	- Mild thinness 17.00 - 18.49
+- Normal range	18.50 - 24.99
+- Overweight	$\geq$ 25.00
+	- Pre-obese	25.00 - 29.99
+	- Obese	$\geq$ 30.00
+		- Obese class I	30.00 - 34.99
+		- Obese class II	35.00 - 39.99
+		- Obese class III	$\geq$ 40.00
+
+O professor Felipe Campelo, do Departamento de Engenharia Elétrica da UFMG, reporta estar atualmente com um valor de $BMI = 26.3 kg/m^2$. Neste estudo de caso vamos buscar responder à pergunta: _Os alunos do PPGEE estão, em média, mais "acima do peso" do que este professor?_ Para isso, os alunos da disciplina foram solicitados a reportar seu peso e estatura de forma anonimizada, formando uma nase de dados com a qual pretende-se realizar a inferência estatística.
+
+## Atividades
+
+- Definição das hipóteses de teste (qual a hipótese nula? Qual a alternativa? Que tipo de teste utilizar?);
+- Consolidação dos dados coletados em uma base comum. Os grupos deverão entrar em acordo sobre o formato de dados a utilizar, e acertar uma forma de compartilhamento destes dados entre os grupos.
+- Estimação do tamanho do efeito e do intervalo de confiança _bilateral_ na grandeza de interesse (note que deseja-se um intervalo de confiança bilateral, mesmo que a hipótese alternativa seja direcional);
+- Verificação e discussão das premissas do teste;
+- Derivação de conlcusões e recomendações.
+- Discussão sobre possíveis formas de melhorar este experimento.
+
+## Relatório
+Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. As instruções e requerimentos para a redação do relatório são dadas abaixo:
+
+Seu relatório será avaliado de acordo com os seguintes critérios:
+
+- Obediência ao formato determinado (ver abaixo);
+- Reproducibilidade dos resultados;
+- Qualidade técnica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+
+O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com), e deve conter todo o código necessário para a reprodução da análise obtida embutido na forma de blocos de código no documento. Os grupos devem enviar:
+
+- O arquivo **.Rmd** do relatório.
+- O arquivo de dados utilizado.
+
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis no [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Report%20template) e [aqui]().
+
+Reports written in either Portuguese, English, or Spanish will be accepted.
+
+
+### For undergrad (Systems Engineering) Students
+Your report will be evaluated according to:
+
+- Technical correctness;
+- Correct use of language (grammar, orthography, etc.);
+
+The report has no particular template. [R Markdown](http://rmarkdown.rstudio.com) is suggested, but not mandatory. Please send me the **.pdf** file (**NO** .doc, .odt, or other exotic formats please) and the **.R** analysis file.
