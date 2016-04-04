@@ -409,13 +409,13 @@ Since $|z_0|<z_{0.025}$, we can conclude that there is not enough evidence to re
 + 	library(TeachingDemos)
 + }
 > 
-> sample<-scan("../data files/greenpeas.txt")
-> z.test(as.numeric(sample),
+> sample <- as.numeric(scan("../data files/greenpeas.txt"))
+> z.test(sample,
 +        mu=500,
 +        stdev=10)
 
 One Sample z-test
-data:  as.numeric(sample)
+data:  sample
 z = -1.1131, n = 10.000, Std. Dev. = 10.000, 
 Std. Dev. of the sample mean = 3.162, 
 p-value = 0.2657
@@ -709,13 +709,12 @@ We need at least 25 observations to detect a $-5g\ (1\%)$ or larger deviation on
 {Model validation}
 {The normality assumption}
 The assumption of normality, required for the \textbf{z} and \textbf{t} tests, needs to be validated.
-\vhalf
-\bitems Graphical/qualitative tests;
-	\spitem Analytical/quantitative tests; 
-\eitem
-\vhalf
-It is interesting to use both whenever possible.
-\lfr{Check J.T. Mordkoff's \textit{The assumption(s) of normality} for a nice discussion on this topic: \url{http://goo.gl/Z3w8ku}}
+	\begin{colorblock}{}{bg=green!30,fg=black}
+	``\textit{The Assumption of Normality (note the upper case) that underlies parametric stats does not assert that the observations within a given sample are normally distributed, nor does it assert that the values within the population (from which the sample was taken) are normal. This core element of the Assumption of Normality asserts that \textbf{the distribution of sample means (across independent samples) is normal.}}''\\
+	\flushright -- J. Toby Mordkoff, 2011.$^{(a)}$
+	\end{colorblock}
+
+\lfr{$^{(a)}$ Check J.T. Mordkoff's \textit{The assumption(s) of normality} for a nice discussion on this topic: \url{http://goo.gl/Z3w8ku}}
 \end{ftst}
 
 %=====
@@ -723,6 +722,8 @@ It is interesting to use both whenever possible.
 \begin{ftstf}
 {Model validation}
 {The normality assumption}
+If the conditions for the CLT cannot be assumed, then normality tests can be performed on the data.
+\vone
 Graphical/qualitative tests;
 \vone
 \begin{rcode}
@@ -744,7 +745,7 @@ Graphical/qualitative tests;
 \begin{ftst}
 {Model validation}
 {The normality assumption}
-There is a great variety of analytical tests of normality;
+Analytical tests of normality (choose \textbf{one});
 \bitems Shapiro-Wilk;
 	\item Anderson-Darling;
 	\item Lilliefors / Kolmogorov-Smirnov;
@@ -756,7 +757,7 @@ These procedures use different aspects of the sample distribution to test the fo
 	H_1: \mbox{population is not normal}
 \end{cases}\eqs
 \vhalf
-In this case, rejection of the null hypothesis suggests evidence that the sample came from a non-normal population. Generally we will use a low $\alpha$ (e.g., $0.01$) for these tests, and will consider their results together with a graphical analysis.
+In this case, rejection of the null hypothesis suggests evidence that the sample came from a non-normal population. Generally we use a strict threshold (e.g., $\alpha = 0.01$ or $0.001$) for these tests, and consider their results together with a graphical analysis.
 \end{ftst}
 
 %=====
@@ -764,7 +765,7 @@ In this case, rejection of the null hypothesis suggests evidence that the sample
 \begin{ftstf}
 {Model validation}
 {The normality assumption}
-Even thought the Lilliefors test is possibly the most widely used for normality testing, the Shapiro-Wilk test tends to be more sensitive and has some other  interesting properties, so we will be using it throughout the course.
+Even thought the Lilliefors / Kolmogorov-Smirnov test is possibly the most widely used for normality testing, the Shapiro-Wilk test is recommended as a better alternative in Michael Crawley's \textit{The R Book}, and will be used throughout this course.
 \vhalf
 \begin{rcode}
 > shapiro.test(sample)
@@ -783,9 +784,9 @@ W = 0.8809, p-value = 0.1335
 \begin{ftstf}
 {Model validation}
 {The independence assumption}
-Another assumption of the statistical model used for the t-test is the independence of the residuals, that is, the absence of external (unmodeled) biases contaminating the data.
+Possibly the strongest assumption of the statistical model used for the t-test is that of independence, that is, of the absence of unmodeled biases contaminating the data.
 \vhalf
-While there is no procedure to test independence in the general case, the Durbin-Watson test can be used to evaluate serial autocorrelations in the residual data, which can be useful to investigate contamination by order-dependent effects.
+While I know of no procedure to test independence in the general case, serial autocorrelations in the residual data (which can emerge, for instance, as a consequence of heating effects or equipment degradation) can be tested by a procedure known as the Durbin-Watson test:
 \begin{rcode}
 > library(lmtest)
 > dwtest(sample~1)
@@ -805,9 +806,9 @@ alternative hypothesis: true autocorrelation is greater than 0
 \begin{ftstf}
 {Model validation}
 {The independence assumption}
-As a test of serial autocorrelation, the Durbin-Watson test depends on the ordering of the data, so observations should be ordered (either in the data file or by manipulating the data vector) according to covariates that are suspected to introduce dependencies, e.g., order of collection, placement criteria, etc.
+The Durbin-Watson test depends on the ordering of the data, so observations should be ordered (either in the data file or by manipulating the data vector) according to covariates that are suspected to introduce dependencies, e.g., order of collection, placement criteria, etc.
 \vone
-Violations of the independence assumption tend to be the hardest to deal with during the analysis, so extra care is recommended in the design of the experiment in order to prevent, control, or at least document all variables that could introduce dependencies in the data.
+Violations of the independence assumption tend to be the hardest to weed out, so extra care is recommended in the design of the experiment in order to prevent, control, or at least document all variables that could introduce dependencies in the data.
 \end{ftstf}
 
 %=====
