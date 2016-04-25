@@ -22,7 +22,7 @@ Para a investigação destas questões, são desejadas as seguintes característ
 - Potência desejada: $\pi = 0.8$
 
 ## Coleta de dados
-
+A coleta de dados deverá ser simulada mediante o aplicativo disponível em [](). Cada equipe deverá inicialmente realizar o planejamento do experimento e os cálculos de tamanho amostral, e posteriormente gerar a amostra desejada **uma única vez**.
 
 ## Relatório
 Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. O relatório será avaliado de acordo com os seguintes critérios:
