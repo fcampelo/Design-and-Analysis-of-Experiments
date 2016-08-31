@@ -2,7 +2,7 @@
 shinyUI(fluidPage(
       
       # Application title
-      titlePanel("Central Limit Theorem - Continuous Distributions"),
+      titlePanel("Central Limit Theorem"),
       
       # Sidebar with:
       # - A dropdown menu to choose the distribution
