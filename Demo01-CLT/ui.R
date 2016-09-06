@@ -2,7 +2,7 @@
 shinyUI(fluidPage(
       
       # Application title
-      titlePanel("Central Limit Theorem - Continuous Distributions"),
+      titlePanel("Central Limit Theorem"),
       
       # Sidebar with:
       # - A dropdown menu to choose the distribution
@@ -20,7 +20,9 @@ shinyUI(fluidPage(
                                           "Normal",
                                           "T",
                                           "Uniform",
-                                          "Weibull"),
+                                          "Weibull",
+                                          "Poisson",
+                                          "Binomial"),
                               selected = "Lognormal"),
                   sliderInput("nobs",
                               "Sample size",

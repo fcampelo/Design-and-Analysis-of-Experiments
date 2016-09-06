@@ -1,5 +1,9 @@
 # Function to plot the original distribution
 distrplot<-function(dname,basefunc,nobs,...){
+    # Detect if the distribution is discrete.
+    # For now we only cover Poisson and Binomial.
+    discrete <- basefunc == "pois" || basefunc == "binom"
+    
     # Set graphical parameters
     par(las=1,
         tck=.02,
@@ -16,9 +20,20 @@ distrplot<-function(dname,basefunc,nobs,...){
                  x))
     
     # Get histogram
-    h<-hist(x,
+    h <- if (discrete) {
+        # If discrete, number of breaks should be exactly the range.
+        hist(x,
+            breaks = max(x) - min(x),
+            freq=T)
+    } else {
+        hist(x,
             breaks = 25,
             freq=T)
+    }
+    if (discrete) {
+        # If discrete, adjust the breaks for prettier plot.
+        h$breaks <- h$breaks-0.5
+    }
     
     h$counts<-h$counts/nobs
     k<-(h$counts/h$density)[1]
@@ -28,9 +43,17 @@ distrplot<-function(dname,basefunc,nobs,...){
         do.call(paste0("q",basefunc),
                 list(p=c(0.01,0.99),...))))
     
-    xfit<-seq(xlim[1]+0.01,
-              xlim[2]-0.01,
-              length.out = 500)
+    # Generate x-values to plot the distribution curve.
+    xfit <- if (discrete) {
+        # If discrete, should get an integer sequence.
+        seq(xlim[1],
+            xlim[2],
+            by = 1)
+    } else {
+        seq(xlim[1]+0.01,
+            xlim[2]-0.01,
+            length.out = 500)
+    }
     
     yfit<-k*do.call(paste0("d",basefunc),
                     list(x=xfit,...))
@@ -50,10 +73,17 @@ distrplot<-function(dname,basefunc,nobs,...){
           col = "cornsilk4",
           lwd=2, 
           lty=1)
-    
+    if (discrete) {
+        # If discrete, add points as well.
+        points(xfit,yfit,
+               col = "black",
+               pch = 19)
+    }
     # Plot Decorations
     box(which="outer")
-    axis(1,at=pretty(xlim))
+    # If discrete, we plot all points in the x-axis,
+    # if not, get pretty values.
+    axis(1,at=if(discrete) xfit else pretty(xlim))
     axis(2,at=seq(ylim[1],ylim[2],length.out = 5),labels=F)
     legend("topright",
            legend="Theoretical distribution",
@@ -177,7 +207,18 @@ shinyServer(function(input, output) {
                                            basefunc="weibull",
                                            nobs=input$nobs,
                                            shape=1,
-                                           scale=1.5))
+                                           scale=1.5),
+               
+               Poisson          =distrplot(dname="Poisson(lambda=3.5)",
+                                           basefunc="pois",
+                                           nobs=input$nobs,
+                                           lambda=3.5),
+               
+               Binomial          =distrplot(dname="Binomial(size=10,prob=0.7)",
+                                            basefunc="binom",
+                                            nobs=input$nobs,
+                                            size=10,
+                                            prob=0.7))
     })
     
     output$meansPlot <- renderPlot({
@@ -229,7 +270,18 @@ shinyServer(function(input, output) {
                                            basefunc="weibull",
                                            nobs=input$nobs,
                                            shape=1,
-                                           scale=1.5))
+                                           scale=1.5),
+               
+               Poisson          =meansplot(dname="Poisson(lambda=3)",
+                                           basefunc="pois",
+                                           nobs=input$nobs,
+                                           lambda=3.5),
+               
+               Binomial          =meansplot(dname="Binomial(size=10,prob=0.7)",
+                                           basefunc="binom",
+                                           nobs=input$nobs,
+                                           size=10,
+                                           prob=0.7))
     })
     
 })
