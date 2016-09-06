@@ -108,15 +108,15 @@ Easier to understand if you think about the confidence level as a confidence in 
 {CI on the Mean of a Normal Variable}
 The two-sided $CI_{(1-\alpha)}$ for the mean of a normal population with known variance $\sigma^2$ is given by:
 \beqs
-\bar{x}-\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}\leq\mu\leq\bar{x}+\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}
+\bar{x}+\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}\leq\mu\leq\bar{x}+\frac{\sigma}{\sqrt{N}}z_{(1-\alpha/2)}
 \eqs
-\noindent wherein $(1-\alpha)$ is the confidence level and $z_{(\alpha/2)}$ is the $(1-\alpha/2)$-quantile of the standard normal distribution.
+\noindent where $(1-\alpha)$ is the confidence level and $z_{(x)}$ is the $x$-quantile of the standard normal distribution.
 \vone
 For the more usual case with an unknown variance,
 \beqs
-\bar{x}-\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}\leq\mu\leq\bar{x}+\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}
+\bar{x}+\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}\leq\mu\leq\bar{x}+\frac{s}{\sqrt{N}}t_{(1-\alpha/2;N-1)}
 \eqs
-\noindent wherein $t_{(\alpha/2;N-1)}$ is the corresponding quantile of the t distribution with $N-1$ degrees of freedom.
+\noindent where $t_{(x;N-1)}$ is the $x$-quantile of the t distribution with $N-1$ degrees of freedom.
 \end{ftst}
 
 %=====
@@ -126,9 +126,9 @@ For the more usual case with an unknown variance,
 {CI on the Variance of a Normal Variable}
 Similarly, a two-sided confidence interval on the variance of a normal variable can be easily calculated:
 \beqs
-\frac{(N-1)s^2}{\chi^2_{1-\alpha/2;N-1}}\leq\sigma^2\leq\frac{(N-1)s^2}{\chi^2_{\alpha/2;N-1}}
+\frac{(N-1)s^2}{\chi^2_{\alpha/2;N-1}}\leq\sigma^2\leq\frac{(N-1)s^2}{\chi^2_{1-\alpha/2;N-1}}
 \eqs
-\noindent wherein $\chi^2_{\alpha/2;N-1}$ and $\chi^2_{1-\alpha/2;N-1}$ are the upper and lower $(\alpha/2)$-quantiles of the $\chi^2$ distribution with $N-1$ degrees of freedom.
+\noindent where $\chi^2_{\alpha/2;N-1}$ and $\chi^2_{1-\alpha/2;N-1}$ are the upper and lower $(\alpha/2)$-quantiles of the $\chi^2$ distribution with $N-1$ degrees of freedom, respectively.
 \end{ftst}
 
 %=====
