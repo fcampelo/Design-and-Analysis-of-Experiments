@@ -1,0 +1,51 @@
+---
+title: "EEE933 - Planejamento e Análise de Experimentos"
+author: "Estudo de Caso 01"
+output: pdf_document
+---
+
+## O Experimento
+O IMC (índice de massa corporal) [[1](http://apps.who.int/bmi/index.jsp?introPage=intro_3.html)] é um indicador frequentemente utilizado (embora seja reconhecidamente falho) em avaliações clínicas de questões relacionadas ao peso do índivíduo. Este índice é calculado como a razão entre o peso (em kg) e o quadrado da estatura (em metros):
+
+$$imc = \frac{m}{h^2}$$
+
+Considere que o IMC médio da população masculina entre 25 e 30 anos seja de $24.5 kg/m^2$, e o feminino de $23.5 kg/m^2$ (estes valores [[2](http://www.cdc.gov/healthyweight/assessing/bmi/childrens_bmi/about_childrens_bmi.html)] não estão necessariamente corretos, mas são uma primeira aproximação suficientemente boa para este estudo de caso). 
+
+Neste estudo de caso vamos buscar responder às seguintes perguntas:
+
+- _A média do IMC dos alunos (sexo masculino) do PPGEE é diferente da média da população em geral? E a média do IMC das alunas?_ Para isso, os estudantes da disciplina foram solicitados a reportar seu peso e estatura de forma anonimizada, formando uma base de dados com a qual pretende-se realizar a inferência estatística.
+
+## Atividades
+
+- Definição das hipóteses de teste;
+- Definição dos parâmetros experimentais desejados: nível de significância, menor tamanho de efeito de importância prática, nível de potência desejada etc..
+- Consolidação dos dados coletados em uma base comum (em formato **.CSV**)
+- Estimação do tamanho do efeito e do intervalo de confiança na grandeza de interesse;
+- Verificação e discussão das premissas do teste;
+- Derivação de conclusões e recomendações.
+- Discussão sobre a potência do teste (se aplicável).
+- Discussão sobre possíveis formas de melhorar este experimento.
+
+## Relatório
+Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. O relatório será avaliado de acordo com os seguintes critérios:
+
+- Obediência ao formato determinado (ver abaixo);
+- Reproducibilidade dos resultados;
+- Qualidade técnica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+
+O relatório deve obrigatoriamente ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com), e deve conter todo o código necessário para a reprodução da análise obtida, embutido na forma de blocos de código no documento. Os grupos devem enviar:
+
+- O arquivo **.Rmd** do relatório.
+- O arquivo de dados utilizado.
+
+O arquivo **.Rmd** deve ser possível de ser compilado em um pdf sem erros, e deve assumir que o _arquivo de dados_ (em formato **.CSV**) se encontra no mesmo diretório do arquivo do relatório. Modelos de relatórios de estudos de caso estão disponíveis no [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). 
+
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
+**Importante**: Inclua no relatório os papéis desempenhados por cada membro da equipe (Relator, Verificador etc.)
+
+Relatórios serão aceitos em português, inglês ou espanhol.
+
+## Entrega
+Os arquivos deverão ser enviados via _e-mail_ para o endereço [fcampelo@ufmg.br](fcampelo@ufmg.br). O título do e-mail deve seguir o padrão "**[EEE933_2016-2_EC01] Nome_da_equipe**" (sem as aspas). A data-limite para o recebimento dos arquivos é **segunda-feira (12/09) às 11:00h**
