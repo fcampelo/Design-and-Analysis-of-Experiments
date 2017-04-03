@@ -29,13 +29,11 @@ t.test(sample,
        mu = 500,
        conf.level = 0.99)
 
-# Power analysis
-s<-sd(sample)
 
 # Power for the 10-observation sample
 power.t.test(n=10, 
              delta=5, 
-             sd=s, 
+             sd=10, 
              sig.level=0.01, 
              type = "one.sample", 
              alternative = "one.sided")
@@ -43,7 +41,7 @@ power.t.test(n=10,
 # Minimal sample size for power = 0.85
 power.t.test(power=0.85, 
              delta=5, 
-             sd=s, 
+             sd=10, 
              sig.level=0.01, 
              type = "one.sample", 
              alternative = "one.sided")

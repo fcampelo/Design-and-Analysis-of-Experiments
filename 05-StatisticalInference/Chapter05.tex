@@ -180,7 +180,7 @@ Hypothesis testing involves:
 \begin{ftst}
 {Statistical Hypotheses}
 {Example}
-Suppose you are a large-scale customer of green peas\footnote[1]{\tiny We could use any other item on your usual grocery list, but why not pay a little tribute to Gregor Mendel?}, and that you want to determine if the $500$g packages from a given food supplier really contain their nominal weight (at least on average).
+Suppose you own a company that sells green peas\footnote[1]{\tiny We could use any other item from your grocery list, but why not pay a little tribute to Gregor Mendel?}, and that you want to determine whether your $500$g packages really contain their nominal weight (at least on average).
 \vhalf
 In this case the null hypothesis could be defined as:
 \textit{the average net weight of a package is $500$g}, and the alternative of interest could be expressed as the complementary inequality.
@@ -189,7 +189,7 @@ H_0: \mu = 500g \\
 H_1: \mu \neq 500g 
 \end{cases}\eqs
 \vone
-Suppose still that $n=10$ randomly selected packs are obtained from this supplier, and their contents are weighted using a calibrated scale;
+Suppose still that $n=10$ packs are randomly sampled, and their contents are weighted using a calibrated scale;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -201,15 +201,15 @@ Suppose still that $n=10$ randomly selected packs are obtained from this supplie
 \begin{ftst}
 {Statistical Hypotheses}
 {Example}
-Since the sample mean $\bar{x}$ is a good estimator of the real mean $\mu$, we can assume:
+Since the sample mean $\bar{x}$ is a good estimator of the real mean $\mu$, common sense suggests that:
 
 \bitems If $\bar{x} \cong 500$g - corroboration of $H_0$;
 \item If $\bar{x} \ll 500$g or $\bar{x} \gg 500$g - refutation of $H_0$;
 \eitem
 \vone
-Suggests the use of $\bar{x}$ as basis for a statistical test.
+That is, we can use $\bar{x}$ as the basis for a statistical test.
 \vone
-Definition of a \textit{critical region} for the rejection of $H_0$:
+But how to define a \textit{critical region} for the rejection of $H_0$?
 \vone\vhalf
 \centering\includegraphics[width=\textwidth]{../figs/regcrit2.png}
 \begin{tikzpicture}[remember picture,overlay]
@@ -239,9 +239,9 @@ Another frequently used term is the \textit{confidence level} of the test, given
 {Type I error}
 For a given sample, the selected value of $\alpha$ defines the critical threshold for the rejection of $H_0$.
 \vone
-If $H_0$ is true (i.e., if $\mu=500$g), the distribution of values of $\bar{x}$ is aproximately normal (remember the CLT), with average $500$ and variance given by $s^2/n$;
+If $H_0$ is true (i.e., if $\mu=500$g), the distribution of values of $\bar{x}$ is aproximately normal (assuming the CLT holds), with average $500$ and variance given by $s^2/n$;
 \vone
-For a Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region is $1-\alpha = 0.95$.
+For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region is $1-\alpha = 0.95$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=0.5\textwidth]{../figs/alpha.png}};
 \end{tikzpicture}
@@ -343,7 +343,7 @@ It is important to remember that failing to reject $H_0$ does not mean that ther
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance known}
-Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the packages. Assume for now that the variance of the process is known. The test hypotheses are defined as:
+Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the packages. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
 
 \beqs\begin{cases}
 H_0: \mu = 500g\\
@@ -352,7 +352,7 @@ H_1: \mu \neq 500g
 \vone
 Let the desired significance level be $\alpha = 0.05$;
 \vone
-Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with variance $Var(\bar{X})=\sigma^2/n$ and, if $H_0$ is true -- mean $\mu_{\bar{X}}=\mu_0=500$;
+Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with variance $Var(\bar{X})=\sigma^2/n$ and -- if $H_0$ is true -- mean $\mu_{\bar{X}}=\mu_0=500$;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -366,11 +366,11 @@ Given these characteristics, we expect that the sampling distribution of $\bar{X
 Based on these characteristics, the variable
 \beqs Z_0 = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}\eqs
 \vhalf
-\noindent will be distributed according to the standard normal, $\mathcal{N}\left(0,1\right)$, but only \textbf{if $H_0$ is true}.
+\noindent will be distributed according to the standard normal, $\mathcal{N}\left(0,1\right)$, \textbf{if $\mathbf{H_0}$ is true}.
 \vone
-This result implies a probability of $\left(1-\alpha\right)$ that $Z_0$ will fall within the range $(\pm z_{\alpha/2})$\footnote[2]{\tiny $z_{\alpha/2}$ is the superior $100(1-\alpha/2)\%$ percentile of the standard normal distribution;} if $H_0$ is true, which provides a selection criterion between $H_0$ and $H_1$:
+This result implies a probability of $\left(1-\alpha\right)$ that $Z_0$ will fall within the range $(\pm z_{1-\alpha/2})$\footnote[2]{\tiny $z_{1-\alpha/2}$ is the superior $100(1-\alpha/2)\%$ percentile of the standard normal distribution;} if $H_0$ is true, which provides a selection criterion between $H_0$ and $H_1$:
 
-\bitems If $|z_0|>z_{\alpha/2}$, we reject $H_0$ at the confidence level $1-\alpha$;
+\bitems If $|z_0|>z_{1-\alpha/2}$, we reject $H_0$ at the confidence level $1-\alpha$;
 	\item Otherwise, there is not enough evidence to reject $H_0$;
 \eitem
 \begin{tikzpicture}[remember picture,overlay]
@@ -463,7 +463,7 @@ It can be shown that, \textbf{if $H_0$ is true}, then
 From the same data, $\bar{x} = 496.48 g$, $n=10$, $s = 6.97 g$:
 \beqs t_0 = \frac{496.48 - 500}{6.97/\sqrt{10}} = -1.5969\eqs
 \vhalf
-The critical value of this test statistic for the desired significance is $t_{\alpha,n-1} = t_{0.01,9} = -2.82$;
+The critical value of this test statistic for the desired significance is $t_{\alpha,n-1} = t_{0.01,9} = -2.82$ --- i.e., under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
 \vone
 Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
 \begin{tikzpicture}[remember picture,overlay]
@@ -603,7 +603,7 @@ mean of x
 
 \begin{ftst}{Sample size and Type-II error}
 {Some considerations}
-The probability of Type-II error can be easily evaluated \textit{a posteriori}, but its definition \textit{a priori} requires some care;
+The probability of Type-II error can be easily (and wrongly) evaluated \textit{a posteriori}, but its definition \textit{a priori} requires some care;
 \vone
 The power of a test is essentially a function of 4 elements:
 \bitems Actual size of the difference;
@@ -649,14 +649,14 @@ This technique can also be used as a way to compute the maximum necessary sample
 {Example}
 Suppose that on the green peas example one is really interested in detecting deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01*500 = 5g$. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The test will again be performed with $\alpha = 0.01$.
 \vone
-The same sample of $n=10$ packs is used. The estimated standard deviation for this sample is $s=6.97g$. From this data, we can compute the power of this test as:
+The same sample of $n=10$ packs is used. Assume that you estimated a reasonable standard deviation for this sample as $s=10g$. From this data, we can compute the power of this test as:
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
 > s<-sd(sample)
 > power.t.test(n=10, 
 +        delta=5, 
-+        sd=s, 
++        sd=10, 
 +        sig.level=0.01, 
 +        type = "one.sample", 
 +        alternative = "one.sided")
@@ -666,9 +666,9 @@ The same sample of $n=10$ packs is used. The estimated standard deviation for th
 One-sample t test power calculation 
 n = 10
 delta = 5
-sd = 6.970382
+sd = 10
 sig.level = 0.01
-power = 0.3474724
+power = 0.1654013
 alternative = one.sided
 \end{rcode}
 \end{columns}
@@ -690,15 +690,15 @@ What is the smallest sample size needed to obtain the desired power of $0.85$?
                type = "one.sample", alternative = "one.sided")
 
 One-sample t test power calculation 
-n = 24.76091
+n = 47.98044
 delta = 5
-sd = 6.970382
+sd = 10
 sig.level = 0.01
 power = 0.85
 alternative = one.sided
 \end{rcode}
 \vhalf
-We need at least 25 observations to detect a $-5g\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
+We need at least 48 observations to detect a $-5g\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \node[anchor=south east,yshift=140pt,xshift=-182pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{(round this value up)}};
