@@ -1,0 +1,60 @@
+---
+title: "EEE933 - Planejamento e Análise de Experimentos"
+author: "Estudo de Caso 01"
+output: pdf_document
+---
+
+## O Experiento
+Foram coletadas em sala de aula medidas relativas às estimativas dos alunos em relação a duas grandezas: 
+
+1. Número de moedas contidas no recipiente A; 
+2. Valor total (em reais e centavos) das moedas contidas no recipiente B. 
+
+A coleta das estimativas relativas ao *número de moedas no recipiente A* foi realizada de maneira cega (isto é, os valores foram registrados sem interação entre os alunos). Após um certo intervalo, a coleta dos dados relativos ao *valor total das moedas no recipiente B* foi realizada de forma aberta (isto é, mediante declarações sequenciais dos alunos em voz alta).
+
+Neste estudo de caso, vamos investigar se conjuntos de alunos de engenharia são bons estimadores de pequenas quantidades pecuniárias. Com base nos dados coletados, as equipes deverão responder às seguintes perguntas:
+
+- Quantas moedas havia no recipiente 1?
+- Qual o valor real contido no recipiente 2?
+
+Observe que temos duas análises que deverão ser realizadas neste caso (número de moedas no recipiente 1, valor total no recipiente 2).
+
+## Atividades
+Para cada análise, alguns pontos para os quais as equipes deverão atentar são:
+
+- Definição das hipóteses de teste: é necessário (ou possível) definir um par de hipóteses de teste neste caso? Caso seja, qual a pergunta técnica refletida pelas hipóteses? Como seria definido um valor, por exemplo, para a hipótese nula? Alternativamente, é possível realizar esta análise com base apenas em estatística descritiva? Neste caso, quais seriam as diferenças na análise e no tipo de pergunta respondida pelo experimento? 
+
+- Definição dos parâmetros experimentais desejados: como definir um nível de significância para a análise experimental? E o menor tamanho de efeito de importância prática? Qual é a potência desejada para o teste, caso o mesmo seja feito?
+
+- Quais as premissas (experimentais e estatísticas) assumidas na análise? Quais são facilmente verificáveis, e quais não são? Onde estariam os pontos fracos da análise, com base nas premissas assumidas?
+
+- Quais conclusões podem ser propostas a partir desta análise?
+
+- Como seria possível melhorar este experimento?
+
+## Relatório
+Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. O relatório será avaliado de acordo com os seguintes critérios:
+
+- Obediência ao formato determinado (ver abaixo);
+- Reproducibilidade dos resultados;
+- Qualidade técnica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+
+O relatório deve obrigatoriamente ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com), e deve conter todo o código necessário para a reprodução da análise obtida, embutido na forma de blocos de código no documento. Os grupos devem enviar:
+
+- O arquivo **.Rmd** do relatório.
+- O arquivo **.pdf** gerado a partir do **.Rmd**
+- O arquivo de dados utilizado.
+
+O arquivo **.Rmd** deve ser possível de ser compilado para **pdf** sem erros, e deve assumir que o _arquivo de dados_ (em formato **.CSV**) se encontra no mesmo diretório do arquivo do relatório. Modelos de relatórios de estudos de caso estão disponíveis no [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). 
+
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
+**Importante**: Inclua no relatório os papéis desempenhados por cada membro da equipe (Relator, Verificador etc.)
+
+Relatórios serão aceitos em português, inglês ou espanhol.
+
+## Entrega (**ATENÇÃO**)
+- Os arquivos deverão ser enviados via _e-mail_ para o endereço [fcampelo@ufmg.br](fcampelo@ufmg.br);  
+- O título do e-mail deve seguir o padrão "**[EEE933_2017-1_EC01] Nome_da_equipe**" (sem as aspas). 
+- A data-limite para o recebimento dos arquivos é **segunda-feira (17/04) às 11:00h**
