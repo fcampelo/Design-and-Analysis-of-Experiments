@@ -1,0 +1,52 @@
+---
+title: "EEE933 - Estudo de Caso 02"
+author: "Investigação do desempenho de um algoritmo de classificação"
+output: pdf_document
+---
+
+## O Experimento\footnote{Inspirado em D. Pinto, I.T. Mendes, F. Campelo, A.P. Lemos, "\textit{A High Performance Extreme Learning Machine with Semi-Automatic Shrinkage Estimator and Significance Test Based Pruning}". Em preparação}
+Pesquisadores trabalhando com algoritmos de classificação desenvolveram uma técnica de simplificação de modelos baseada em inferência estatística, que eles afirmam ser capaz de gerar melhorias significativas no **tempo** requerido para a classificação, sem contudo resultar em grandes perdas de desempenho em termos de **acurácia** da classificação. 
+
+Para investigar se o desempenho da técnica de simplificação proposta está de acordo com as afirmações dos autores, um experimento é realizado para comparação entre o tempo de execução e a acurácia do algoritmo de classificação original e do método simplificado em diversas bases de dados da literatura. 
+
+Para este estudo de caso, as equipes deverão planejar o experimento, realizar a coleta das observações (simulada, ver abaixo) e realizar a análise dos dados de forma a investigar as seguintes questões:
+
+1. O método proposto realmente apresenta ganhos em relação ao tempo de execução, quando comparado ao método padrão?
+2. O método proposto realmente não resulta em variações consideráveis de acurácia?
+
+Para a investigação destas questões, são desejadas as seguintes características para os testes estatísticos:
+
+- Nível de significância: $\alpha = 0.05$;
+- Tamanho de efeito de interesse prático para os ganhos de tempo: $d^*_{tempo} = 1.0$ 
+- Margem de não-inferioridade para acurácia: $\delta^*_{acuracia} = 0.05$
+- Potência desejada: $\pi = 0.8$
+
+**Dica**: Observe que há duas questões distintas de interesse neste experimento. Pode ser interessante a leitura dos slides relativos ao [Capítulo 8: Equivalence and Non-inferiority](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/08-EquivalenceAndNonInferiority), bem como a referência [ _E. Walker, A.S. Nowacki, "Understanding Equivalence and Noninferiority Testing", Journal of General Internal Medicine 26(2):192-196, 2011_ ] para a realização de parte deste estudo de caso.
+
+## Coleta de dados
+A coleta de dados deverá ser simulada mediante o aplicativo disponível em [http://orcslab.cpdee.ufmg.br:3838/classdata](http://orcslab.cpdee.ufmg.br:3838/classdata). Cada equipe deverá inicialmente realizar o planejamento do experimento e os cálculos de tamanho amostral, e posteriormente gerar a amostra desejada. Se necessário, a amostragem poderá ser realizada em duas etapas.
+
+## Relatório
+Cada grupo deverá entregar um relatório detalhando o experimento e a análise dos dados. O relatório será avaliado de acordo com os seguintes critérios:
+
+- Obediência ao formato determinado (ver abaixo);
+- Reproducibilidade dos resultados;
+- Qualidade técnica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+
+O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com), e deve conter todo o código necessário para a reprodução da análise obtida, embutido na forma de blocos de código no documento. Os grupos devem enviar:
+
+- O arquivo **.Rmd** do relatório.
+- O arquivo **.pdf** resultante da compilação do **.Rmd**.
+- O arquivo de dados utilizado.
+
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis  [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). 
+
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
+**Importante**: Inclua no relatório os papéis desempenhados por cada membro da equipe (Relator, Verificador etc.)
+
+Relatórios serão aceitos em português, inglês ou espanhol.
+
+## Entrega
+Os arquivos deverão ser enviados via _e-mail_ para o endereço [fcampelo@ufmg.br](fcampelo@ufmg.br). O título do e-mail deve seguir o padrão "**[EEE933_2017-1_EC02] Nome_da_equipe**" (sem as aspas). A data-limite para o recebimento dos arquivos é **segunda-feira (15/05) às 11:00h**
