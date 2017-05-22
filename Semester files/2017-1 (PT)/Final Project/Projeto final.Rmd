@@ -1,0 +1,69 @@
+---
+title: "EEE933 - Design and Analysis of Experiments"
+subtitle: "Projeto Final"
+header-includes:
+   - \usepackage{framed}
+output: pdf_document
+---
+
+## Sumário
+As equipes devem escolher uma questão de interesse para investigação experimental. Enquanto a preferência é por experimentos planejados, estudos observacionais ou retrospectivos também serão aceitos.^[Caso alguma equipe deseje realizar algo diferente, deve entrar em contato com o professor da disciplina o quanto antes para discussão.] O projeto final deve consistir de:
+
+- Definição da questão experimental;
+- Revisão da literatura relevante;
+- Planejamento experimental (para experimentos planejados) ou limpeza e pré-condicionamento dos dados (estudos retrospectivos);
+- Coleta de dados;
+- Modelagem estatística e análise dos dados obtidos;
+- Derivação de conclusões e recomendações.
+
+## Relatório
+O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com), e deve conter todo o código necessário para a reprodução da análise obtida, embutido na forma de blocos de código no documento. Cada equipe deve enviar:
+
+- O arquivo **.Rmd** do relatório.
+- Os arquivos de dados utilizados.
+
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis em [https://git.io/vHk0F](https://git.io/vHk0F) e [https://git.io/vHk0j](https://git.io/vHk0j). 
+
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
+**Importante**: Inclua no relatório os papéis desempenhados por cada membro da equipe (Relator, Verificador etc.)
+
+Relatórios serão aceitos em português, inglês ou espanhol.
+
+Os relatórios devem **obrigatoriamente** conter (pelo menos) as seguintes partes:
+
+- Sumário;
+- Introdução (incluindo a descrição da pergunta científica a ser investigada e uma breve revisão da literatura relevante ao tópico);
+- Planejamento experimental (incluindo materiais e métodos, protocolos de coleta de dados, critérios de inclusão ou exclusão de observações, etc.);
+- Resultados experimentais (incluindo observações sobre o processo de coleta das observações, análise exploratória dos dados, inferência estatística, validação dos modelos, quantificação da magnitude dos efeitos e discussão dos resultados);
+- Conclusões e recomendações (**atenção**: conclusões sobre o _experimento_. Eu não estou interessado em comentários sobre "a importância do planejamento de experimentos" - eu já sei que é importante. O que é desejado é uma discussão sobre as conclusões que possam ser derivadas em relação à questão de interesse sendo avaliada pela equipe.).
+
+O trabalho será avaliado de acordo com os seguintes critérios:
+
+- Justificativa do experimento (isto é, quão bem você consegue justificar a investigação experimental da sua questão de interesse);
+- Adequação ao formato requerido;
+- Reproducibilidade dos resultados e das análises;
+- Correção técnica e solidz metodológica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+- Qualidade gráfica;
+
+## Apresentação
+Cada equipe deve apresentar seu trabalho em um seminário de **até 15 minutos**, detalhando o problema, o planejamento e a análise do experimento, os resultados e conclusões obtidos, e sugestões de melhoria ou continuidade. A apresentação será avaliada de acordo com os seguintes critérios:
+
+- Correção técnica;
+- Qualidade gráfica / estética;
+- Correto uso da linguagem;
+- Grau de desenvoltura (na apresentação) na explicação dos conceitos apresentados;
+
+O trabalho final pode ser apresentado por todo o grupo ou apenas pelos membros mais ``desenvoltos'', a critério de cada equipe. Contudo, **todos os membros da equipe devem estar preparados para responder a perguntas sobre qualquer aspecto do trabalho.**
+
+O formato do seminário é livre (sejam criativos), mas o limite de tempo é rígido. Além dos softwares usuais de _slide decks_  (Powerpoint, Beamer, Keynote etc.), outras possibilidades que podem ser exploradas por grupos que optarem por se ater às tradicionais apresentações de slides são o [Prezi](https://prezi.com/explore/staff-picks/), o [Slidify](http://ramnathv.github.io/slidifyExamples/), ou o [R Markdown + ioslides](http://rmarkdown.rstudio.com/ioslides_presentation_format.html).
+
+A ordem das apresentações será determinada aleatoriamente no dia dos seminários. Os arquivos relativos à apresentação também devem ser entregues ao professor.^[Caso alguma equipe tenha restrições de datas favor informar o quanto antes.]
+
+## Entrega
+Os arquivos do relatório, arquivos de dados, e arquivos da apresentação deverão ser enviados via _e-mail_ para o endereço [fcampelo@ufmg.br](fcampelo@ufmg.br). O título do e-mail deve seguir o padrão:
+
+"**[EEE933_2017-1_FinalProject] NomeDaEquipe**"  
+
+(sem as aspas, substituindo _NomeDaEquipe_ pelo nome da equipe). A o limite para o envio dos arquivos é **segunda-feira (03/07) às 11:59h da manhã**.
