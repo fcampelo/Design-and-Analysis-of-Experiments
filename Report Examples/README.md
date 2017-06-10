@@ -3,7 +3,7 @@ title: “Report Examples“
 output: html_document
 ---
 
-Here are two examples of reports that got high grades in the last (and most difficult) case study. Both examples are in Portuguese, since we did not have anyone submitting their reports in English this term.
+Here are examples of reports that got high grades in the last (and most difficult) case study. Both examples are in Portuguese, since we did not have anyone submitting their reports in English this term.
 
 Please notice that while these reports are not perfect (there are still a few mistakes here and there in the analysis and interpretation) they are mostly correct and, very importantly, demonstrate the efforts of their authors in thinking and working on the problem. 
 
