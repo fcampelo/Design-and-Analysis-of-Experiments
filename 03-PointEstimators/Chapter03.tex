@@ -237,13 +237,22 @@ When the standard error is estimated from a given sample we refer to it as the \
 \begin{ftst}
 {Point Estimators}
 {Standard error}
-For samples of Gaussian variables, it can be shown that:
+For the most usual point estimates used with Gaussian variables, we have:$^{[5]}$
 \beqs
-\hat{\sigma}_{\hat{\Theta}} = \frac{S}{\sqrt{n}}
+\hat{\sigma}_{\bar{X}} = \frac{s}{\sqrt{n}}
+\eqs
+
+\beqs
+\hat{\sigma}_{s^2} = s^2\sqrt{\frac{2}{n-1}}
+\eqs
+
+\beqs
+\hat{\sigma}_{s} = \frac{s}{\sqrt{2(n-1)}} + O\left(\frac{1}{n\sqrt{n}}\right)\approx \frac{s}{\sqrt{2(n-1)}}
 \eqs
 
 \vone
-Since the distribution of many point estimators is approximately Normal for relatively large sample sizes (the usual rule of thumb is $N > 30$), this is a quite useful result, as it allows the use of the well-known properties of the Gaussian distribution as asymptotic results for the distributions of the estimators.
+More general estimates of the standard error for different distributions (or different statistics) can usually be obtained using resampling strategies or asymptotic results.
+\lfr{$[5]$ See Ahn and Fessler (2003), \textit{Standard Errors of Mean, Variance, and Standard Deviation Estimators}: \url{https://git.io/v5Z5v}}
 \end{ftst}
 
 %=====
@@ -269,7 +278,7 @@ Even for arbitrary population distributions the sampling distribution of means t
 \vone
 More generally, let $x_1,\ldots,x_n$ be a sequence of \textit{independent and identically distributed} (\textbf{iid}) random variables, with mean $\mu$ and finite variance $\sigma^2$. Then:
 \beqs
-z_n = \frac{\sum\limits_{i=1}^{n}{(x_i)} - n\mu}{\sqrt{n\sigma^2}}
+z_n = \frac{\sum\limits_{i=1}^{n}{(x_i)} - n\mu}{\sqrt{n\sigma^2}} = \frac{\bar{x} - \mu}{\sqrt{\sigma^2/n}}
 \eqs
 \noindent is distributed approximately as a standard normal variable, that is, $z_n\sim\mathcal{N}(0,1)$.
 \lfr{For more details on the CLT, see \url{http://www.encyclopediaofmath.org/index.php/Central_limit_theorem}}
