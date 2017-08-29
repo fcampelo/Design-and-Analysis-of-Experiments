@@ -131,47 +131,45 @@ A two-sided confidence interval on the variance of a normal variable can be easi
 %=====
 
 \begin{ftst}
-{Tolerance Intervals}
-{Definition}
-``\textit{A tolerance interval is an \textbf{enclosure} interval for a specified proportion of the sampled population, not its mean or standard deviation. For a specified confidence level, you may want to determine lower and upper bounds such that a given percent of
-the population is contained within them.}''$^{[1]}$.
-
-\centering\includegraphics[width=\textwidth]{../figs/enclosure.pdf}
-\lfr{[1] J.G. Ram\'irez: \url{http://goo.gl/NJz7ot}}
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Tolerance Intervals}
-{Definition}
-The common practice in engineering of defining specification limits by adding $\pm3\sigma$ to a given estimate of the mean arises from this definition - for a normally-distributed population, aproximately $99.75\%$ of the observations will fall within these limits.
-\vone
-However, as in most cases the true population variance is unknown, one has to use its estimate $s^2$ and compensate for the uncertainty in this estimation. The two-sided tolerance interval is then given as:
-
-\beqs
-\bar{x}\pm s\sqrt{\frac{\left(n-1\right)\left(n+z_{(\alpha/2)}^{2}\right)}{n\ \chi^2_{(\gamma;n-1)}}} 
-\eqs
-\vhalf
-\noindent wherein $\gamma$ is the proportion of the population to be enclosed, and $1-\alpha$ represents the desired confidence level for the interval.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
 {Prediction Intervals}
 {Definition}
 Prediction intervals quantify the uncertainty associated with forecasting the value of a future observation;
 \vone
 Essentially, one is interested in obtaining an interval within which he or she can declare that the next observation will fall with a given probability;
 \vone
-For a normal distribution, we have:
+For a normal distribution, the tolerance interval for a single next observation (given an existing sample of size $n$) is:
+\beqs
+\bar{x}+t_{\alpha/2}^{(n-1)}s\sqrt{1 + \frac{1}{n}}\leq x_{n+1}\leq\bar{x}+t_{1-\alpha/2}^{(n-1)}s\sqrt{1 + \frac{1}{n}}
+\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Tolerance Intervals}
+{Definition}
+``\textit{A tolerance interval is an \textbf{enclosure} interval for a specified proportion of the sampled population, not its mean or standard deviation. For a specified confidence level, you may want to determine lower and upper bounds such that a given percent of
+the population is contained within them.}''$^{[1]}$.
+
+\centering\includegraphics[width=\textwidth]{../figs/enclosure.pdf}
+\lfr{[1] J.G. Ram\'irez: \url{https://git.io/v5ZFh}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Tolerance Intervals}
+{Definition}
+The common practice in engineering of defining specification limits by adding $\pm3\sigma$ to a given estimate of the mean arises from this definition - for a normal population $\approx 99.75\%$ of observations fall within $\mu\pm3\sigma$.
+\vone
+However, as in most cases $\sigma^2$ is unknown, we have to use $s^2$ and compensate for the uncertainty in this estimation. The two-sided tolerance interval for a given population proportion $\gamma$ is given as:$^{[2]}$
 
 \beqs
-\bar{x} +  t_{(\alpha/2;n-1)}s\sqrt{1+\frac{1}{n}}\leq X_{n+1}\leq\bar{x} + t_{(1-\alpha/2;n-1)}s\sqrt{1+\frac{1}{n}}
+\bar{x}\pm s\sqrt{\frac{\left(n-1\right)}{n}\frac{\left(n+z_{(\alpha/2)}^{2}\right)}{{\chi^2}_{\gamma}^{(n-1)}}} 
 \eqs
 \vhalf
-\noindent which is similar to the confidence interval for the mean, but adding 1 to the term within the square root to account for the prediction noise.
+\noindent wherein $\gamma$ is the proportion of the population to be enclosed, and $1-\alpha$ is the desired confidence level for the interval.
+\lfr{[2] NIST Engineering Statistics Handbook, \url{https://goo.gl/m6cxC6}}
 \end{ftst}
 
 %=====
@@ -181,10 +179,10 @@ For a normal distribution, we have:
 {Wrapping up}
 Statistical intervals quantify the uncertainty associated with different aspects of estimation;
 \vone
-Reporting intervals is always better that point estimates, as it provides to you (and your readers) the necessary information to quantify the location and spread of your estimated values;
+Reporting intervals is always better than point estimates, as it provides the necessary information to quantify the location and uncertainty of your estimated values;
 \vone
-The correct interpretation is a little tricky (although not that difficult)$^{[2]}$, but it is essential in order to derive the correct conclusions based on the statistical interval of interest.
-\lfr{[2] See the table at the end of: \url{http://goo.gl/NJz7ot}}
+The correct interpretation is a little tricky (although not very difficult)$^{[3]}$, but it is essential in order to derive the correct conclusions based on the statistical interval of interest.
+\lfr{[3] See the table at the end of  \url{https://git.io/v5ZFh}}
 \end{ftst}
 
 %=====
@@ -196,7 +194,7 @@ The correct interpretation is a little tricky (although not that difficult)$^{[2
 \scriptsize
 \textbf{Required reading}
 
-\benums J.G. Ram\'irez, \textit{Statistical Intervals: Confidence, Prediction, Enclosure}: \url{http://goo.gl/NJz7ot}
+\benums J.G. Ram\'irez, \textit{Statistical Intervals: Confidence, Prediction, Enclosure}: \url{https://git.io/v5ZFh}
 \item D.C. Montgomery and G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Chapter 8. 3rd Ed., Wiley 2005.
 \eenum
 
