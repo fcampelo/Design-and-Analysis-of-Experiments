@@ -56,7 +56,7 @@ Statistical intervals are important in quantifying the uncertainty associated to
 \vone
 As an example, let's recap the coaxial cables example: \textit{a coaxial cable manufacturing operation produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$. Assume that the resistance values can be well modeled by a normal distribution}.
 \vone
-Let us now suppose that a sample mean of $N=25$ observations of resistance  yields $\bar{x} = 48$. Given the sampling variability, it is very likely that this value is not exactly the true value of $\mu$, but we are so far unable quantify how much uncertainty there is in this estimate.
+Let us now suppose that a sample mean of $n=25$ observations of resistance  yields $\bar{x} = 48$. Given the sampling variability, it is very likely that this value is not exactly the true value of $\mu$, but we are so far unable quantify how much uncertainty there is in this estimate.
 \end{ftst}
 
 %=====
@@ -85,11 +85,8 @@ Confidence intervals quantify the degree of uncertainty associated with the esti
 \vone
 Can be defined as ``\textit{the interval that contains the true value of a given population parameter with a confidence level of $100(1-\alpha)$}'';
 
-\bitems \textbf{Wrong}: ``there is a $95\%$ chance that the interval contains the true population mean.''
-\spitem \textbf{right}: ``The method used to derive the interval has a hit rate of $95\%$'' - i.e., the interval generated has a $95\%$ chance of ``capturing'' the true population parameter.
-\eitem
-
-Easier to understand if you think about the confidence level as a confidence in the \textbf{method}, not in the interval.
+\vone
+Another useful definition is to think about confidence intervals in terms of confidence \textit{in the method}: ``The method used to derive the interval has a hit rate of $95\%$'' - i.e., the interval generated has a $95\%$ chance of `capturing' the true population parameter.''
 \end{ftst}
 
 %=====
@@ -108,27 +105,27 @@ Easier to understand if you think about the confidence level as a confidence in 
 {CI on the Mean of a Normal Variable}
 The two-sided $CI_{(1-\alpha)}$ for the mean of a normal population with known variance $\sigma^2$ is given by:
 \beqs
-\bar{x}+\frac{\sigma}{\sqrt{N}}z_{(\alpha/2)}\leq\mu\leq\bar{x}+\frac{\sigma}{\sqrt{N}}z_{(1-\alpha/2)}
+\bar{x}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\leq\mu\leq\bar{x}+z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}
 \eqs
-\noindent where $(1-\alpha)$ is the confidence level and $z_{(x)}$ is the $x$-quantile of the standard normal distribution.
+\noindent where $(1-\alpha)$ is the confidence level and $z_{x}$ is the $x$-quantile of the standard normal distribution.
 \vone
 For the more usual case with an unknown variance,
 \beqs
-\bar{x}+\frac{s}{\sqrt{N}}t_{(\alpha/2;N-1)}\leq\mu\leq\bar{x}+\frac{s}{\sqrt{N}}t_{(1-\alpha/2;N-1)}
+\bar{x}+t_{\alpha/2}^{(n-1)}\frac{s}{\sqrt{n}}\leq\mu\leq\bar{x}+t_{1-\alpha/2}^{(n-1)}\frac{s}{\sqrt{n}}
 \eqs
-\noindent where $t_{(x;N-1)}$ is the $x$-quantile of the t distribution with $N-1$ degrees of freedom.
+\noindent where $t_{x}^{(n-1)}$ is the $x$-quantile of the t distribution with $n-1$ degrees of freedom.
 \end{ftst}
 
 %=====
 
 \begin{ftst}
 {Confidence Intervals}
-{CI on the Variance of a Normal Variable}
-Similarly, a two-sided confidence interval on the variance of a normal variable can be easily calculated:
+{CI on the Variance and Standard Deviation of a Normal Variable}
+A two-sided confidence interval on the variance of a normal variable can be easily calculated:
 \beqs
-\frac{(N-1)s^2}{\chi^2_{\alpha/2;N-1}}\leq\sigma^2\leq\frac{(N-1)s^2}{\chi^2_{1-\alpha/2;N-1}}
+\frac{(n-1)s^2}{{\chi^2}_{1 - \alpha/2}^{(n-1)}}\leq\sigma^2\leq\frac{(n-1)s^2}{{\chi^2}_{\alpha/2}^{(n-1)}}
 \eqs
-\noindent where $\chi^2_{\alpha/2;N-1}$ and $\chi^2_{1-\alpha/2;N-1}$ are the upper and lower $(\alpha/2)$-quantiles of the $\chi^2$ distribution with $N-1$ degrees of freedom, respectively.
+\noindent where ${\chi^2}_{x}^{(n-1)}$ represents the x-quantile of the $\chi^2$ distribution with $n-1$ degrees of freedom. For the standard deviation one simply needs to take the squared root of the confidence limits.
 \end{ftst}
 
 %=====
@@ -153,7 +150,7 @@ The common practice in engineering of defining specification limits by adding $\
 However, as in most cases the true population variance is unknown, one has to use its estimate $s^2$ and compensate for the uncertainty in this estimation. The two-sided tolerance interval is then given as:
 
 \beqs
-\bar{x}\pm s\sqrt{\frac{\left(N-1\right)\left(N+z_{(\alpha/2)}^{2}\right)}{N\ \chi^2_{(\gamma;N-1)}}} 
+\bar{x}\pm s\sqrt{\frac{\left(n-1\right)\left(n+z_{(\alpha/2)}^{2}\right)}{n\ \chi^2_{(\gamma;n-1)}}} 
 \eqs
 \vhalf
 \noindent wherein $\gamma$ is the proportion of the population to be enclosed, and $1-\alpha$ represents the desired confidence level for the interval.
@@ -171,7 +168,7 @@ Essentially, one is interested in obtaining an interval within which he or she c
 For a normal distribution, we have:
 
 \beqs
-\bar{x} +  t_{(\alpha/2;N-1)}s\sqrt{1+\frac{1}{N}}\leq X_{N+1}\leq\bar{x} + t_{(1-\alpha/2;N-1)}s\sqrt{1+\frac{1}{N}}
+\bar{x} +  t_{(\alpha/2;n-1)}s\sqrt{1+\frac{1}{n}}\leq X_{n+1}\leq\bar{x} + t_{(1-\alpha/2;n-1)}s\sqrt{1+\frac{1}{n}}
 \eqs
 \vhalf
 \noindent which is similar to the confidence interval for the mean, but adding 1 to the term within the square root to account for the prediction noise.

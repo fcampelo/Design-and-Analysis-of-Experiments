@@ -144,7 +144,7 @@ A \textit{point estimator} is a statistic which provides the value of maximum pl
 \vone
 Consider a random variable $X$ distributed according to a given $f(X|\theta)$.
 \vone
-Consider also a random sample from this variable: $\mbf{x}=\{x_1,x_2,\ldots,x_N\}$;
+Consider also a random sample from this variable: $\mbf{x}=\{x_1,x_2,\ldots,x_n\}$;
 \vone
 A given function $\hat{\Theta}=h\left(\mbf{x}\right)$ is called a \textit{point estimator} of the parameter $\theta$, and a value returned by this function for a given sample is referred to as a \textit{point estimate} $\hat{\theta}$ of the parameter.
 \end{ftst}
@@ -192,13 +192,13 @@ The difference $E\left[\hat{\Theta}\right] - \theta$ is referred to as the \text
 {Unbiased estimators}
 The usual estimators for mean and variance are unbiased estimators;
 \vone
-Let $x_1,\ldots,x_N$ be a random sample from a given population $X$, characterized by its mean $\mu$ and variance $\sigma^2$. In this situation, it is possible to show that$^{[4]}$:
+Let $x_1,\ldots,x_n$ be a random sample from a given population $X$, characterized by its mean $\mu$ and variance $\sigma^2$. In this situation, it is possible to show that$^{[4]}$:
 \beqs
-E\left[\bar{x}\right] = E\left[\frac{1}{N}\sum\limits_{i=1}^{N}x_i\right] = \mu
+E\left[\bar{x}\right] = E\left[\frac{1}{n}\sum\limits_{i=1}^{n}x_i\right] = \mu
 \eqs
 \noindent and:
 \beqs
-E\left[s^2\right] = E\left[\frac{1}{N-1}\sum\limits_{i=1}^{N}\left(x_i-\bar{x}\right)^2\right] = \sigma^2
+E\left[s^2\right] = E\left[\frac{1}{n-1}\sum\limits_{i=1}^{n}\left(x_i-\bar{x}\right)^2\right] = \sigma^2
 \eqs
 \lfr{[4] For details see  S.D. Anderson (1999), \textit{Proof that Sample Variance is Unbiased}: \url{http://git.io/vUn9N}.}
 \end{ftst}
@@ -243,11 +243,11 @@ For the most usual point estimates used with Gaussian variables, we have:$^{[5]}
 \eqs
 
 \beqs
-\hat{\sigma}_{s^2} = s^2\sqrt{\frac{2}{n-1}}
+\hat{\sigma}_{S^2} = s^2\sqrt{\frac{2}{n-1}}
 \eqs
 
 \beqs
-\hat{\sigma}_{s} = \frac{s}{\sqrt{2(n-1)}} + O\left(\frac{1}{n\sqrt{n}}\right)\approx \frac{s}{\sqrt{2(n-1)}}
+\hat{\sigma}_{S} = \frac{s}{\sqrt{2(n-1)}} + O\left(\frac{1}{n\sqrt{n}}\right)\approx \frac{s}{\sqrt{2(n-1)}}
 \eqs
 
 \vone
@@ -274,7 +274,7 @@ Also suppose a random sample of $25$ cables is taken from this production proces
 \begin{ftst}
 {Sampling Distributions}
 {The Central Limit Theorem}
-Even for arbitrary population distributions the sampling distribution of means tends to be approximately normal (with $E[\bar{x}] = \mu $ and $s_{\bar{x}} = \sigma^2/N$). 
+Even for arbitrary population distributions the sampling distribution of means tends to be approximately normal (with $E[\bar{x}] = \mu $ and $s_{\bar{x}} = \sigma^2/n$). 
 \vone
 More generally, let $x_1,\ldots,x_n$ be a sequence of \textit{independent and identically distributed} (\textbf{iid}) random variables, with mean $\mu$ and finite variance $\sigma^2$. Then:
 \beqs
