@@ -8,7 +8,7 @@
 \subtitle[]{05 - Statistical Inference}
 \author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2015}
+\date{\scriptsize Belo Horizonte\\September 2017}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11.20172};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -70,8 +70,8 @@ A \textit{hypothesis} is a proposed explanation for an observable phenomenon.
 \vone
 Scientific hypotheses must satisfy (at least) two conditions:
 
-\bitems Testability;
-	\item Falsifiability;
+\bitems Falsifiability;
+	\item Testability;
 \eitem
 \vone
 \begin{columns}[T]
@@ -91,7 +91,7 @@ Scientific hypotheses must satisfy (at least) two conditions:
 %\node[anchor=south east,yshift=0pt,xshift=-15pt] at (current page.south east) {Karl Popper};
 \end{tikzpicture}
 \end{columns}
-\lfr{Image: Copyright 2008 Ivan Jer\^onimo \url{http://www.ivanjeronimo.com.br/imagem.php?imagem=30}}
+\lfr{Image: Copyright 2008 Ivan Jer\^onimo \url{http://www.ivanjeronimo.com.br} ; \url{https://flic.kr/p/58R1w4}}
 \end{ftst}
 
 %=====
@@ -140,16 +140,14 @@ On frequentist approaches, the formal test of hypotheses involves the contrast b
 	\begin{block}{Null hypothesis ($H_0$)}
 	\small
 	\bitems Absence of effects;
-	\item \textit{Conservative} model;
-	\item Point value for the parameter.\eitem
+	\item \textit{Conservative} model.\eitem
 	\textbf{Example:} $H_0: \mu = 25$
 	\end{block}
 	\column{0.48\textwidth}
 	\begin{block}{Alternative hypothesis ($H_1$)}
 	\small 
 	\bitems Presence of some effect;
-	\item Existence of something ``new''.
-	\item Interval value for the parameter.\eitem
+	\item Existence of something ``new''.\eitem
 	\textbf{Example:} $H_1: \mu \neq 25$
 		\end{block}
 	\end{columns}
@@ -180,16 +178,18 @@ Hypothesis testing involves:
 \begin{ftst}
 {Statistical Hypotheses}
 {Example}
-Suppose you own a company that sells green peas\footnote[1]{\tiny We could use any other item from your grocery list, but why not pay a little tribute to Gregor Mendel?}, and that you want to determine whether your $500$g packages really contain their nominal weight (at least on average).
+Suppose you own a company that sells green peas to large customers, 
+and that you want to determine whether your $50$kg sacks really 
+contain their nominal weight (at least on average).
 \vhalf
 In this case the null hypothesis could be defined as:
-\textit{the average net weight of a package is $500$g}, and the alternative of interest could be expressed as the complementary inequality.
+\textit{the average net weight of a sack is $50$kg}, and the alternative of interest could be expressed as the complementary inequality.
 \beqs\begin{cases}
-H_0: \mu = 500g \\
-H_1: \mu \neq 500g 
+H_0: \mu = 50kg \\
+H_1: \mu \neq 50kg 
 \end{cases}\eqs
 \vone
-Suppose still that $n=10$ packs are randomly sampled, and their contents are weighted using a calibrated scale;
+Suppose still that $n = 10$ packs are randomly sampled, and their contents are weighted using a calibrated scale;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -203,15 +203,15 @@ Suppose still that $n=10$ packs are randomly sampled, and their contents are wei
 {Example}
 Since the sample mean $\bar{x}$ is a good estimator of the real mean $\mu$, common sense suggests that:
 
-\bitems If $\bar{x} \cong 500$g - corroboration of $H_0$;
-\item If $\bar{x} \ll 500$g or $\bar{x} \gg 500$g - refutation of $H_0$;
+\bitems If $\bar{x} \cong 50$kg - corroboration of $H_0$;
+\item If $\bar{x} \ll 50$kg or $\bar{x} \gg 50$kg - refutation of $H_0$;
 \eitem
 \vone
 That is, we can use $\bar{x}$ as the basis for a statistical test.
 \vone
 But how to define a \textit{critical region} for the rejection of $H_0$?
 \vone\vhalf
-\centering\includegraphics[width=\textwidth]{../figs/regcrit2.png}
+\centering\includegraphics[width=\textwidth]{../figs/regcrit.png}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -239,9 +239,9 @@ Another frequently used term is the \textit{confidence level} of the test, given
 {Type I error}
 For a given sample, the selected value of $\alpha$ defines the critical threshold for the rejection of $H_0$.
 \vone
-If $H_0$ is true (i.e., if $\mu=500$g), the distribution of values of $\bar{x}$ is aproximately normal (assuming the CLT holds), with average $500$ and variance given by $s^2/n$;
+If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of values of $\bar{x}$ is aproximately normal (assuming the CLT holds), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
 \vone
-For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region is $1-\alpha = 0.95$.
+For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region under the null hypothesis is $1-\alpha = 0.95$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=0.5\textwidth]{../figs/alpha.png}};
 \end{tikzpicture}
@@ -291,8 +291,8 @@ The quantity ($1-\beta$) is known as \textit{power} of the test, and quantifies 
 {Type II error}
 The power of a test is governed by several factors:
 
-\bitems Controllable: significance level, sample size;
-	\item Uncontrollable: real value of the parameter;
+\bitems Controllable: significance level, sample size, directionality of $H_1$;
+	\item Uncontrollable: real value of the parameter, variance;
 \eitem
 
 If $H_0$ is false, the smaller the magnitude of the difference between the real value of the parameter and the one under the null hypothesis, the greater the probability of a type II error - \textbf{\textit{but the practical importance of the effect gets smaller}}.
@@ -310,7 +310,7 @@ If $H_0$ is false, the smaller the magnitude of the difference between the real 
 These characteristics lead to the following classification of the conclusions obtained from the test of hypotheses:
 \begin{block}{}
 \bitems Rejection of $H_0$ - \textit{strong} conclusion; 
-\spitem Failure to reject $H_0$ - \textit{weak} conclusion (but we can strengthen it);
+\spitem Failure to reject $H_0$ - \textit{weak} conclusion (but we can fortify it);
 \eitem
 \end{block}
 \vone
@@ -343,16 +343,16 @@ It is important to remember that failing to reject $H_0$ does not mean that ther
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance known}
-Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the packages. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
+Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the sacks. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
 
 \beqs\begin{cases}
-H_0: \mu = 500g\\
-H_1: \mu \neq 500g
+H_0: \mu = 50kg\\
+H_1: \mu \neq 50kg
 \end{cases}\eqs
 \vone
 Let the desired significance level be $\alpha = 0.05$;
 \vone
-Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with variance $Var(\bar{X})=\sigma^2/n$ and -- if $H_0$ is true -- mean $\mu_{\bar{X}}=\mu_0=500$;
+Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with $Var(\bar{X})=\sigma^2/n$ and -- \textbf{if $H_0$ is true } -- a mean of $\mu_{\bar{X}}=\mu_0=50$;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -363,15 +363,20 @@ Given these characteristics, we expect that the sampling distribution of $\bar{X
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance known}
-Based on these characteristics, the variable
+Based on these characteristics, the standardized variable
 \beqs Z_0 = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}\eqs
 \vhalf
 \noindent will be distributed according to the standard normal, $\mathcal{N}\left(0,1\right)$, \textbf{if $\mathbf{H_0}$ is true}.
-\vone
-This result implies a probability of $\left(1-\alpha\right)$ that $Z_0$ will fall within the range $(\pm z_{1-\alpha/2})$\footnote[2]{\tiny $z_{1-\alpha/2}$ is the superior $100(1-\alpha/2)\%$ percentile of the standard normal distribution;} if $H_0$ is true, which provides a selection criterion between $H_0$ and $H_1$:
+\vhalf
+This result implies that:
+\beqs
+P\left(z_{\alpha/2}\leq Z_0\leq z_{1-\alpha/2}\mid H_0~\mbox{is true}\right) = 1-\alpha
+\eqs
 
-\bitems If $|z_0|>z_{1-\alpha/2}$, we reject $H_0$ at the confidence level $1-\alpha$;
-	\item Otherwise, there is not enough evidence to reject $H_0$;
+\noindent which provides a selection criterion between $H_0$ and $H_1$:
+\vhalf
+\bitems If $z_{\alpha/2}> Z_0$ or $z_{1-\alpha/2}<Z_0$, reject $H_0$ with confidence $(1-\alpha)$;
+	\spitem Otherwise, there is not enough evidence to reject $H_0$ at this confidence level;
 \eitem
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
@@ -383,54 +388,19 @@ This result implies a probability of $\left(1-\alpha\right)$ that $Z_0$ will fal
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance known}
-Assume that we got $\bar{x} = 496.48 g$ from our $n=10$ observations, and that $\sigma = 10g$. In this case,
+Assume that we got $\bar{x} = 49.65$kg from our $n=10$ observations, and that we know that $\sigma = 1$kg. In this case,
 
 \beqs 
-z_0 = \frac{496.48 - 500}{10/\sqrt{10}} = -1.113
+z_0 = \frac{49.65 - 50}{1/\sqrt{10}} = -1.113
 \eqs
 \vhalf
-The critical values of the standard normal distribution are $\pm z_{\alpha/2} = \pm z_{0.025} = \pm 1.96$;
+The critical values of the standard normal distribution at the significance level $\alpha = 0.05$ are $\left[z_{0.025},z_{0.975}\right] = \left[-1.96,1.96\right]$;
 \vone
-Since $|z_0|<z_{0.025}$, we can conclude that there is not enough evidence to reject $H_0$ at the $95\%$ confidence level.
+Since $z_0\in \left[-1.96,1.96\right]$, we can conclude that there is not enough evidence to reject $H_0$ at the $95\%$ confidence level.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
 \end{ftst}
-
-%=====
-
-\begin{ftstf}
-{Hypothesis Testing}
-{Mean of a normal distribution, variance known}
-
-\begin{rcode}
-> if(!require(TeachingDemos)){
-+ 	install.packages("TeachingDemos")
-+ 	library(TeachingDemos)
-+ }
-> 
-> sample <- as.numeric(scan("../data files/greenpeas.txt"))
-> z.test(sample,
-+        mu=500,
-+        stdev=10)
-
-One Sample z-test
-data:  sample
-z = -1.1131, n = 10.000, Std. Dev. = 10.000, 
-Std. Dev. of the sample mean = 3.162, 
-p-value = 0.2657
-alternative hypothesis: true mean is not equal to 500
-95 percent confidence interval:
- 490.282 502.678
-sample estimates:
-mean of as.numeric(sample) 
-                    496.48 
-\end{rcode}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=-60pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.22\textwidth]{../figs/peastxt.png}};
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
-\end{ftstf}
 
 %=====
 
@@ -441,13 +411,13 @@ Suppose now a more realistic situation in which the real variance is unknown. Be
 \vone
 The test hypotheses can be defined as:
 \beqs\begin{cases}
-H_0: \mu = 500g\\
-H_1: \mu < 500g 
+H_0: \mu \geq 50kg\\
+H_1: \mu < 50kg 
 \end{cases}\eqs
 \vhalf
-In this second scenario we want to be more conservative, so we pick a significance level of $\alpha = 0.01$;
+Assume also that we want to be more conservative, so we pick a significance level $\alpha = 0.01$;
 \vone
-It can be shown that, \textbf{if $H_0$ is true}, then
+In this case, \textbf{if $H_0$ is true}, we have that
 \beqs T_0 = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t_{n-1}
 \eqs
 \begin{tikzpicture}[remember picture,overlay]
@@ -460,10 +430,10 @@ It can be shown that, \textbf{if $H_0$ is true}, then
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a normal distribution, variance unknown}
-From the same data, $\bar{x} = 496.48 g$, $n=10$, $s = 6.97 g$:
-\beqs t_0 = \frac{496.48 - 500}{6.97/\sqrt{10}} = -1.5969\eqs
+From the same data used earlier, $\bar{x} = 49.65$kg, $n=10$, $s = 0.697$kg:
+\beqs t_0 = \frac{49.65 - 50}{0.697/\sqrt{10}} = -1.597\eqs
 \vhalf
-The critical value of this test statistic for the desired significance is $t_{\alpha,n-1} = t_{0.01,9} = -2.82$ --- i.e., under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
+The critical value of this test statistic for the desired significance is $t_{\alpha,n-1} = t_{0.01,9} = -2.82$, which means that under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
 \vone
 Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
 \begin{tikzpicture}[remember picture,overlay]
@@ -474,27 +444,30 @@ Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to rejec
 %=====
 
 \begin{ftstf}
-{Hypothesis Testing}
-{Mean of a normal distribution, variance unknown}
-\begin{rcode}
+	{Hypothesis Testing}
+	{Mean of a normal distribution, variance unknown}
+	\begin{rcode}
+> sample <- as.numeric(scan("../data files/greenpeas.txt"))
+
 > t.test(sample,
 +        alternative = "less",
-+        mu = 500,
++        mu = 50,
 +        conf.level = 0.99)
 
-	One Sample t-test
+One Sample t-test
 data:  sample
 t = -1.5969, df = 9, p-value =0.07237
-alternative hypothesis: true mean is less than 500
+alternative hypothesis: true mean is less than 50
 99 percent confidence interval:
-     -Inf 502.6991
+-Inf 50.2699
 sample estimates:
 mean of x 
-   496.48
-\end{rcode}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+49.648
+	\end{rcode}
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north east,yshift=-70pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.22\textwidth]{../figs/peastxt.png}};
+	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+	\end{tikzpicture}
 \end{ftstf}
 
 %=====
@@ -529,7 +502,7 @@ Can be interpreted as the probability under $H_0$ of the test statistic assuming
 \vone\vhalf
 For the previous example, the p-value could be calculated as:
 \beqs
-p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}(t_{9})dt = 0.07237
+p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}t_{(df=9)}dt = 0.07237
 \eqs
 \vhalf
 
@@ -545,7 +518,7 @@ p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}(t_{9})dt
 {p-values, significance and effect sizes}
 Statistical $\times$ practical significance: p-values can be made arbitrarily small, if $n$ is big enough;
 \vone 
-As an example, suppose a test of $H_0: \mu=500g$ against a two-sided alternative, with $n=5000, \bar{x}=499g,\ s=5g$. In this case we would have:
+As an example, suppose a test of $H_0: \mu=500$ against a two-sided alternative, with $n=5000, \bar{x}=499,\ s=5$. In this case we would have:
 
 \bitems $t_0 = -14.142$;
 \item $p = 1.02\times 10^{-23}$;\eitem
@@ -560,7 +533,7 @@ Is it really \textit{that} significant?
 {p-values, significance and effect sizes}
 To ``tell the whole story'' of the experiment, it is necessary to use \textbf{effect size estimators} alongside the tests of statistical significance; 
 \vone
-While there are whole books on the subject \footnote[3]{\tiny See, for instance, Paul D. Ellis' \textit{The Essential Guide to Effect Sizes}, Cambridge University Press, 2010.}, the main idea is quite simple - to quantify the magnitude of the observed deviation from the null hypothesis.
+While there are whole books on the subject\footnote[3]{\tiny See, for instance, Paul D. Ellis' \textit{The Essential Guide to Effect Sizes}, Cambridge University Press, 2010.}, the main idea is quite simple - to quantify the magnitude of the observed deviation from the null hypothesis.
 \vone
 Examples of effect size estimators include the simple point estimator for the difference $\bar{x} - \mu_0$, or the dimensionless \textit{d} estimator:
 
@@ -581,18 +554,18 @@ d = \frac{\bar{x}-\mu_0}{s}
 \centering\textit{Point estimators + confidence intervals quantify the magnitude and accuracy of effects, and must be reported alongside the results of significance testing whenever possible.}
 \end{block}
 \vhalf
-Suppose we are testing $H_0: \mu=500$ against the two-sided alternative hypothesis, with $n=10$ and $\alpha=0.01$. Assume that the population is known to be normal, with unknown variance. We'll use the same data as before:
+Suppose we are testing $H_0: \mu=50$ against the two-sided alternative hypothesis, with $n=10$ and $\alpha=0.01$. Assume that the population is known to be normal, with unknown variance. We'll use the same data as before:
 \vhalf
 \begin{rcode}
-> t.test(sample, mu = 500, conf.level = 0.99)
+> t.test(sample, mu = 50, conf.level = 0.99)
 (...)
 t = -1.5969, df = 9, p-value = 0.1447
-alternative hypothesis: true mean is not equal to 500
+alternative hypothesis: true mean is not equal to 50
 99 percent confidence interval:
- 489.3166 503.6434
+ 48.93166 50.36434
 sample estimates:
 mean of x 
-   496.48 
+   49.648 
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
@@ -603,16 +576,16 @@ mean of x
 
 \begin{ftst}{Sample size and Type-II error}
 {Some considerations}
-The probability of Type-II error can be easily (and wrongly) evaluated \textit{a posteriori}, but its definition \textit{a priori} requires some care;
+The probability of Type-II error can be easily (and often wrongly) evaluated \textit{a posteriori}, but its definition \textit{a priori} requires some care;
 \vone
-The power of a test is essentially a function of 4 elements:
+Given a desired test, its power is essentially a function of 4 elements:
 \bitems Actual size of the difference;
 	\item Variability of the observations;
 	\item Significance level;
 	\item Sample size.
 \eitem
 \vone
-The experimenter generally have little control over the first two.
+The experimenter generally have very little control over the first two.
 \end{ftst}
 
 %=====
@@ -647,17 +620,17 @@ This technique can also be used as a way to compute the maximum necessary sample
 \begin{ftstf}
 {Sample size and Type-II error}
 {Example}
-Suppose that on the green peas example one is really interested in detecting deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01*500 = 5g$. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The test will again be performed with $\alpha = 0.01$.
+Suppose that on the green peas example we are really interested in detecting negative deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01\times 50 = 0.5$kg. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The desired significance is $\alpha = 0.01$.
 \vone
-The same sample of $n=10$ packs is used. Assume that you estimated a reasonable standard deviation for this sample as $s=10g$. From this data, we can compute the power of this test as:
+The same sample of $n=10$ sacks is used. Assume that you estimated a reasonable standard deviation for this sample as $s=1$kg. From this data, we can compute the power of this test as:
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
-> s<-sd(sample)
-> power.t.test(n=10, 
-+        delta=5, 
-+        sd=10, 
-+        sig.level=0.01, 
+> s <- sd(sample)
+> power.t.test(n = 10, 
++        delta = 0.5, 
++        sd = 1, 
++        sig.level = 0.01, 
 +        type = "one.sample", 
 +        alternative = "one.sided")
 \end{rcode}
@@ -665,8 +638,8 @@ The same sample of $n=10$ packs is used. Assume that you estimated a reasonable 
 \begin{rcode}
 One-sample t test power calculation 
 n = 10
-delta = 5
-sd = 10
+delta = 0.5
+sd = 1
 sig.level = 0.01
 power = 0.1654013
 alternative = one.sided
@@ -674,7 +647,7 @@ alternative = one.sided
 \end{columns}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\node[anchor=south east,yshift=30pt,xshift=-48pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{Power}};
+\node[anchor=south east,yshift=31pt,xshift=-75pt] at (current page.south east) {\footnotesize\color{red}$\boldsymbol{\longleftarrow}$};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -686,13 +659,13 @@ alternative = one.sided
 What is the smallest sample size needed to obtain the desired power of $0.85$?
 \vhalf
 \begin{rcode}
-> power.t.test(power=0.85, delta=5, sd=s, sig.level=0.01,
+> power.t.test(power = 0.85, delta = 0.5, sd = 1, sig.level = 0.01,
                type = "one.sample", alternative = "one.sided")
 
 One-sample t test power calculation 
 n = 47.98044
-delta = 5
-sd = 10
+delta = 0.5
+sd = 1
 sig.level = 0.01
 power = 0.85
 alternative = one.sided
@@ -722,7 +695,7 @@ The assumption of normality, required for the \textbf{z} and \textbf{t} tests, n
 \begin{ftstf}
 {Model validation}
 {The normality assumption}
-If the conditions for the CLT cannot be assumed, then normality tests can be performed on the data.
+If the conditions for the CLT cannot be assumed \textit{a priori}, then normality tests can be performed on the data.
 \vone
 Graphical/qualitative tests;
 \vone
@@ -757,7 +730,7 @@ These procedures use different aspects of the sample distribution to test the fo
 	H_1: \mbox{population is not normal}
 \end{cases}\eqs
 \vhalf
-In this case, rejection of the null hypothesis suggests evidence that the sample came from a non-normal population. Generally we use a strict threshold (e.g., $\alpha = 0.01$ or $0.001$) for these tests, and consider their results together with a graphical analysis.
+In this case, rejection of the null hypothesis suggests evidence that the \textbf{sample} came from a non-normal population. Generally we use a strict $\alpha$ threshold for these tests, and consider their results together with a graphical analysis.
 \end{ftst}
 
 %=====
@@ -786,15 +759,14 @@ W = 0.8809, p-value = 0.1335
 {The independence assumption}
 Possibly the strongest assumption of the statistical model used for the t-test is that of independence, that is, of the absence of unmodeled biases contaminating the data.
 \vhalf
-While I know of no procedure to test independence in the general case, serial autocorrelations in the residual data (which can emerge, for instance, as a consequence of heating effects or equipment degradation) can be tested by a procedure known as the Durbin-Watson test:
+While I know of no procedure to test independence in the general case, the special case of serial autocorrelations in the data (which can emerge, for instance, as a consequence of heating effects or equipment degradation) can be tested by a procedure known as the Durbin-Watson test:
 \begin{rcode}
-> library(lmtest)
-> dwtest(sample~1)
+> library(car)
+> durbinWatsonTest(lm(sample ~ 1))
 
-Durbin-Watson test
-data:  sample ~ 1
-DW = 2.1117, p-value = 0.573
-alternative hypothesis: true autocorrelation is greater than 0
+lag Autocorrelation D-W Statistic p-value
+1      -0.0848535      2.111733   0.898
+Alternative hypothesis: rho != 0
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
@@ -841,13 +813,13 @@ After examining the green peas example, it is interesting to go back and follow 
 \textbf{Required reading}
 
 \benums D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 9.\\5th ed., Wiley, 2010. 
-\item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
 \item J.T. Mordkoff (2011), \textit{The assumption(s) of normality} - \url{http://goo.gl/Z3w8ku}
 \eenum
 
 \textbf{Recommended reading}
 
 \benums A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide} - {\tiny\url{http://www.statisticsdonewrong.com}}
+\item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
 \item E. Ernst and S. Singh, \textit{Trick or Treatment}, Norton \& Company, 2009.
 \eenum
 \end{ftst}
