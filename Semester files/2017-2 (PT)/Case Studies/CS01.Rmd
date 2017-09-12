@@ -1,7 +1,7 @@
 ---
 title: "EEE933 - Estudo de Caso 01"
 author: "BMI médio dos alunos do PPGEE"
-output: html_document
+output: pdf_document
 ---
 
 ## O Experimento
