@@ -77,7 +77,7 @@ O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http:
 - O arquivo **.Rmd** do relatório.
 - O arquivo de dados utilizado.
 
-O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis  [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). Caso a equipe deseje utilizar o estilo do presente documento, pode consultar seu código-fonte [aqui]().
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do relatório. Modelos de estudos de caso estão disponíveis  [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report%20template) e [aqui](https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case%20Studies/Report%20Examples). Caso a equipe deseje utilizar o estilo do presente documento, pode consultar seu código-fonte [aqui](https://raw.githubusercontent.com/fcampelo/Design-and-Analysis-of-Experiments/master/Semester%20files/2017-2%20(PT)/Case%20Studies/CS02.Rmd) (note que o mesmo requer a instalação do pacote _pinp_).
 
 **Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na compilação em outros sistemas).
 **Importante**: Inclua no relatório os papéis desempenhados por cada membro da equipe (Relator, Verificador etc.)
