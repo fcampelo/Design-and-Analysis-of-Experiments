@@ -8,7 +8,7 @@
 \subtitle[]{00 - Course Intro}
 \author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\August 2017}
+\date{\scriptsize Belo Horizonte\\March 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11.2017b};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -44,7 +44,7 @@
 \begin{ftst}
 {Course Overview}
 {Objectives}
-\bitems To develop advanced skills in designing experiments, defining and testing hypotheses, and performing statistical data analyses within one's field of interest;
+\bitems To develop basic skills in designing experiments, defining and testing hypotheses, and performing statistical data analyses within one's field of interest;
 \spitem By the end of this course, the student should be able to:
 \bitems Plan experiments related to his/her work;
 \item Perform appropriate statistical analyses of the data obtained from the experiment;
@@ -79,8 +79,8 @@
 			\textbf{Item}	& \textbf{Type}	&Value\\
 			\hline
 			Case studies		& Classroom activity		&35\\
-			Written exam		& Written exam	&30\\
-			Final Project		& Report and presentation		&35\\
+			Written exam		& Written exam	&35\\
+			Final Project		& Report and presentation		&30\\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -90,7 +90,7 @@
 	\bitems Lectures slides, example R files, data, etc. available at \\
 	{\small \url{http://git.io/v3Kh8}}
 	\spitem Office hours: depends on the week. Please drop me a message to check availability.
-	\spitem Software/services used: R ({\scriptsize\url{http://cran.r-project.org/}}),\\GitHub ({\scriptsize\url{http://github.com/}}).
+	\spitem Software/services used: R ({\scriptsize\url{http://cran.r-project.org/}}),\\Github ({\scriptsize\url{http://github.com/}}).
 	\eitem
 \end{block}
 \end{ftst}
@@ -102,14 +102,14 @@
 {Course Bibliography}
 \textbf{Main}:\\
 {\footnotesize
-\bitems Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}. Online: \url{http://git.io/v3Kh8} Version 2.11; Creative Commons BY-NC-SA 4.0.
+\bitems Felipe Campelo (2018), \textit{Lecture Notes on Design and Analysis of Experiments}. Online: \url{http://git.io/v3Kh8} Version 2.12; Creative Commons BY-NC-SA 4.0.
 \item D.C. Montgomery, G.C. Runger (2010), \textit{Applied Statistics and Probability for Engineers}, John Wiley \& Sons.
-\item Michael J. Crawley (2007), \textit{The R Book}, Wiley.
 \eitem}
 \vhalf
 \textbf{Additional}:
 {\footnotesize
-\bitems D.C. Montgomery (2012), \textit{Design and Analysis of Experiments}, John Wiley \& Sons.
+\bitems D.C. Montgomery (2012), \textit{Design and Analysis of Experiments}, Wiley.
+\item Michael J. Crawley (2007), \textit{The R Book}, Wiley.
 \item B. Caffo (2015), \textit{Statistical inference for data science}, LeanPub - {\small\url{https://leanpub.com/LittleInferenceBook/}}
 \item J.J. Faraway (2002), \textit{Practical Regression and Anova using R} - {\small\url{http://goo.gl/ewMWL}}
 \item D. Wiens (2005), \textit{Introduction to Design and Analysis of Experiments} - {\small\url{http://goo.gl/hZXg1}}
@@ -123,36 +123,14 @@
 {Required / Desired background}
 This is a course on \textit{applied} experimental design and analysis. As such, a large portion of the course is dedicated to case studies in which the student will design experiments, collect (simulated) data, perform inference and report his or her analysis.
 \vone
-It is \textbf{strongly reccomended} that the student should complete the free online course  \textit{R Programming}\footnote{{\scriptsize\url{https://www.coursera.org/course/rprog}}} \textbf{before the end of the second week} of the semester (except if the student is already fluent with R).
+It is \textbf{strongly reccomended} that the student should complete the free online course  \textit{R Programming}\footnote{{\scriptsize\url{https://www.coursera.org/course/rprog}}} \textbf{before the end of the second week} of the semester (except if the student is already fluent in R).
 \vone
-It is also \textbf{strongly reccomended} that the student should complete the free online course  \textit{Reproducible Research}\footnote{{\scriptsize\url{https://www.coursera.org/course/repdata}}} \textbf{before the end of the first month} of the semester (except if the student is already fluent with writing reports using R Markdown).
+It is also \textbf{strongly reccomended} that the student should complete the free online course  \textit{Reproducible Research}\footnote{{\scriptsize\url{https://www.coursera.org/course/repdata}}} \textbf{before the end of the first month} of the semester (except if the student is already capable of writing reports using R Markdown).
 \end{ftst}
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11; Creative Commons BY-NC-SA 4.0.\\
-
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-00,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCsomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
+\input{../defs/FinalSlide.tex}
 
 %=====
 

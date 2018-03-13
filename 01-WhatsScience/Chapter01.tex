@@ -8,7 +8,7 @@
 \subtitle[]{01 - What is Science}
 \author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2017}
+\date{\scriptsize Belo Horizonte\\March 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -32,17 +32,17 @@
 		\frametitle{}
 \begin{columns}[T]
 \column{0.8\textwidth}
-\flushright{\small ``\textit{The most that can be expected from any model is that\\it can supply a useful approximation to reality.\\All models are wrong; some models are useful}''\\\ \\
-George E.P. Box (1919 -- 2013)\\
-British statistician}
+\flushright{\small ``\textit{Science and everyday life cannot\\and should not be separated.}''\\\ \\
+Rosalind Franklin (1920 -- 1958)\\
+English Chemist and X-ray crystallographer}
 \column{0.2\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=5pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/box.png}};
+{\includegraphics[width=\textwidth]{../figs/Rosalind_Franklin_CC-BY-SA.png}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: \url{https://asq.org/about-asq/honorary-members/box}}
+\lfr{Image: \url{https://commons.wikimedia.org/wiki/File:Rosalind_Franklin_CC-BY-SA.png}}
 \end{frame}
 
 %=====
@@ -60,6 +60,8 @@ British statistician}
 	\item Science \textbf{proves} stuff; {\color{red}$\times$}
 	\item Science can only \textbf{disprove} stuff; {\color{red}$\times$}
 	\item The scientist works to \textbf{show} that his/her theory is right;{\color{red}$\times$}
+	\vskip .5em
+	\spitem Facts \textit{vs} hypotheses \textit{vs} theories \textit{vs} laws;
 \eitem
 \lfr{\textbf{Essential reading}: Common Misconceptions About Science: \url{http://goo.gl/TN7k9B}}
 \lfr{Image: \url{http://xkcd.com}}
@@ -373,29 +375,6 @@ The scientific process is a way of building knowledge:
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 1; Creative Commons BY-NC-SA 4.0.\\
-
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-01,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11, Chapter 1; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
-
+\input{../defs/FinalSlide.tex}
 
 \end{document}
