@@ -8,7 +8,7 @@
 \subtitle[]{03 - Point Estimators}
 \author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2015}
+\date{\scriptsize Belo Horizonte\\March 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -32,18 +32,19 @@
 		\frametitle{}
 \begin{columns}[T]
 \column{0.77\textwidth}
-\flushright{\small ``\textit{A scientist must indeed be freely imaginative and yet skeptical, creative and yet a critic.\\There is a sense in which he must be free, but another in which his thought must be very precisely regimented; \\there is poetry in science, but also a lot of bookkeeping.}''\\\ \\
-Sir Peter B. Medawar\\
-1915-1987\\
-British Immunologist}
+\flushright{\small ``\textit{I like to think of ideas as potential energy.\\
+										They're really wonderful, but nothing will happen\\
+										until we risk putting them into action.}''\\\vspace{1em}
+Mae Carol Jemison (1956 - )\\
+American engineer, physician and astronaut}
 \column{0.23\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=20pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/Medawar.jpg}};
+{\includegraphics[width=\textwidth]{../figs/MaeJamison.jpg}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: \url{http://commons.wikimedia.org/wiki/File:Peter_Brian_Medawar.jpgQ}}
+\lfr{Image by Monique Dong: \url{https://www.rainbowresource.com/viewpict.php?pid=065272}}
 \end{frame}
 
 %=====
@@ -260,15 +261,15 @@ More general estimates of the standard error for different distributions (or dif
 \begin{ftst}
 {Sampling Distributions}
 {Sampling distributions of means}
-Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values can be well modeled by a normal distribution, i.e., $X\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
+Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values are distributed according to a known Normal distribution, i.e., $X\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
 \vone
 Also suppose a random sample of $25$ cables is taken from this production process and their resistance is measured. The sample mean of the observations taken,
 \beqs
 \bar{x} = \frac{1}{25}\sum\limits_{i=1}^{25}{x_i}
 \eqs
 
-\noindent is also normally distributed, with $E[\bar{x}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $s_{\bar{x}} = \sqrt{\sigma^2/25} = 0.4$.
-\lfr{[5] Example inspired in \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
+\noindent is also normally distributed, with $E[\bar{x}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $\sigma_{\bar{x}} = \sqrt{\sigma^2/25} = 0.4\Omega$.
+\lfr{[5] Example inspired on \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
 \end{ftst}
 
 \begin{ftst}
@@ -280,14 +281,14 @@ More generally, let $x_1,\ldots,x_n$ be a sequence of \textit{independent and id
 \beqs
 z_n = \frac{\sum\limits_{i=1}^{n}{(x_i)} - n\mu}{\sqrt{n\sigma^2}} = \frac{\bar{x} - \mu}{\sqrt{\sigma^2/n}}
 \eqs
-\noindent is distributed approximately as a standard normal variable, that is, $z_n\sim\mathcal{N}(0,1)$.
+\noindent is distributed approximately as a standard Normal variable, that is, $z_n\sim\mathcal{N}(0,1)$.
 \lfr{For more details on the CLT, see \url{http://www.encyclopediaofmath.org/index.php/Central_limit_theorem}}
 \end{ftst}
 
 \begin{ftst}
 {Sampling Distributions}
 {The Central Limit Theorem}
-This result is known as the \textit{Central Limit Theorem}, and is one of the most useful properties for statistical inference. The CLT allows the use of techniques based on the Gaussian distribution, even when the population under study is not normal.
+This result is known as the \textit{Central Limit Theorem}, and is one of the most useful properties for statistical inference. The CLT allows the use of techniques based on the Normal distribution, even when the population under study is not normal.
 \vone
 For ``well-behaved'' distributions (continuous, symmetrical, unimodal - the usual bell-shaped pdf we all know and love) even small sample sizes are commonly enough to justify invoking the CLT and using parametric techniques.
 \end{ftst}
@@ -322,29 +323,6 @@ For an interactive demonstration of the CLT, check
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.\\
-
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-01,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11, Chapter 3; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
-
+\input{../defs/FinalSlide.tex}
 
 \end{document}
