@@ -8,7 +8,7 @@
 \subtitle[]{04 - Statistical Intervals}
 \author[]{Felipe Campelo\\{\footnotesize http://www.cpdee.ufmg.br/\textasciitilde fcampelo}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2015}
+\date{\scriptsize Belo Horizonte\\April 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -31,19 +31,22 @@
   \begin{frame}[b]
 		\frametitle{}
 \begin{columns}[T]
-\column{0.8\textwidth}
-\flushright{\small ``\textit{Science is an integral part of culture. It's not this foreign thing, done by an arcane priesthood. It's one of the glories of the human intellectual tradition.}''\\\ \\
-Stephen Jay Gould\\
-1941-2002\\
-American paleontologist}
-\column{0.2\textwidth}
+\column{0.7\textwidth}
+\flushright{\small ``\textit{I attribute my success to this: I never\\gave or took an excuse.}''\\\ \\
+						   ``\textit{I think one's feelings waste themselves in words;\\
+						   	             they ought all to be distilled into actions,\\
+						   	             and into actions which bring results.}''\\\ \\
+Florence Nightingale\\
+1820-1910\\
+English statistician and founder of modern nursing}
+\column{0.3\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=15pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/Gould.jpg}};
+{\includegraphics[width=\textwidth]{../figs/florence.jpg}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: Harvard University  /  AP }
+\lfr{Image: https://www.pinterest.com.au/pin/572238696374683644/}
 \end{frame}
 
 %=====
@@ -95,7 +98,7 @@ Another useful definition is to think about confidence intervals in terms of con
 {Confidence Intervals}
 {Example: 100 $CI_{.95}$ for a sample of 25 observations}
 \centering\includegraphics[width=.9\textwidth]{../figs/CIs.pdf}
-\lfr{For an interactive demonstration of the factors involved in the definition of a confidence interval, see \url{http://orcslab.cpdee.ufmg.br:3838/CI/}}
+\lfr{For an interactive demonstration of the factors involved in the definition of a confidence interval, download the files from \url{https://git.io/vxXGj} and run on RStudio.}
 \end{ftst}
 
 %=====
@@ -207,29 +210,7 @@ The correct interpretation is a little tricky (although not very difficult)$^{[3
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 4; Creative Commons BY-NC-SA 4.0.\\
-
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-01,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11, Chapter 4; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCsomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
+\input{../defs/FinalSlide.tex}
 
 
 \end{document}
