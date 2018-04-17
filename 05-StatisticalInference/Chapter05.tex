@@ -486,7 +486,7 @@ Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to rejec
 +        conf.level = 0.99)
 
 One Sample t-test
-data:  sample
+data:  my.sample
 t = -1.5969, df = 9, p-value =0.07237
 alternative hypothesis: true mean is less than 50
 99 percent confidence interval:
@@ -588,7 +588,7 @@ d = \frac{\bar{x}-\mu_0}{s}
 Suppose we are testing $H_0: \mu=50$ against the two-sided alternative hypothesis, with $n=10$ and $\alpha=0.01$. Assume that the population is known to be normal, with unknown variance. We'll use the same data as before:
 \vhalf
 \begin{rcode}
-> t.test(sample, mu = 50, conf.level = 0.99)
+> t.test(my.sample, mu = 50, conf.level = 0.99)
 (...)
 t = -1.5969, df = 9, p-value = 0.1447
 alternative hypothesis: true mean is not equal to 50
@@ -657,7 +657,6 @@ The same sample of $n=10$ sacks is used. Assume that a reasonable upper bound fo
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
-> s <- sd(sample)
 > power.t.test(n = 10, 
 +        delta = 0.5, 
 +        sd = 1, 
@@ -732,7 +731,7 @@ Graphical/qualitative tests;
 \vone
 \begin{rcode}
 > library(car)
-> qqPlot(sample,
+> qqPlot(my.sample,
 +        pch=16,
 +        cex=1.5,
 +        las=1)
@@ -772,10 +771,10 @@ In this case, rejection of the null hypothesis suggests evidence that the \textb
 Even thought the Lilliefors / Kolmogorov-Smirnov test is possibly the most widely used for normality testing, the Shapiro-Wilk test is recommended as a better alternative in Michael Crawley's \textit{The R Book}, and will be used throughout this course.
 \vhalf
 \begin{rcode}
-> shapiro.test(sample)
+> shapiro.test(my.sample)
 
 Shapiro-Wilk normality test
-data:  sample
+data:  my.sample
 W = 0.8809, p-value = 0.1335
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
@@ -793,7 +792,7 @@ Possibly the strongest assumption of the statistical model used for the t-test i
 While I know of no procedure to test independence in the general case, the special case of serial autocorrelations in the data (which can emerge, for instance, as a consequence of heating effects or equipment degradation) can be tested by a procedure known as the Durbin-Watson test:
 \begin{rcode}
 > library(car)
-> durbinWatsonTest(lm(sample ~ 1))
+> durbinWatsonTest(lm(my.sample ~ 1))
 
 lag Autocorrelation D-W Statistic p-value
 1      -0.0848535      2.111733   0.898
@@ -849,7 +848,7 @@ After examining the green peas example, it is interesting to go back and follow 
 
 \textbf{Recommended reading}
 
-\benums A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide} - {\tiny\url{http://www.statisticsdonewrong.com}}
+\benums A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide}. No Starch Press, 2015 ({\tiny\url{http://www.statisticsdonewrong.com}})
 \item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
 \item E. Ernst and S. Singh, \textit{Trick or Treatment}, Norton \& Company, 2009.
 \eenum
