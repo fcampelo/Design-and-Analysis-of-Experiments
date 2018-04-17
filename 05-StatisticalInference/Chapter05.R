@@ -3,13 +3,12 @@ rm(list=ls())
 
 #===================
 # Greenpeas example
-# Install required package
 
 # load data (single vector)
-sample <- scan("../data files/greenpeas.txt")
+my.sample <- read.table("../data files/greenpeas.txt")
 
 # Mean of normal distribution, variance unknown, one-sided test
-t.test(sample,
+t.test(my.sample,
        alternative = "less",
        mu          = 50,
        conf.level  = 0.99)

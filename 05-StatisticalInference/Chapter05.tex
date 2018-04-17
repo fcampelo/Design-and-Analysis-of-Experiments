@@ -124,17 +124,31 @@ The \textit{hypothetico-deductive model} of construction of scientific knowledge
 \lfr{Image: \url{http://www.philosophybasics.com/philosophers_ockham.html}}
 \end{ftst}
 
+%=====
+
+\begin{ftst}
+	{Statistical hypotheses}
+	{Comparing Competing Hypotheses}
+	As multiple, competing hypotheses can be proposed to explain any given phenomenon, it is common to contrast these proposed explanations using a number of criteria. 
+	\vone
+	Besides the required testability / falsifiability and the desired parsimony, common ones include:
+	\vone
+	\bitems Scope: how applicable is the hypothesis to multiple instances of the phenomenon it addresses?
+	\item External consistency: how well does the hypothesis fit with existing, well-accepted knowledge systems?
+	\eitem
+	\lfr{Also refer to Schick \& Vaughn's book \textit{How to think about weird things: critical thinking for a New Age.} McGraw-Hill, 2013.}
+\end{ftst}
 
 %=====
 
 \begin{ftst}
 {Statistical Hypotheses}
 {Definitions}
-\textit{Statistical hypotheses} are defined as objective statements about parameters of one ore more populations;
+\textit{Statistical hypotheses} are defined as objective statements about parameters of one or more populations;
 \vone
 \textbf{Attention}: the statements in statistical hypotheses are about parameters of the \textit{population} or \textit{model}, \textbf{not the \textit{sample}}.
 \vone
-On frequentist approaches, the formal test of hypotheses involves the contrast between \textit{null} and \textit{alternative} hypotheses.
+the \textit{null hypothesis significance testing} (NHST) approach involves the contrast between \textit{null} and \textit{alternative} hypotheses.
 \begin{columns}[T]
 	\column{0.48\textwidth}
 	\begin{block}{Null hypothesis ($H_0$)}
@@ -167,9 +181,9 @@ Determination of the reference value for the null hypothesis $H_0$:
 \vone
 Hypothesis testing involves:
 
-\bitems Obtaining the sample;
-	\item Calculation of test statistics;
-	\item Decision based on the computed value;
+\bitems Obtaining a sample;
+	\item Calculating test statistics;
+	\item Deciding based on the computed value;
 \eitem
 \end{ftst}
 
@@ -189,7 +203,7 @@ H_0: \mu = 50kg \\
 H_1: \mu \neq 50kg 
 \end{cases}\eqs
 \vone
-Suppose still that $n = 10$ packs are randomly sampled, and their contents are weighted using a calibrated scale;
+Suppose still that $n = 10$ sacks are randomly sampled, and their contents are weighted using a reliable scale;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -199,17 +213,34 @@ Suppose still that $n = 10$ packs are randomly sampled, and their contents are w
 %=====
 
 \begin{ftst}
+	{Statistical Hypotheses}
+	{Example}
+	Notice that we are already adopting a number of underlying assumptions (both statistical and technical):
+	\vhalf
+	\bitems The mean is a good measure for our question of interest (under-underlying assumptions: the variance is small enough, the customers purchase larger quantities so that on average the deal is fair, ...)
+	\spitem The sacks sampled are representative of our population of interest (i.e., of the sacks that are actually going to be sold);
+	\spitem The contents of the sacks are only green peas (no significant amounts of stones or other contaminants);
+	\spitem ...
+	\eitem
+
+	\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+	\end{tikzpicture}
+	\lfr{Image: \url{http://www.storko.eu/ed_files/image/green-peas.jpg}}
+\end{ftst}
+
+%=====
+
+\begin{ftst}
 {Statistical Hypotheses}
 {Example}
-Since the sample mean $\bar{x}$ is a good estimator of the real mean $\mu$, common sense suggests that:
+Since the sample mean $\bar{X}$ is a good estimator of the real mean $\mu$, common sense suggests that:
 
 \bitems If $\bar{x} \cong 50$kg - corroboration of $H_0$;
 \item If $\bar{x} \ll 50$kg or $\bar{x} \gg 50$kg - refutation of $H_0$;
 \eitem
 \vone
-That is, we can use $\bar{x}$ as the basis for a statistical test.
-\vone
-But how to define a \textit{critical region} for the rejection of $H_0$?
+That is, we can use $\bar{x}$ as the basis for a test. But how to define a \textit{critical region} for the rejection of $H_0$?
 \vone\vhalf
 \centering\includegraphics[width=\textwidth]{../figs/regcrit.png}
 \begin{tikzpicture}[remember picture,overlay]
@@ -229,7 +260,7 @@ But how to define a \textit{critical region} for the rejection of $H_0$?
 The probability of occurrence of a false positive in any hypothesis testing procedure is generally known as the \textit{significance level} of the test, represented by Greek letter $\alpha$:
 \beqs \alpha = P\left(\mbox{type I error}\right) = P\left(\mbox{reject }H_0|H_0\mbox{ is true}\right)\eqs
 \vone
-Another frequently used term is the \textit{confidence level} of the test, given by $(1-\alpha)$.
+Another frequently used term is the \textit{confidence level} of the test, given by $(1-\alpha)$ or, sometimes, as $100(1-\alpha)\%$.
 \end{ftst}
 
 %=====
@@ -239,7 +270,7 @@ Another frequently used term is the \textit{confidence level} of the test, given
 {Type I error}
 For a given sample, the selected value of $\alpha$ defines the critical threshold for the rejection of $H_0$.
 \vone
-If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of values of $\bar{x}$ is aproximately normal (assuming the CLT holds), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
+If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of values of $\bar{x}$ is approximately normal (assuming the CLT conditions are met), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
 \vone
 For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region under the null hypothesis is $1-\alpha = 0.95$.
 \begin{tikzpicture}[remember picture,overlay]
@@ -310,7 +341,7 @@ If $H_0$ is false, the smaller the magnitude of the difference between the real 
 These characteristics lead to the following classification of the conclusions obtained from the test of hypotheses:
 \begin{block}{}
 \bitems Rejection of $H_0$ - \textit{strong} conclusion; 
-\spitem Failure to reject $H_0$ - \textit{weak} conclusion (but we can fortify it);
+\spitem Failure to reject $H_0$ - \textit{weak} conclusion (but we can strengthen it);
 \eitem
 \end{block}
 \vone
@@ -352,7 +383,7 @@ H_1: \mu \neq 50kg
 \vone
 Let the desired significance level be $\alpha = 0.05$;
 \vone
-Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with $Var(\bar{X})=\sigma^2/n$ and -- \textbf{if $H_0$ is true } -- a mean of $\mu_{\bar{X}}=\mu_0=50$;
+Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with $Var(\bar{X})=\sigma^2/n$ and, \underline{\textbf{if $H_0$ is true}}, a mean of $\mu_{\bar{X}}=\mu_0=50$;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -366,7 +397,7 @@ Given these characteristics, we expect that the sampling distribution of $\bar{X
 Based on these characteristics, the standardized variable
 \beqs Z_0 = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}\eqs
 \vhalf
-\noindent will be distributed according to the standard normal, $\mathcal{N}\left(0,1\right)$, \textbf{if $\mathbf{H_0}$ is true}.
+\noindent will be distributed, \underline{\textbf{under the null hypothesis}}, according to the standard normal, $\mathcal{N}\left(0,1\right)$.
 \vhalf
 This result implies that:
 \beqs
@@ -447,9 +478,9 @@ Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to rejec
 	{Hypothesis Testing}
 	{Mean of a normal distribution, variance unknown}
 	\begin{rcode}
-> sample <- as.numeric(scan("../data files/greenpeas.txt"))
+> my.sample <- read.table("../data files/greenpeas.txt")
 
-> t.test(sample,
+> t.test(my.sample,
 +        alternative = "less",
 +        mu = 50,
 +        conf.level = 0.99)
@@ -585,7 +616,7 @@ Given a desired test, its power is essentially a function of 4 elements:
 	\item Sample size.
 \eitem
 \vone
-The experimenter generally have very little control over the first two.
+The experimenter generally has very little control over the first two.
 \end{ftst}
 
 %=====
@@ -612,7 +643,7 @@ Having obtained this estimation of the Type-II error probability, one can run hi
 \vone
 The test will have lower power for differences smaller than $\delta^*$, but these differences are below the minimally interesting effect; any effect greater than $\delta^*$ will result in a higher power for the test;
 \vone
-This technique can also be used as a way to compute the maximum necessary sample size for the experiment.
+This technique is most useful to compute the required sample size for the experiment.
 \end{ftst}
 
 %=====
@@ -622,7 +653,7 @@ This technique can also be used as a way to compute the maximum necessary sample
 {Example}
 Suppose that on the green peas example we are really interested in detecting negative deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01\times 50 = 0.5$kg. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The desired significance is $\alpha = 0.01$.
 \vone
-The same sample of $n=10$ sacks is used. Assume that you estimated a reasonable standard deviation for this sample as $s=1$kg. From this data, we can compute the power of this test as:
+The same sample of $n=10$ sacks is used. Assume that a reasonable upper bound for the standard deviation can be estimated as $\sigma=1$kg. From this data, we can compute the power of this test as:
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
@@ -671,7 +702,7 @@ power = 0.85
 alternative = one.sided
 \end{rcode}
 \vhalf
-We need at least 48 observations to detect a $-5g\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
+We need at least 48 observations to detect a $-0.5kg\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \node[anchor=south east,yshift=140pt,xshift=-182pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{(round this value up)}};
