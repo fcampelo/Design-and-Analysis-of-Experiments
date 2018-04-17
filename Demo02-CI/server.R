@@ -39,7 +39,7 @@ shinyServer(function(input, output) {
                    y    = c(CI_lower[i], CI_upper[i]),
                    type = "l",
                    lwd  = ifelse(isout[i], 3, 2),
-                   col  = ifelse(isout[i], "red", "green"))
+                   col  = ifelse(isout[i], "red", "blue"))
         }
         grid(NA, NULL)
         points(x    = c(0, K),
