@@ -284,7 +284,7 @@ F_0 = \frac{MS_{\mbox{\tiny\textit{Levels}}}}{MS_E}
 If $H_0$ is false, the expected value of $MS_{\mbox{\tiny\textit{Levels}}}$ is larger than that of $MS_E$, which results in larger values of $F_0$ and defines the critical region for our test:
 \vhalf
 \begin{block}{}
-\centering Reject $H_0$ at the $\alpha$ significance level if\\$f_0>F_{\alpha;(a-1),a(n-1)}$
+\centering Reject $H_0$ at the $\alpha$ significance level if\\$f_0>F_{1-\alpha;(a-1),a(n-1)}$
 \end{block}
 \end{ftst}
 
@@ -654,7 +654,7 @@ D - B == 0  4.2200   1.8056  6.6344
 {Some final considerations}
 The kind of comparisons that are to be performed after an ANOVA should be planned in advance, as it influences your data collection and sample size calculations. There are of course sample size formulas for the pure ANOVA, but these are usually of limited use since researchers frequently want to know where the detected differences lie.
 \vone
-There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow he ideas outlined above: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
+There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow the ideas outlined above: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
 \end{ftst}
 
 %=====
