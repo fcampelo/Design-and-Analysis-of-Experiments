@@ -1,5 +1,7 @@
 # clean workspace
 rm(list=ls())
+this.dir <- dirname(parent.frame(2)$ofile)
+setwd(this.dir)
 
 # install required packages if needed
 packages_needed <- c("ggplot2","lmtest","dplyr")
