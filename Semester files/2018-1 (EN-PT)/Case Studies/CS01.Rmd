@@ -1,25 +1,98 @@
 ---
-title: "EEE933 - Case Study 01"
-author: "Performance of a new software version"
-output: pdf_document
+title: EEE933 - Design and Analysis of Experiments
+
+# Use letters for affiliations
+author:
+  - name: Case Study 01
+
+# For footer text  TODO(fold into template, allow free form two-authors)
+#lead_author_surname: ELE077 - TC1
+
+# Place DOI URL or CRAN Package URL here
+#doi: "https://cran.r-project.org/package=YourPackage"
+
+# Abstract
+abstract: |
+  Experiment: erformance of a new software version.
+
+# Optional: Acknowledgements
+# acknowledgements: |
+#   This template package builds upon, and extends, the work of the excellent 
+#   [rticles](https://cran.r-project.org/package=rticles) package, and both rely on
+#   the [PNAS LaTeX](http://www.pnas.org/site/authors/latex.xhtml) macros. Both sources
+#   are gratefully acknowledged as this work would not have been possible without them.
+#   Our extensions are under the same respective licensing term 
+#   ([GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html) and
+#   [LPPL (>= 1.3)](https://www.latex-project.org/lppl/)).
+
+# Optional: One or more keywords
+# keywords:
+#   - one
+#   - two
+#   - optional
+#   - keywords
+#   - here
+
+# Font size of the document, values of 9pt (default), 10pt, 11pt and 12pt
+fontsize: 11pt
+
+# Optional: Force one-column layout, default is two-column
+one_column: true
+
+# Optional: Enables lineo mode, but only if one_column mode is also true
+#lineno: true
+
+# Optional: Enable one-sided layout, default is two-sided
+#one_sided: true
+
+# Optional: Enable section numbering, default is unnumbered
+#numbersections: true
+
+# Optional: Specify the depth of section number, default is 5
+#secnumdepth: 5
+
+# Optional: Bibliography 
+#bibliography: pinp
+
+# Optional: Enable a 'Draft' watermark on the document
+#watermark: true
+
+# Customize footer, eg by referencing the vignette
+#footer_contents: "YourPackage Vignette"
+
+# Optional: Skip inserting final break between acknowledgements, default is false
+skip_final_break: true
+
+# Produce a pinp document
+output: pinp::pinp
+
+
+# Required: Vignette metadata for inclusion in a package.
+#vignette: >
+#  %\VignetteIndexEntry{YourPackage-vignetteentry}
+#  %\VignetteKeywords{YourPackage, r, anotherkeyword}
+#  %\VignettePackage{YourPackage}
+#  %\VignetteEngine{knitr::rmarkdown}
 ---
 
-## The experiment
+
+# The experiment  
+
 The **current** version of a software used for simulating certain electromagnetic characteristics of a patch antenna is known, based on extensive past experience, to have a mean simulation time of $\mu = 55s$ seconds and a variance $\sigma^2 = 100s^2$.
 
-A **new** version of this software is developed, and we wish to investigate whether it results in _performance gains_ when compared to the currently available version. To investigate this particular question, $16$ simulations of small variations of the patch antenna geometry are executed, and their times are recorded as (see file `CS01_data.csv`, available on ):
+A **new** version of this software is developed, and we wish to investigate whether it results in _performance gains_ (i.e., smaller mean runtime and/or smaller variance) in relation to the current standard. To investigate this particular question, $16$ simulations are executed, and their times are recorded as (`CS01_data.csv`, available on [https://git.io/vpGxG](https://git.io/vpGxG)):
 
 ```{r, echo = FALSE}
 x <- read.table("CS01_data.csv", header = TRUE)
-print(x)
+x[, 1]
 ```
-
-For this experiment in particular, we are interested in investigating possible gains both in terms of _mean run time_ and of the _variance of run times_.
 
 ***
 
-## Activities  
-### For the test on the mean runtime:  
+# Activities  
+
+## For the test on the mean runtime  
+
 For this test, assume a desired significance level $\alpha = 0.01$. The teams must perform the following activities:
 
 - Define the statistical hypotheses to be tested (null/alternative).
@@ -29,7 +102,8 @@ For this test, assume a desired significance level $\alpha = 0.01$. The teams mu
 - Validate and discuss the assumptions of the test.
 - Discuss the power of the test (if needed), and the adequacy of the available sample size for this particular test.
 
-### For the test on the standard deviation:  
+## For the test on the standard deviation  
+
 For this test, assume a desired significance level $\alpha = 0.05$. The teams must perform the following activities:
 
 - Define the statistical hypotheses to be tested (null/alternative).
@@ -45,7 +119,8 @@ After performing the activities related to each test individually, the team must
 
 ***
 
-## Report  
+# Report  
+
 Each team must prepare a short report detailing the experiment and the analysis performed. The report will be evaluated according to the following criteria:
 
 - Use of the predefined format (see below);
@@ -69,7 +144,10 @@ Report templates are available on  [https://git.io/vHk0F](https://git.io/vHk0F),
 
 ***
 
-## Deadline  
+# Deadline  
+
 The report files (pdf + rmd) must be compressed into a single file and uploaded to the activity **Case Study 01** on Moodle, until **Monday, April 30th 2018, 11:59p.m.**. After that deadline the system will be closed. 
+
+**Important**: Only ONE submission is required for each team.
 
 **Important**: Reports will NOT be received by e-mail or in printed form.
