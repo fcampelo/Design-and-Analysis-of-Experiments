@@ -80,7 +80,7 @@ output: pinp::pinp
 
 The **current** version of a software used for simulating certain electromagnetic characteristics of a patch antenna is known, based on extensive past experience, to have a mean simulation time of $\mu = 55s$ seconds and a variance $\sigma^2 = 100s^2$.
 
-A **new** version of this software is developed, and we wish to investigate whether it results in _performance gains_ (i.e., smaller mean runtime and/or smaller variance) in relation to the current standard. To investigate this particular question, $16$ simulations are executed, and their times are recorded as (`CS01_data.csv`, available on [https://git.io/vpGxG](https://git.io/vpGxG)):
+A **new** version of this software is developed, and we wish to investigate whether it results in _performance gains_ (i.e., smaller mean runtime and/or smaller variance) in relation to the current standard. To investigate this particular question, $14$ simulations are executed, and their times are recorded as (`CS01_data.csv`, available on [https://git.io/vpGxG](https://git.io/vpGxG)):
 
 ```{r, echo = FALSE}
 x <- read.table("CS01_data.csv", header = TRUE)
