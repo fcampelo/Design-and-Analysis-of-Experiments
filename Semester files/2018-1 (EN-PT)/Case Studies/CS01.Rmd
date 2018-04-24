@@ -1,0 +1,75 @@
+---
+title: "EEE933 - Case Study 01"
+author: "Performance of a new software version"
+output: pdf_document
+---
+
+## The experiment
+The **current** version of a software used for simulating certain electromagnetic characteristics of a patch antenna is known, based on extensive past experience, to have a mean simulation time of $\mu = 55s$ seconds and a variance $\sigma^2 = 100s^2$.
+
+A **new** version of this software is developed, and we wish to investigate whether it results in _performance gains_ when compared to the currently available version. To investigate this particular question, $16$ simulations of small variations of the patch antenna geometry are executed, and their times are recorded as (see file `CS01_data.csv`, available on ):
+
+```{r, echo = FALSE}
+x <- read.table("CS01_data.csv", header = TRUE)
+print(x)
+```
+
+For this experiment in particular, we are interested in investigating possible gains both in terms of _mean run time_ and of the _variance of run times_.
+
+***
+
+## Activities  
+### For the test on the mean runtime:  
+For this test, assume a desired significance level $\alpha = 0.01$. The teams must perform the following activities:
+
+- Define the statistical hypotheses to be tested (null/alternative).
+- Discuss and define the other experimental parameters of the test (smallest effect of practical relevance, desired power, _etc._). This is specific for each team, but must be determined based on discussions, related to the topic of the experiment.
+- Test the hypotheses and decide for rejecting (or not) the null hypothesis.
+- Calculate the confidence interval on the mean runtime.
+- Validate and discuss the assumptions of the test.
+- Discuss the power of the test (if needed), and the adequacy of the available sample size for this particular test.
+
+### For the test on the standard deviation:  
+For this test, assume a desired significance level $\alpha = 0.05$. The teams must perform the following activities:
+
+- Define the statistical hypotheses to be tested (null/alternative).
+- Test the hypotheses and decide for rejecting (or not) the null hypothesis.
+- Calculate the confidence interval on the variance of the runtime.
+- Validate and discuss the assumptions of the test.
+
+
+After performing the activities related to each test individually, the team must:
+
+- Draw conclusions and provide recommendations regarding the adoption (or not) of the new software version.
+- Discuss possible ways to improve this experiment.
+
+***
+
+## Report  
+Each team must prepare a short report detailing the experiment and the analysis performed. The report will be evaluated according to the following criteria:
+
+- Use of the predefined format (see below);
+- Reproducibility of the analyses;
+- Technical quality;
+- Logical structure;
+- Correct use of language (grammar, orthography, _etc._);
+
+The report must **necessarily** be prepared using [R Markdown](http://rmarkdown.rstudio.com), and must contain the full code needed to reproduce the analysis performed by the team, embedded in the form of _code blocks_. Each team must deliver the following files:
+
+- The report file, compiled in **.pdf** .
+- The original (source) of the report, in **.Rmd**.
+
+the **.Rmd** file must be able to be recompiled, if needed (tip: save your **.Rmd** file using UTF-8 encoding, to prevent compilation problems in other operational systems. 
+
+Report templates are available on  [https://git.io/vHk0F](https://git.io/vHk0F), and an example of report structure can be consulted on [https://git.io/vHk0j](https://git.io/vHk0j). 
+
+**Important**: Please include in the report the roles of each team member (Coordinator, Recorder, Checker and, for 4-member teams, Monitor)
+
+**Important**: Reports can be prepared in either Portuguese or English.
+
+***
+
+## Deadline  
+The report files (pdf + rmd) must be compressed into a single file and uploaded to the activity **Case Study 01** on Moodle, until **Monday, April 30th 2018, 11:59p.m.**. After that deadline the system will be closed. 
+
+**Important**: Reports will NOT be received by e-mail or in printed form.
