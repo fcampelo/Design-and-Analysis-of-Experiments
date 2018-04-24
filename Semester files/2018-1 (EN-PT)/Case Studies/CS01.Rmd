@@ -146,7 +146,7 @@ Report templates are available on  [https://git.io/vHk0F](https://git.io/vHk0F),
 
 # Deadline  
 
-The report files (pdf + rmd) must be compressed into a single file and uploaded to the activity **Case Study 01** on Moodle, until **Monday, April 30th 2018, 11:59p.m.**. After that deadline the system will be closed. 
+The report files (pdf + rmd) must be compressed into a single file and uploaded to the activity **Case Study 01** on Moodle, until **Friday, May 4th 2018, 11:59p.m.**. After that deadline the system will be closed. 
 
 **Important**: Only ONE submission is required for each team.
 
