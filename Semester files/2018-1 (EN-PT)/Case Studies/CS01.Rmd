@@ -13,7 +13,7 @@ author:
 
 # Abstract
 abstract: |
-  Experiment: erformance of a new software version.
+  Experiment: performance of a new software version.
 
 # Optional: Acknowledgements
 # acknowledgements: |
