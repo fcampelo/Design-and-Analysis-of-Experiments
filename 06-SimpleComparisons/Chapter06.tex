@@ -31,22 +31,27 @@
   \begin{frame}[b]
 		\frametitle{}
 \begin{columns}[T]
-\column{0.79\textwidth}
-\flushright{\small ``\textit{Science is simply common sense at its best,\\
-that is, rigidly accurate in observation,\\
-and merciless to fallacy in logic.}''\\\ \\
-Thomas H. Huxley\\
-1825-1895\\
-English biologist\\
+\column{0.7\textwidth}
+\flushright{\small ``\textit{If you get a million dollars for research it\\
+will be very helpful, of course;\\
+but what can really make a difference are\\
+the good ideas, recognizing those questions\\
+which are really important,\\
+which are yet to be answered. 
+}''\\
+\vspace{1em}
+Suzana Herculano-Houzel\\
+1972 --\\
+Brazilian neuroscientist\\
 }
-\column{0.21\textwidth}
+\column{0.3\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=26pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/huxley.png}};
+{\includegraphics[width=\textwidth]{../figs/SuzanaHouzel.jpeg}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: \url{http://www.iep.utm.edu/huxley/}}
+\lfr{Image by Jorge Bispo: \url{https://goo.gl/KdqQkd}}
 \end{frame}
 
 %=====
@@ -441,35 +446,35 @@ One can at most test for serial autocorrelation in the residuals using Durbin-Wa
 
 %=====
 
-\begin{ftstf}
-{Comparison of two means}
-{Example: Length of steel rods}
-The assumptions of the test must be verified. In this particular case:
-
-\bitems Normality of the residuals;
-\item Equality of variance of the residuals;
-\item \alert{Independence of the residuals}.
-\eitem
-\begin{rcode}
-> library(lmtest)
-> with(y,
-+      dwtest(Length.error~Process))
-Durbin-Watson test
-data:  Length.error ~ Process
-DW = 2.2215, p-value = 0.6838
-alternative hypothesis: true autocorrelation 
-is greater than 0
-
-> plot(resid,
-+      pch=16,
-+      cex=1.5,
-+      type="b",
-+      las=1)
-\end{rcode}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/steelrodsind.pdf}};
-\end{tikzpicture}
-\end{ftstf}
+%\begin{ftstf}
+%{Comparison of two means}
+%{Example: Length of steel rods}
+%The assumptions of the test must be verified. In this particular case:
+%
+%\bitems Normality of the residuals;
+%\item Equality of variance of the residuals;
+%\item \alert{Independence of the residuals}.
+%\eitem
+%\begin{rcode}
+%> library(lmtest)
+%> with(y,
+%+      dwtest(Length.error~Process))
+%Durbin-Watson test
+%data:  Length.error ~ Process
+%DW = 2.2215, p-value = 0.6838
+%alternative hypothesis: true autocorrelation 
+%is greater than 0
+%
+%> plot(resid,
+%+      pch=16,
+%+      cex=1.5,
+%+      type="b",
+%+      las=1)
+%\end{rcode}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/steelrodsind.pdf}};
+%\end{tikzpicture}
+%\end{ftstf}
 
 %=====
 
