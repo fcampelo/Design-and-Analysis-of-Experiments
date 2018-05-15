@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -87,7 +87,7 @@ One of the critical aspects of manufacturing steel rods is cutting the bars with
 This process is prone to errors, which result in additional costs for standardizing and reprocessing the rods.
 \end{columns}
 \vone
-An engineer is interested in comparing the current controller of the cutting scissors with a new method that could potentially improve the performance of the process.
+An engineer is interested in comparing the current cutting process with a new method that could potentially improve the performance of the system.
 \lfr{Adapted from D.F. Carvalho Jr.'s course project for the Design and Analysis of Experiments Course, PPGEE-UFMG, June 2012. The data used in this example is not necessarily the original one.}
 \lfr{Image: \url{http://www.shutterstock.com/pic-73207399/}}
 \end{ftst}
@@ -113,22 +113,22 @@ Lets initially assume that the residuals $\epsilon_{ij}$ are iid $\mathcal{N}\le
 \begin{ftst}
 {Comparison of two means}
 {Definitions}
-What we wish is to perform an inference about the difference in the mean values of constructive deviations for the two controllers. In this case, a reasonable response variable would be the \textit{absolute error}, from which we could test our hypotheses.
+What we wish is to perform an inference about the difference in the mean values of constructive deviations for the two processes. In this case, a possible response variable would be the \textit{absolute error}, e.g., $y = |\ell - \ell_{nominal}|$.
 \vhalf
 The statistical hypotheses can be stated as:
 \beqs
 \begin{cases}
 H_0: \mu_1 - \mu_2 = 0\\
-H_1: \mu_1 - \mu_2 \neq 0
+H_1: \mu_1 - \mu_2 < 0
 \end{cases}\ \ \ \mbox{\textbf{or, equivalently, }}\ \ \ \ \ \ \begin{cases}
 H_0: \mu_1 = \mu_2\\
-H_1: \mu_1 \neq \mu_2
+H_1: \mu_1 < \mu_2
 \end{cases}
 \eqs
 \vhalf
-Suppose a desired significance level $\alpha = 0.05$, and that the engineer is interested in detecting any difference larger than $15mm$ in the mean absolute error with a power $(1-\beta) = 0.8$.
+Suppose a desired significance level $\alpha = 0.05$, and that the engineer is interested in detecting any difference larger than $15cm$ in the mean absolute error with a power $(1-\beta) = 0.8$.
 \vhalf
-Also, lets assume that the variance of the process is unknown but similar for both controllers.
+Also, lets assume (for the moment) that the variance of the process is unknown but similar for both systems.
 \end{ftst}
 
 %=====
@@ -144,7 +144,7 @@ S_p^2 = \frac{\left(n_1-1\right)S_1^2+\left(n_2-1\right)S_2^2}{n_1+n_2-2}=wS_1^2
 \vone
 Based on this estimator and the stated assumptions, we have that:
 \beqs
-T = \frac{\left(\bar{y_1} - \bar{y_2}\right) - \left(\mu_1 - \mu_2\right)}{S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\sim t_{\left(n_1+n_2-2\right)}
+T = \frac{\left(\bar{y_1} - \bar{y_2}\right) - \left(\mu_1 - \mu_2\right)}{S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\sim t^{\left(n_1+n_2-2\right)}
 \eqs
 \end{ftst}
 
@@ -158,17 +158,17 @@ If we recall our working hypotheses:
 \beqs
 \begin{cases}
 H_0: \mu_1 - \mu_2 = 0\\
-H_1: \mu_1 - \mu_2 \neq 0
+H_1: \mu_1 - \mu_2 < 0
 \end{cases}
 \eqs
 \vone
 
-\noindent we have that, under $H_0$: 
+\noindent we have that, \underline{under $H_0$}: 
 \beqs 
-t_0 = \frac{\left(\bar{y_1} - \bar{y_2}\right) - \cancelto{0}{\left(\mu_1 - \mu_2\right)}}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} = \frac{\left(\bar{y_1} - \bar{y_2}\right)}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\sim t_{\left(n_1+n_2-2\right)}
+t_0 = \frac{\left(\bar{y_1} - \bar{y_2}\right) - \cancelto{0}{\left(\mu_1 - \mu_2\right)}}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} = \frac{\left(\bar{y_1} - \bar{y_2}\right)}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}\sim t^{\left(n_1+n_2-2\right)}
 \eqs
 \vone 
-We'll reject $H_0$ at the $(1-\alpha)$ confidence level if $|t_0|\geq t_{1-\alpha/2; (n_1+n_2-2)}$
+We'll reject $H_0$ at the $(1-\alpha)$ confidence level if $t_0\leq t^{(n_1+n_2-2)}_{\alpha/2}$
 \end{ftst}
 
 %=====
@@ -180,7 +180,7 @@ Now recall that the process engineer was interested in some very specific charac
 
 \bitems Significance: $\alpha = 0.05$;
 \item Power: $(1-\beta) = 0.8$;
-\item Minimally interesting effect: $\delta^* = 15mm$
+\item Minimally relevant effect size (MRES): $\delta^* = 15cm$
 \eitem
 \vone
 From these specifications, we can obtain the required sample sizes. The derivation of the sample size formulas is not particularly difficult, but we'll concentrate only on the results. More details can be easily found in the literature\footnote[1]{\tiny Check, for instance, Paul Mathews' \textit{Sample Size Calculations}, MMB, 2010.}.
@@ -191,20 +191,14 @@ From these specifications, we can obtain the required sample sizes. The derivati
 \begin{ftst}
 {Comparison of two means}
 {Sample sizes}
-For the general case of unequal sample sizes, we have:
-
+For the specific case of approximately equal variances, the optimal sample size ratio is $n_1 = n_2 = n$, with
 \beqs
-n_1 = \left(1+\frac{n_1}{n_2}\right)\left(\frac{s_p}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
+n \approxeq 2\left(\frac{t^{(2n-2)}_{\alpha/2}+t^{(2n-2)}_{\beta}}{d^*}\right)^2
 \eqs
 \vhalf
 
-\noindent where $s_p$ is the estimated common standard deviation, and $t_{\alpha/2}$ and $t_{\beta}$ are the $\alpha/2$ and $\beta$ quantiles of the $t_{(n1+n2-2 )}$ distribution. The sample size $n_2$ can be calculated by simply substituting $(n_1/n_2)$ by $(n_2/n_1)$.
-\vone
-For equal sample sizes $(n_1 = n_2 = n)$ the expression is simplified to:
+\noindent where $d^* = \delta^*/\sigma$ is the (standardized) minimally interesting effect size; and $t^{(2n-2)}_{\alpha/2}$ and $t^{(2n-2)}_{\beta}$ are the $\alpha/2$ and $\beta$ quantiles of the $t^{(2n-2 )}$ distribution. .
 
-\beqs
-n = 2 \left(\frac{s_p}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
 \end{ftst}
 
 %=====
@@ -212,102 +206,105 @@ n = 2 \left(\frac{s_p}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
 \begin{ftst}
 {Comparison of two means}
 {Sample sizes}
-These formulas are very convenient, but leave us with a riddle: we need variance estimate in order to calculate the sample size, but we need observations to be able to estimate the variance.
+These formulas are very convenient, but leave us with a riddle: we need variance estimate in order to calculate the sample size, but we need observations to be able to estimate the variance!
 \vone
 There are a few ways to proceed in this case. The most practical are:
 \vhalf
 \bitems Use process knowledge or historical data to obtain an (initial) estimate of the  variance;
+\spitem Use a standardized MRES to calculate sample size;
 \spitem Perform a pilot study and collect samples to estimate the variance.
 \eitem
-\vhalf The first method is almost always preferable since it does not imply additional costs for the experiment.
+\vhalf Each approach has its own advantages and drawbacks.
 \end{ftst}
+
+%=====
+
+%\begin{ftst}
+%{Comparison of two means}
+%{Sample sizes}
+%If no information is available to estimate the variance, a pilot study must be performed to obtain this value. The sample size required for this pilot study is given by:
+%\beqs
+%n_{\mbox{\textit{pilot}}}\approx 2\left(\frac{z_{\alpha_n/2}}{e_{n}}\right)^2
+%\eqs
+%\vhalf
+%
+%\noindent where $(1-\alpha_{n})$ is the desired confidence level for the sample size estimate of the main study, and $e_n$ is the maximum relative error allowed for the sample size.
+%\vhalf
+%This calculation can yield some scarily large sample sizes for a pilot study (much larger than would be actually required for the main study itself), so use this with caution.
+%\end{ftst}
 
 %=====
 
 \begin{ftst}
 {Comparison of two means}
 {Sample sizes}
-If no information is available to estimate the variance, a pilot study must be performed to obtain this value. The sample size required for this pilot study is given by:
-\beqs
-n_{\mbox{\textit{pilot}}}\approx 2\left(\frac{z_{\alpha_n/2}}{e_{n}}\right)^2
-\eqs
-\vhalf
-
-\noindent where $(1-\alpha_{n})$ is the desired confidence level for the sample size estimate of the main study, and $e_n$ is the maximum relative error allowed for the sample size.
-\vhalf
-This calculation can yield some scarily large sample sizes for a pilot study (much larger than would be actually required for the main study itself), so use this with caution.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Comparison of two means}
-{Sample sizes}
-For the steel rods experiment, suppose that the engineer uses data available from the controller manuals, as well as historical measurements, to estimate the common standard deviation for the cutting process as $\hat{\sigma} \approxeq 15mm$.
-\vhalf
-Assuming that equal sample sizes are desired, we can simply use the formula:
-\beqs
-n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
-\vone
-Easy, right?
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Comparison of two means}
-{Sample sizes}
-For the steel rods experiment, suppose that the engineer uses data available from the controller manuals, as well as historical measurements, to estimate the common standard deviation for the cutting process as $\hat{\sigma} \approxeq 15mm$.
+For the steel rods experiment, suppose that the engineer uses data available from the system manuals, as well as historical measurements, to estimate a reasonable upper bound for the common standard deviation as $\sigma \approxeq 15cm$.
 \vhalf
 Assuming that equal sample sizes are desired, we can simply use the formula:
-\beqs
-n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
 \vone
-Easy, right?
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/boromir.jpg}};
-\end{tikzpicture}
+\beqs
+n \approxeq 2\left[\left(t^{(2n-2)}_{\alpha/2}+t^{(2n-2)}_{\beta}\right)\frac{\sigma}{\delta^*}\right]^2
+\eqs
+\vone\vone\vone
+\flushright Easy, right?
 \end{ftst}
+
+%%=====
+%
+%\begin{ftst}
+%{Comparison of two means}
+%{Sample sizes}
+%For the steel rods experiment, suppose that the engineer uses data available from the controller manuals, as well as historical measurements, to estimate the common standard deviation for the cutting process as $\hat{\sigma} \approxeq 15mm$.
+%\vhalf
+%Assuming that equal sample sizes are desired, we can simply use the formula:
+%\beqs
+%n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
+%\eqs
+%\vone
+%Easy, right?
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/boromir.jpg}};
+%\end{tikzpicture}
+%\end{ftst}
 
 %=====
 
 \begin{ftst}
 {Comparison of two means}
 {Sample sizes}
-The last problem we have to solve is that the values of $t_{\alpha/2}$ and $t_{\beta}$ are also dependent of $n$, which makes the equation
-\beqs
-n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
-\vhalf transcendental in $n$. We'll have to iterate until we find the smallest $n$ that satisfies:
+The last problem we have to solve is that the values of $t^{(2n-2)}_{\alpha/2}$ and $t^{(2n-2)}_{\beta}$ are also dependent of $n$, which makes the sample size equation transcendental in $n$. 
+\vone
+We can solve that by using an initial estimate of $t^{(2n-2)}_{\kappa}\approx z_{\kappa}$, and iterating until we find the smallest $n$ that satisfies:
+\vone
 \beqs
 n \geq 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
 \eqs
-\vhalf
-Usually $t_{\alpha/2}\approx z_{\alpha/2}$ is used for the first iteration. Easy, right?
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Comparison of two means}
-{Sample sizes}
-The last problem we have to solve is that the values of $t_{\alpha/2}$ and $t_{\beta}$ are also dependent of $n$, which makes the equation
-\beqs
-n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
-\vhalf transcendental in $n$. We'll have to iterate until we find the smallest $n$ that satisfies:
-\beqs
-n \geq 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
-\eqs
-\vhalf
-Usually $t_{\alpha/2}\approx z_{\alpha/2}$ is used for the first iteration. Easy, right?
 \lfr{Image: http://vigilantmeadow.deviantart.com/art/DON-T-PANIC-165415311}
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=-5pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.15\textwidth]{../figs/dontpanic.png}};
+\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.15\textwidth]{../figs/dontpanic.png}};
 \end{tikzpicture}
 \end{ftst}
+
+%=====
+
+%\begin{ftst}
+%{Comparison of two means}
+%{Sample sizes}
+%The last problem we have to solve is that the values of $t_{\alpha/2}$ and $t_{\beta}$ are also dependent of $n$, which makes the equation
+%\beqs
+%n = 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
+%\eqs
+%\vhalf transcendental in $n$. We'll have to iterate until we find the smallest $n$ that satisfies:
+%\beqs
+%n \geq 2 \left(\frac{\hat{\sigma}}{\delta^*}\right)^2\left(t_{\alpha/2}+t_{\beta}\right)^2
+%\eqs
+%\vhalf
+%Usually $t_{\alpha/2}\approx z_{\alpha/2}$ is used for the first iteration. Easy, right?
+%\lfr{Image: http://vigilantmeadow.deviantart.com/art/DON-T-PANIC-165415311}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=-5pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.15\textwidth]{../figs/dontpanic.png}};
+%\end{tikzpicture}
+%\end{ftst}
 
 %=====
 
@@ -316,20 +313,20 @@ Usually $t_{\alpha/2}\approx z_{\alpha/2}$ is used for the first iteration. Easy
 {Example: Length of steel rods}
 Required sample size:
 \begin{rcode}
-> ss.calc<-power.t.test(delta=15,
-                        sd=15,
-                        sig.level=0.05,
-                        power=0.8,
-                        type="two.sample",
-                        alternative="two.sided")
+> ss.calc <- power.t.test(delta       = 15,
+                          sd          = 15,
+                          sig.level   = 0.05,
+                          power       = 0.8,
+                          type        = "two.sample",
+                          alternative = "one.sided")
 
 Two-sample t test power calculation
-n = 16.71477
+n = 13.09777
 delta = 15
 sd = 15
 sig.level = 0.05
 power = 0.8
-alternative = two.sided
+alternative = one.sided
 
 NOTE: n is number in *each* group
 \end{rcode}
@@ -343,25 +340,23 @@ NOTE: n is number in *each* group
 Computationally, we can perform the t-test for comparing the means of two independent populations by:
 \vhalf
 \begin{rcode}
-> y<-read.table("../data files/steelrods.txt",
-+               header=T)
+> y <- read.table("../data files/steelrods.txt",
++                 header = TRUE)
 
-> with(y,
-+      t.test(Length.error~Process, 
-+             alternative = "two.sided", 
-+             mu = 0, 
-+             var.equal = TRUE, 
-+             conf.level = 0.95))
+> t.test(y$Length.error ~ y$Process, 
++        alternative = "less", 
++        mu          = 0, 
++        var.equal   = TRUE, 
++        conf.level  = 0.95)
 
-Two Sample t-test
-data:  Length.error by Process
-t = -14.312, df = 32, p-value = 1.849e-15
-alternative hypothesis: true difference in means is not equal to 0
+data:  y$Length.error by y$Process
+t = -14.312, df = 32, p-value = 9.244e-16
+alternative hypothesis: true difference in means is less than 0
 95 percent confidence interval:
- -0.09272982 -0.06962312
+      -Inf -7.156884
 sample estimates:
 mean in group new mean in group old 
-       0.07782353        0.15900000 
+         7.782353         15.900000 
 \end{rcode}
 \end{ftstf}
 
@@ -372,27 +367,27 @@ mean in group new mean in group old
 {Example: Length of steel rods}
 The assumptions of the test must be verified. In this particular case:
 
-\bitems \alert{Normality of the residuals};
-\item Equality of variance of the residuals;
-\item Independence of the residuals.
+\bitems \alert{Normality};
+\item Equality of variances;
+\item Independence.
 \eitem
 \begin{rcode}
-> resid<-y$Length.error - rep(means[2:1],
-+                             each=n)
+> qqPlot(y$Length.error, groups = y$Process, 
+        cex = 1.5, pch = 16,  las = 1,
+        layout = c(2, 1))
 
-> shapiro.test(resid)
-Shapiro-Wilk normality test
-data:  resid
-W = 0.9552, p-value = 0.176
+> shapiro.test(y$Length.error[y$Process == "new"])
+# W = 0.92269, p-value = 0.164
 
-> library(car)
-> qqPlot(resid,
-+        pch=16,
-+        cex=1.5,
-+        las=1)
+> shapiro.test(y$Length.error[y$Process == "old"])
+# W = 0.94971, p-value = 0.4519
 \end{rcode}
+\vhalf Reminder: the t-test is quite robust to mild\\
+to moderate violations of the normality\\
+of the residuals / groups.
+
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/steelrodsqq.pdf}};
+\node[anchor=south east,yshift=-5pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.32\textwidth]{../figs/steelrodsqq.pdf}};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -403,25 +398,26 @@ W = 0.9552, p-value = 0.176
 {Example: Length of steel rods}
 The assumptions of the test must be verified. In this particular case:
 
-\bitems Normality of the residuals;
-\item \alert{Equality of variance of the residuals};
-\item Independence of the residuals.
+\bitems Normality;
+\item \alert{Equality of variances};
+\item Independence.
 \eitem
 \begin{rcode}
-> with(y,
-+      fligner.test(Length.error~Process))
-Fligner-Killeen test of homogeneity of variances
-data:  Length.error by Process
-Fligner-Killeen:med chi-squared = 1.6837, 
-df = 1, p-value = 0.1944
+> fligner.test(Length.error ~ Process, data = y)
+# Fligner-Killeen:med chi-squared = 1.6837, 
+# df = 1, p-value = 0.1944
 
-> plot(x=rep(means[2:1],
-+            each=n),
-+      y=resid,
-+      xlab="mean",
-+      pch=16,
-+      cex=1.5,
-+      las=1)
+> resid <- tapply(X = y$Length.error, 
+         INDEX = y$Process, 
+         FUN   = function(x){x - mean(x)})
+         
+> stripchart(x        = resid, 
+             vertical = TRUE, 
+             pch      = 16, 
+             cex      = 1.5, 
+             las      = 1, 
+             xlab     = "mean",
+             ylab     = "residuals")
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/steelrodsvar.pdf}};
@@ -435,9 +431,9 @@ df = 1, p-value = 0.1944
 {Example: Length of steel rods}
 The assumptions of the test must be verified. In this particular case:
 
-\bitems Normality of the residuals;
-\item Equality of variance of the residuals;
-\item \alert{Independence of the residuals}.
+\bitems Normality;
+\item Equality of variances;
+\item \alert{Independence}.
 \eitem
 As mentioned in an earlier lecture, there is no general test for the independence assumption, and it has to be guaranteed in the design phase. 
 \vhalf
@@ -486,43 +482,49 @@ Suppose now a more general case, in which the variances of the two populations a
 For this cases, a modification on the t-test called \textit{Welch's t test} is usually employed. The Welch statistic can be calculated as:
 \beqs t^*_0 = \frac{\bar{y_1} - \bar{y_2}}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\eqs
 \vhalf
-Under the null hypothesis $t^*_0$  is distributed approximately as a $t_{\nu}$ distribution, with:
+Under the null hypothesis $t^*_0$  is distributed approximately as a $t^{(\nu)}$ distribution, with:
 \beqs  \nu = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{\left(s_1^2/n_1\right)^2}{n_1-1} + \frac{\left(s_2^2/n_2\right)^2}{n_2-1}}\eqs
 \end{ftst}
 
 %=====
 
-\begin{ftstf}
+%\begin{ftstf}
+%{Comparison of two means}
+%{Unequal variances}
+%To illustrate the use of this technique, we can use the same data from the previous example\footnote[2]{Notice that this would not be necessary, since the data collected in the previous example did not violate the equality of variances assumption.}:
+%\vhalf
+%\begin{Verbatim}[fontsize=\scriptsize]
+%> with(y,
+%+      t.test(Length.error~Process,
+%+             alternative = "two.sided",
+%+             mu = 0,
+%+             var.equal = FALSE,
+%+             conf.level = 0.95))
+%Welch Two Sample t-test
+%data:  Length.error by Process
+%t = -14.312, df = 28.386, p-value = 1.645e-14
+%alternative hypothesis: true difference in means is not equal to 0
+%95 percent confidence interval:
+% -0.09278780 -0.06956515
+%sample estimates:
+%mean in group new mean in group old 
+%       0.07782353        0.15900000 
+%\end{Verbatim}
+%\vone
+%\end{ftstf}
+
+\begin{ftst}
 {Comparison of two means}
 {Unequal variances}
-To illustrate the use of this technique, we can use the same data from the previous example\footnote[2]{Notice that this would not be necessary, since the data collected in the previous example did not violate the equality of variances assumption.}:
-\vhalf
-\begin{Verbatim}[fontsize=\scriptsize]
-> with(y,
-+      t.test(Length.error~Process,
-+             alternative = "two.sided",
-+             mu = 0,
-+             var.equal = FALSE,
-+             conf.level = 0.95))
-Welch Two Sample t-test
-data:  Length.error by Process
-t = -14.312, df = 28.386, p-value = 1.645e-14
-alternative hypothesis: true difference in means is not equal to 0
-95 percent confidence interval:
- -0.09278780 -0.06956515
-sample estimates:
-mean in group new mean in group old 
-       0.07782353        0.15900000 
-\end{Verbatim}
+The two-sample Welch t-test for considering unequal variances is usually the first test of choice, since it drops one (often inconvenient) assumption, at a very small cost in terms of power.
 \vone
-\end{ftstf}
+Calculating sample sizes for the general case (unequal variances, unequal sample sizes) is not particularly difficult, and can be done for either a \textit{balanced} case (i.e., $n_1 = n_2 = n$) or an optimal, \textit{unbalanced} case (in which $n_1 \neq n_2$).
+\vone
+For the unbalanced case, it is not particularly difficult to prove that the optimal allocation of observation is to keep:
+$$\frac{n_1}{n_2} = \frac{\sigma_1}{\sigma_2}$$.
 
-
-
-
-
-
-
+(if a good estimate of the ratio of variances is available, of course).
+\end{ftst}
 %=====
 
 
@@ -546,29 +548,9 @@ mean in group new mean in group old
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 6; Creative Commons BY-NC-SA 4.0.\\
+%=====
 
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-01,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11, Chapter 6; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
+\input{../defs/FinalSlide.tex}
 
 
 \end{document}

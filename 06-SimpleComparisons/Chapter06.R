@@ -1,5 +1,5 @@
 # clean workspace
-rm(list=ls())
+# rm(list=ls())
 
 #===================
 # Calculate sample size for steel rods experiment
@@ -8,7 +8,7 @@ rm(list=ls())
                          sig.level   = 0.05,
                          power       = 0.8,
                          type        = "two.sample",
-                         alternative = "two.sided"))
+                         alternative = "one.sided"))
 ceiling(ss.calc$n)
 
 
@@ -17,88 +17,58 @@ y <- read.table("../data files/steelrods.txt",
                 header = TRUE)
 print(y)
 
-
 #===================
-# Example of doing the test step by step (to show some of R's syntax)
-
-n <- 17   # We have 17 observations of each process
-
-# Get sample means, standard deviations
-means <- tapply(y$Length.error,
-                y$Process,
-                mean)
-
-s <- tapply(y$Length.error,
-            y$Process,
-            sd)
-
-# Calculate pooled standard deviation
-sp <- sqrt(((n - 1) * s[1] ^ 2 + (n-1) * s[2] ^ 2) / (2 * n - 2))
-
-# Test statistic:
-t0 <- (means[1] - means[2]) / (sp * sqrt(2 / n))
-
-# Critical values
-tlims <- c(qt(.025, 32), qt(.975, 32))
-
-print(tlims)
-print(t0)
-
-# p-value
-p.value <- 2 * pt(t0, 2 * n - 2) # multiply by two since H1 is two-sided.
-print(p.value)
-
-#===================
-# Much simpler way of doing this:
 # Perform two-sample t-test to compare means 
 # (assuming equal but unknown variances)
-with(y,
-     t.test(Length.error ~ Process, 
-            alternative = "two.sided", 
-            mu = 0, 
-            var.equal = TRUE, 
-            conf.level = 0.95))
+t.test(y$Length.error ~ y$Process, 
+       alternative = "less", 
+       mu          = 0, 
+       var.equal   = TRUE, 
+       conf.level  = 0.95)
 
 #===================
 # Verify the assumptions: 
 #   normality, equality of variances, independence of residuals.
 
-# Vector of residuals
-# (invert the order of the means vector to get it in the right order
-resid <- y$Length.error - rep(means[2:1],
-                              each = n)
-
-# Normality: Shapiro-Wilk test
-shapiro.test(resid)
+## Normality
+### QQ-plot for each group
 
 # pdf("../figs/steelrodsqq.pdf",
 #     width=5,
-#     height=5) # comment to open plot in R
+#     height=10) # comment to open plot in R
 
 library(car)
-qqPlot(resid,
-       pch = 16,
-       cex = 1.5,
-       las = 1)
+qqPlot(y$Length.error, 
+       groups = y$Process, 
+       cex    = 1.5, 
+       pch    = 16,
+       layout = c(2, 1),
+       las    = 1)
 
 # dev.off() # comment this if you commented the pdf command.
 
+### Shapiro-Wilk test for each group
+shapiro.test(y$Length.error[y$Process == "new"])
+shapiro.test(y$Length.error[y$Process == "old"])
+
 
 # Equality of variances: Fligner-Killeen test
-with(y,
-     fligner.test(Length.error ~ Process))
+fligner.test(Length.error ~ Process, data = y)
 
 # pdf("../figs/steelrodsvar.pdf",
 #     width=5,
 #     height=5) # comment to open plot in R
 
-plot(x = rep(means[2:1],
-             each = n),
-     y = resid,
-     xlab = "mean",
-     pch = 16,
-     cex = 1.5,
-     las = 1)
+resid <- tapply(X     = y$Length.error, 
+                INDEX = y$Process, 
+                FUN   = function(x){x - mean(x)})
+stripchart(x = resid, 
+           vertical = TRUE, 
+           pch = 16, 
+           cex = 1.5, 
+           las = 1, 
+           xlab = "mean",
+           ylab = "residuals")
 
 # dev.off() # comment this if you commented the pdf command.
 

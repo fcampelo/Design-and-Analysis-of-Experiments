@@ -449,7 +449,7 @@ H_1: \mu < 50kg
 Assume also that we want to be more conservative, so we pick a significance level $\alpha = 0.01$;
 \vone
 In this case, \textbf{if $H_0$ is true}, we have that
-\beqs T_0 = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t_{n-1}
+\beqs T_0 = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t^{(n-1)}
 \eqs
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
@@ -464,7 +464,7 @@ In this case, \textbf{if $H_0$ is true}, we have that
 From the same data used earlier, $\bar{x} = 49.65$kg, $n=10$, $s = 0.697$kg:
 \beqs t_0 = \frac{49.65 - 50}{0.697/\sqrt{10}} = -1.597\eqs
 \vhalf
-The critical value of this test statistic for the desired significance is $t_{\alpha,n-1} = t_{0.01,9} = -2.82$, which means that under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
+The critical value of this test statistic for the desired significance is $t_{\alpha}^{(n-1)} = t_{0.01}^{(9)} = -2.82$, which means that under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
 \vone
 Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
 \begin{tikzpicture}[remember picture,overlay]
@@ -533,7 +533,7 @@ Can be interpreted as the probability under $H_0$ of the test statistic assuming
 \vone\vhalf
 For the previous example, the p-value could be calculated as:
 \beqs
-p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}t_{(df=9)}dt = 0.07237
+p = P(t_0\leq -1.597|H_0 = \mbf{TRUE}) = \int\limits_{-\infty}^{-1.597}t^{(9)}dt = 0.07237
 \eqs
 \vhalf
 
