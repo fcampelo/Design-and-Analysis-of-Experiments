@@ -296,6 +296,9 @@ out$Fbest
 \noindent onde _popsizeX_, _mutparsX_ a _recparsX_ devem ser substituídos pelas 
 variáveis apropriadas (e.g., _popsize1_, _popsize2_ etc.).
 
+### Questão bônus  
+Há alguma diferença na _variância_ do desempenho das duas configurações para o problema de teste? Como esta eventual diferença (caso haja) impacta nas suas recomendações relativas à adoção de uma dada configuração?
+
 
 ## Outras definições
 
