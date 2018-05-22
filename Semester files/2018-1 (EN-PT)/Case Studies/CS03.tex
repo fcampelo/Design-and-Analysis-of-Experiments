@@ -1,0 +1,461 @@
+\documentclass[11pt,twoside,printwatermark=false]{pinp}
+
+%% Some pieces required from the pandoc template
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Use the lineno option to display guide line numbers if required.
+% Note that the use of elements such as single-column equations
+% may affect the guide line number alignment.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\definecolor{pinpblue}{HTML}{185FAF}  % imagecolorpicker on blue for new R logo
+\definecolor{pnasbluetext}{RGB}{101,0,0} %
+
+
+
+\title{EEE933 - Design and Analysis of Experiments}
+
+\author[]{Case Study 03}
+
+
+\setcounter{secnumdepth}{0}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{}
+
+% Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
+ 
+
+\begin{abstract}
+Experiment: Comparação de desempenho de duas configurações de um
+algoritmo de otimização, parte II
+\end{abstract}
+
+\dates{This version was compiled on \today}
+
+
+\begin{document}
+
+% Optional adjustment to line up main text (after abstract) of first page with line numbers, when using both lineno and twocolumn options.
+% You should only change this length when you've finalised the article contents.
+\verticaladjustment{-2pt}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+% If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
+
+
+\subsection{Apresentação}\label{apresentacao}
+
+Algoritmos baseados em populações são uma alternativa comum para a
+solução de problemas de otimização em engenharia. Tais algoritmos
+normalmente consistem de um ciclo iterativo, no qual um conjunto de
+soluções-candidatas ao problema são repetidamente sujeitas a operadores
+de variação e seleção, de forma a promover uma exploração do espaço de
+variáveis do problema em busca de um ponto de ótimo (máximo ou mínimo)
+de uma dada função-objetivo.
+
+Dentre estes algoritmos, um método que tem sido bastante utilizado nos
+últimos anos é conhecido como \emph{evolução diferencial} (DE, do inglês
+\emph{differential evolution})\citep{Storn1997}. De forma simplificada,
+este método é composto pelos seguintes passos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{-1}
+\tightlist
+\item
+  Entrada: \(N,\ n_{iter},\ recpars,\ mutpars\)
+\item
+  \(t \leftarrow 0\)
+\item
+  \(X_t \leftarrow \{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_N\}\)
+  (população inicial)
+\item
+  \(\vec{f}_t \leftarrow f(X_t)\)
+\item
+  Enquanto (\(t < n_{iter}\))
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \(V_t \leftarrow\) mutação(\(X_t,\ mutpars\))
+  \item
+    \(U_t \leftarrow\) recombinação(\(X_t,\ V_t,\ recpars\))
+  \item
+    \(\vec{j}_t \leftarrow f(U_t)\)
+  \item
+    \((X_{t+1},\ \vec{f}_{t+1}) \leftarrow\)
+    seleção(\(X_t,\ U_t,\ \vec{f}_t,\ \vec{j}_t\))
+  \item
+    \(t \leftarrow t + 1\)
+  \end{enumerate}
+\item
+  Saída: \((X_t,\ \vec{f}_t)\)
+\end{enumerate}
+
+Suponha que um pesquisador está interessado em investigar o efeito de
+duas configurações distintas deste algoritmo em seu desempenho para uma
+dada classe de problemas de otimização.
+
+\subsection{Atividades}\label{atividades}
+
+Como forma de análise deste problema, cada equipe terá como tarefa a
+comparação experimental de duas configurações em uma classe de
+problemas, representada por um conjunto de instâncias de teste. O
+objetivo deste estudo é responder às seguintes perguntas:
+
+\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, para a classe de problemas de interesse? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center}
+
+Os seguintes parâmetros experimentais são dados para este estudo:
+
+\begin{itemize}
+\tightlist
+\item
+  Mínima diferença de importância prática (padronizada):
+  (\(d^* = \delta^*/\sigma\)) = 0.5
+\item
+  Significância desejada: \(\alpha = 0.05\)
+\item
+  Potência mínima desejada (para o caso \(d = d^*\)):
+  \(\pi = 1 - \beta = 0.8\) \newpage
+\end{itemize}
+
+\subsection{Informações operacionais}\label{informacoes-operacionais}
+
+Para a execução dos experimentos, instale os pacotes \texttt{ExpDE}
+\citep{Campelo2016} e \texttt{smoof} \citep{smoof}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"ExpDE"}\NormalTok{)}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"smoof"}\NormalTok{)}
+\KeywordTok{library}\NormalTok{(ExpDE)}
+\KeywordTok{library}\NormalTok{(smoof)}
+\end{Highlighting}
+\end{Shaded}
+
+A classe de funções de interesse para este teste é composta por funções
+Rosenbrock \citep{rosenbrock} \citep{Fobjs} de dimensão entre 2 e 150.
+To generate a function
+
+Os parâmetros fixos do algoritmo (ao longo de toda a experimentação) são
+dados por:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{selpars  <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"selection_standard"}\NormalTok{)}
+\NormalTok{stopcrit <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{50000}\NormalTok{, }\DataTypeTok{maxiter =} \DecValTok{1000}\NormalTok{)}
+\NormalTok{probpars <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"sphere"}\NormalTok{, }\DataTypeTok{xmin  =} \OperatorTok{-}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{xmax  =} \DecValTok{20} \OperatorTok{+}\StringTok{ }\DecValTok{5} \OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{24}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+As configurações que deverão ser comparadas por cada equipe passaram por
+uma etapa anterior de ajuste de parâmetros. Suas definições são dadas
+por:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe A}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_arith"}\NormalTok{) }
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{300}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.7}\NormalTok{) }
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{3}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{300}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe B}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_exp"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.6}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{2}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{130}
+    
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_geo"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.2}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{70}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe C}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \DecValTok{0}\NormalTok{, }\DataTypeTok{beta =} \DecValTok{0}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{200}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_linear"}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.5}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{250}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe D}
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{) }
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{230}
+
+\NormalTok{## Config 4}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_eigen"}\NormalTok{, }
+                 \DataTypeTok{othername =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.8}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{85}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe E}
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_lbga"}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.5}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{300}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{3}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{80}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe F}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_mmax"}\NormalTok{, }\DataTypeTok{lambda =} \FloatTok{0.25}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{375}
+
+\NormalTok{## Config 4}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_npoint"}\NormalTok{, }\DataTypeTok{N =} \DecValTok{17}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.2}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{225}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe G}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \DecValTok{0}\NormalTok{, }\DataTypeTok{beta =} \DecValTok{0}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{200}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_exp"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.6}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{2}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{130}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe H}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_eigen"}\NormalTok{, }
+                 \DataTypeTok{othername =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.8}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{85}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_sbx"}\NormalTok{, }\DataTypeTok{eta =} \DecValTok{90}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.5}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{200}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe I}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{) }
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{230}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_wright"}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.8}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{113}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Equipe J}
+
+\NormalTok{## Config 1}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_mmax"}\NormalTok{, }\DataTypeTok{lambda =} \FloatTok{0.25}\NormalTok{)}
+\NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
+\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{375}
+
+\NormalTok{## Config 2}
+\NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_geo"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{)}
+\NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.2}\NormalTok{)}
+\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{70}
+\end{Highlighting}
+\end{Shaded}
+
+Cada observação individual do desempenho do algoritmo equipado com um
+dado operador pode ser obtida através dos comandos abaixo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Run algorithm on problem:}
+\NormalTok{out <-}\StringTok{ }\KeywordTok{ExpDE}\NormalTok{(}\DataTypeTok{popsize  =}\NormalTok{ popsizeX, }
+             \DataTypeTok{mutpars  =}\NormalTok{ mutparsX, }
+             \DataTypeTok{recpars  =}\NormalTok{ recparsX, }
+             \DataTypeTok{selpars  =}\NormalTok{ selpars, }
+             \DataTypeTok{stopcrit =}\NormalTok{ stopcrit, }
+             \DataTypeTok{probpars =}\NormalTok{ probpars,}
+             \DataTypeTok{showpars =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{show.iters =} \StringTok{"dots"}\NormalTok{,}
+                             \DataTypeTok{showevery  =} \DecValTok{20}\NormalTok{))}
+
+\CommentTok{# Extract observation:}
+\NormalTok{out}\OperatorTok{$}\NormalTok{Fbest}
+\end{Highlighting}
+\end{Shaded}
+
+\noindent onde \emph{popsizeX}, \emph{mutparsX} a \emph{recparsX} devem
+ser substituídos pelas variáveis apropriadas (e.g., \emph{popsize1},
+\emph{popsize2} etc.).
+
+\subsubsection{Questão bônus}\label{questao-bonus}
+
+Há alguma diferença na \emph{variância} do desempenho das duas
+configurações para o problema de teste? Como esta eventual diferença
+(caso haja) impacta nas suas recomendações relativas à adoção de uma
+dada configuração?
+
+\subsection{Outras definições}\label{outras-definicoes}
+
+Este estudo de caso consiste das seguintes etapas:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Formulação das hipóteses de teste;
+\item
+  Cálculo do tamanho amostral;
+\item
+  Coleta e tabulação dos dados;
+\item
+  Teste das hipóteses;
+\item
+  Estimação dos tamanhos de efeito e dos intervalos de confiança;
+\item
+  Verificação das premissas dos testes;
+\item
+  Derivação de conclusões;
+\item
+  Discussão sobre possíveis limitações do estudo e sugestões de
+  melhoria.
+\end{enumerate}
+
+Lembre-se que as conclusões devem ser colocadas no contexto das
+perguntas técnicas de interesse.
+
+\subsection{Relatório}\label{relatorio}
+
+Cada equipe deverá entregar um relatório detalhando o experimento e a
+análise dos dados. O relatório será avaliado de acordo com os seguintes
+critérios:
+
+\begin{itemize}
+\tightlist
+\item
+  Obediência ao formato determinado (ver abaixo);
+\item
+  Reproducibilidade dos resultados;
+\item
+  Qualidade técnica;
+\item
+  Estrutura da argumentação;
+\item
+  Correto uso da linguagem (gramática, ortografia, etc.);
+\end{itemize}
+
+O relatório deve \emph{obrigatoriamente} ser produzido utilizando
+\href{http://rmarkdown.rstudio.com}{R Markdown} (opcionalmente
+utilizando estilos distintos, como o do presente documento), e deve
+conter todo o código necessário para a reprodução da análise obtida,
+embutido na forma de blocos de código no documento. Os grupos devem
+enviar:
+
+\begin{itemize}
+\tightlist
+\item
+  O arquivo \textbf{.Rmd} para geração do relatório.
+\item
+  O arquivo \textbf{.pdf} compilado a partir do \textbf{.Rmd}.
+\item
+  O arquivo de dados utilizado, em formato \textbf{.csv}.
+\end{itemize}
+
+O arquivo \textbf{.Rmd} deve ser capaz de ser compilado em um pdf sem
+erros, e deve assumir que o arquivo de dados se encontra no mesmo
+diretório do arquivo do relatório. Modelos de estudos de caso estão
+disponíveis no repositório da disciplina no github. Caso a equipe deseje
+utilizar o estilo do presente documento, pode consultar seu código-fonte
+no repositório (note que o mesmo requer a instalação do pacote
+\emph{pinp}).
+
+\textbf{Importante}: Salve seu arquivo \textbf{.Rmd} em UTF-8 (para
+evitar erros na compilação em outros sistemas). \textbf{Importante}:
+Inclua no relatório os papéis desempenhados por cada membro da equipe
+(Relator, Verificador etc.)
+
+Relatórios serão aceitos em português ou inglês.
+
+\subsection{Entrega}\label{entrega}
+
+Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão
+ser comprimidos em um .ZIP e submetidos via Moodle, na atividade
+\textbf{Case Study 02}, até a data-limite de \textbf{Sexta-feira, 25 de
+maio de 2018, às 23:55h}. Após esta data o sistema estará fechado para
+recebimento.
+
+\textbf{Importante}: Apenas uma submissão por equipe é necessária.
+
+\textbf{Importante}: Relatórios não serão recebidos por e-mail ou em
+formato impresso.
+
+%\showmatmethods
+
+
+\bibliography{CS02.bib}
+\bibliographystyle{jss}
+
+
+
+\end{document}
+
