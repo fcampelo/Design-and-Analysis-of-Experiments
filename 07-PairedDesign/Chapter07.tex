@@ -8,7 +8,7 @@
 \subtitle[]{07 - Paired Design}
 \author[]{Felipe Campelo\\{\footnotesize http://orcslab.cpdee.ufmg.br/}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2015}
+\date{\scriptsize Belo Horizonte\\May 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.11};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -31,20 +31,22 @@
   \begin{frame}[b]
 		\frametitle{}
 \begin{columns}[T]
-\column{0.77\textwidth}
-\flushright{\small ``\textit{I am driven by two main philosophies: know\\
-more today about the world than I knew yesterday\\
-and lessen the suffering of others.\\
-You'd be surprised how far that gets you.}''\\\ \\
-Neil deGrasse Tyson\\1958 - \\American astrophysicist and author.\\}
-\column{0.23\textwidth}
+\column{0.7\textwidth}
+\flushright{\small ``\textit{Don't be afraid of hard work.\\
+Nothing worthwhile comes easily.\\
+Don't let others discourage you or tell you\\
+that you can't do it. In my day I was told\\
+women didn't go into chemistry. I saw\\
+no reason why we couldn't.}''\\\ \\
+Gertrude B. Elion\\1918 - 1999\\American biochemist and pharmacologist.\\}
+\column{0.3\textwidth}
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=26pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/ndgt02.jpg}};
+\node[anchor=south east,yshift=32pt,xshift=0pt] at (current page.south east)
+{\includegraphics[width=\textwidth]{../figs/Gertrude.png}};
 \end{tikzpicture}
 \end{columns}
 \vhalf
-\lfr{Image: \url{http://goo.gl/hzzFUJ}}
+\lfr{Image by Rachel Ignotofsky: \textit{Women in Science}, 2016} \lfr{\url{https://www.rachelignotofskydesign.com/women-in-science/}}
 \end{frame}
 
 %=====
@@ -59,11 +61,11 @@ The researcher implements both methods and wants to determine whether the propos
 \vone
 The measurements are made under homogeneous conditions (same computer, same operational conditions, etc.) and the time is measured in a way that is not sensitive to other processes running in the system.
 \vone
-\lfr{Image: \url{http://goo.gl/xwqig9}}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
-{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
-\end{tikzpicture}
+%\lfr{Image: \url{http://goo.gl/xwqig9}}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
+%{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -76,7 +78,7 @@ This problem has some important questions worth considering:
 \bitems What is the actual question of interest?
 \spitem What is the \textit{population} for which that question is relevant?
 \spitem What are the independent observations for that population?
-\spitem What is the relevant sample size for the experiment?
+\spitem What are the relevant sample sizes for the experiment?
 \eitem
 \end{ftst}
 
@@ -139,7 +141,7 @@ Some other important questions worth considering:
 
 \bitems In this example the minimally interesting effect size $\delta^*$ must be expressed in terms of \textit{average time gains across problems} (not within individual instances);
 \spitem The most important sample size to consider in this situation refers to the \textit{number of problem instances}, and not necessarily to the number of within-problems repeated measures;
-\spitem The number of repetitions within each problem will have an impact on the uncertainty associated to each observation (that is, to each value of mean time to convergence for each algorithm on each problem), and should be selected with some care\footnote[1]{\tiny Alternatively, we can set it as arbitrarily large, particularly in cases where the cost of repetitions is small. As much as I hate to admit it, the lazy heuristic of setting it as $\geq 30$ should be enough in most algorithmic studies. A more methodologically sound approach to setting this is under development, and will be included in future versions of these lecture notes.}.
+\spitem The number of repetitions within each problem will have an impact on the uncertainty associated to each observation (that is, to each value of mean time to convergence for each algorithm on each problem), which will propagate down to the residual variance.
 \eitem
 \end{ftst}
 
@@ -165,13 +167,13 @@ Going back to our example, assume the following facts about the desired comparis
 
 \bitems The benchmark set is composed of seven problems ($N=7$);
 \spitem The researcher is interested in finding differences in mean time to convergence greater than ten seconds ($\delta^*=10$) with a power of at least $(1-\beta)=0.8$, using a significance level $\alpha=0.05$;
-\spitem The researcher performs $n=30$ repeated runs\footnote[2]{\tiny Not that I necessarily recommend this number, but it is generally an easy alternative if you don't\\want to keep justifying your choices to less statistically-savvy reviewers.} of each algorithm in each problem, from random initial conditions.
+\spitem The researcher performs $n=30$ repeated runs\footnote[1]{\tiny Not that this number is necessarily good, but it is generally an easy alternative if you don't want to keep justifying your choices to less statistically-savvy reviewers.} of each algorithm in each problem, from random initial conditions.
 \eitem
 
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
-{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=-5pt,xshift=5pt] at (current page.south east)
+%{\includegraphics[width=.3\textwidth]{../figs/algoresearcher.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 \begin{ftstf}
@@ -180,16 +182,16 @@ Going back to our example, assume the following facts about the desired comparis
 Step 1: load and precondition the data.
 \begin{rcode}
 > # Read data
-> data<-read.table("../data files/soltimes.csv",
-+                  header=T)
+> data <- read.table("../data files/soltimes.csv",
++                    header=T)
 
 # "Problem" is a categorical variable, not a contiunous one
-> data$Problem<-as.factor(data$Problem)
+> data$Problem <- as.factor(data$Problem)
 
 # Summarize within-problem observations by mean
-> aggdata<-aggregate(Time~Problem:Algorithm,
-+                    data=data,
-+                    FUN=mean)
+> aggdata <- aggregate(Time ~ Problem:Algorithm,
++                      data = data,
++                      FUN  = mean)
 > summary(aggdata)
  Problem Algorithm      Time       
  1:2     A:7       Min.   : 37.63  
@@ -211,9 +213,9 @@ Step 1: load and precondition the data.
 Step 2: analysis
 \begin{rcode}
 > # Perform paired t-test
-> t.test(Time~Algorithm,
-+        paired=T,
-+        data=aggdata)
+> t.test(Time ~ Algorithm,
++        paired = TRUE,
++        data   = aggdata)
 
 Paired t-test
 data:  Time by Algorithm
@@ -234,8 +236,7 @@ mean of the differences
 {Paired design}
 Alternatively, we could have done:
 \begin{rcode}
-> difTimes<-with(aggdata,
-+             Time[1:7]-Time[8:14])
+> difTimes <- aggdata$Time[1:7] - aggdata$Time[8:14])
 > t.test(difTimes)
 
 
@@ -265,7 +266,7 @@ data:  difTimes
 W = 0.8387, p-value = 0.09655
 
 # Redo test without outlier
-> indx<-which(difTimes==max(difTimes))
+> indx <- which(difTimes == max(difTimes))
 > t.test(difTimes[-indx])$p.value
 [1] 6.179743e-06
 > t.test(difTimes[-indx])$conf.int
@@ -283,7 +284,7 @@ W = 0.8387, p-value = 0.09655
 {Paired design}
 What happens if we fail to consider the problem effects?
 \begin{rcode}
-> t.test(Time~Algorithm,data=aggdata)
+> t.test(Time ~ Algorithm, data = aggdata)
 
 Welch Two Sample t-test
 data:  Time by Algorithm
@@ -335,29 +336,7 @@ Similarly, failure in recognizing the dependence structure of within-unit measur
 
 %=====
 
-\begin{ftstf}{About this material}{Conditions of use and referencing}
-\centering\footnotesize This work is licensed under the Creative Commons CC BY-NC-SA 4.0 license\\(Attribution Non-Commercial Share Alike International License version 4.0).\\
-\vhalf
-\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}\\
-\vone
-\footnotesize Please reference this work as:\\
-\footnotesize \flushleft Felipe Campelo (2015), \textit{Lecture Notes on Design and Analysis of Experiments}.\\Online: {\scriptsize\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}}\\
-Version 2.11, Chapter 7; Creative Commons BY-NC-SA 4.0.\\
-
-\begin{Verbatim}[fontsize=\tiny]
-    @Misc{Campelo2015-01,
-      title={Lecture Notes on Design and Analysis of Experiments},
-      author={Felipe Campelo},
-      howPublished={\url{https://github.com/fcampelo/Design-and-Analysis-of-Experiments}},
-      year={2015},
-      note={Version 2.11, Chapter 7; Creative Commons BY-NC-SA 4.0.},
-    }
-\end{Verbatim}
-
-\begin{tikzpicture} [remember picture,overlay]
-\node[anchor=south,yshift=0pt] at (current page.south){ \includegraphics[width=.2\textwidth]{../figs/CCSomerights.png}};
-\end{tikzpicture}
-\end{ftstf}
+\input{../defs/FinalSlide.tex}
 
 
 \end{document}
