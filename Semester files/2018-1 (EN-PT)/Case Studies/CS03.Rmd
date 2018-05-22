@@ -107,14 +107,13 @@ Suponha que um pesquisador está interessado em investigar o efeito de duas conf
 
 Como forma de análise deste problema, cada equipe terá como tarefa a comparação experimental de duas configurações em uma classe de problemas, representada por um conjunto de instâncias de teste. O objetivo deste estudo é responder às seguintes perguntas:
 
-\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, para a classe de problemas de interesse? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center} 
+\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, \textbf{para a classe de problemas de interesse}? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center} 
 
 Os seguintes parâmetros experimentais são dados para este estudo:
 
 - Mínima diferença de importância prática (padronizada): ($d^* = \delta^*/\sigma$) = 0.5
 - Significância desejada: $\alpha = 0.05$
 - Potência mínima desejada (para o caso $d = d^*$): $\pi = 1 - \beta = 0.8$
-\newpage
 
 ## Informações operacionais
 
@@ -123,20 +122,40 @@ Para a execução dos experimentos, instale os pacotes `ExpDE` [@Campelo2016] e 
 ```{r block1, eval=FALSE}
 install.packages("ExpDE")
 install.packages("smoof")
-library(ExpDE)
-library(smoof)
 ```
 
-A classe de funções de interesse para este teste é composta por funções Rosenbrock [@rosenbrock] [@Fobjs] de dimensão entre 2 e 150. To generate a function
+A classe de funções de interesse para este teste é composta por funções Rosenbrock [@rosenbrock] [@Fobjs] de dimensão entre 2 e 150. Para gerar uma função de  Rosenbrock de uma dada dimensão $dim$, faça:
 
+```{r block1b, eval = TRUE}
+suppressPackageStartupMessages(library(smoof))
 
+# FOR INSTANCE: set dim = 10
+dim <- 10
 
-Os parâmetros fixos do algoritmo (ao longo de toda a experimentação) são dados por:
+fn <- function(X){
+  if(!is.matrix(X)) X <- matrix(X, nrow = 1) # <- if a single vector is passed as X
 
-```{r block2, eval=FALSE}
+  Y <- apply(X, MARGIN = 1, 
+             FUN = smoof::makeRosenbrockFunction(dimensions = dim))
+  
+  return(Y)
+}
+
+# testing the function on a matrix composed of 2 points
+X <- matrix(runif(20), nrow = 2)
+fn(X)
+```
+
+Os limites das variáveis para uma dada função Rosenbrock de dimensão $dim$ são dados por: $-5\leq x_i\leq 10,~i=1,\dotsc,dim$. Para o problema de dimensão $dim$, os seguintes parâmetros são dados:
+
+```{r block2b, eval=FALSE}
+# FOR INSTANCE: set dim = 10
+dim <- 10
+
 selpars  <- list(name  = "selection_standard")
-stopcrit <- list(names = "stop_maxeval", maxevals = 50000, maxiter = 1000)
-probpars <- list(name  = "sphere", xmin  = -seq(1, 20), xmax  = 20 + 5 * seq(5, 24))
+stopcrit <- list(names = "stop_maxeval", maxevals = 5000 * dim, maxiter = 100 * dim)
+probpars <- list(name  = "fn", xmin  = rep(-5, dim), xmax  = rep(10, dim))
+popsize = 5 * dim
 ```
 
 As configurações que deverão ser comparadas por cada equipe passaram por uma etapa anterior de ajuste de parâmetros. Suas definições são dadas por:
@@ -147,12 +166,10 @@ As configurações que deverão ser comparadas por cada equipe passaram por uma 
 ## Config 1
 recpars1 <- list(name = "recombination_arith") 
 mutpars1 <- list(name = "mutation_rand", f = 4)
-popsize1 <- 300
 
 ## Config 2
 recpars2 <- list(name = "recombination_bin", cr = 0.7) 
 mutpars2 <- list(name = "mutation_best", f = 3)
-popsize2 <- 300
 ```
 
 ``` {r block3b, eval = FALSE}
@@ -161,26 +178,22 @@ popsize2 <- 300
 ## Config 1
 recpars1 <- list(name = "recombination_exp", cr = 0.6)
 mutpars1 <- list(name = "mutation_best", f = 2)
-popsize1 <- 130
     
 ## Config 2
 recpars2 <- list(name = "recombination_geo", alpha = 0.6)
 mutpars2 <- list(name = "mutation_rand", f = 1.2)
-popsize2 <- 70
 ```
-\newpage
+
 ``` {r block3c, eval = FALSE}
 # Equipe C
 
 ## Config 1
 recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0, beta = 0)
 mutpars1 <- list(name = "mutation_rand", f = 4)
-popsize1 <- 200
 
 ## Config 2
 recpars2 <- list(name = "recombination_linear")
 mutpars2 <- list(name = "mutation_rand", f = 1.5)
-popsize2 <- 250
 ```
 
 ``` {r block3d, eval = FALSE}
@@ -188,13 +201,11 @@ popsize2 <- 250
 ## Config 1
 recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
 mutpars1 <- list(name = "mutation_rand", f = 4)
-popsize1 <- 230
 
 ## Config 4
 recpars2 <- list(name = "recombination_eigen", 
                  othername = "recombination_bin", cr = 0.9) 
 mutpars2 <- list(name = "mutation_best", f = 2.8)
-popsize2 <- 85
 ```
 
 ``` {r block3e, eval = FALSE}
@@ -202,12 +213,10 @@ popsize2 <- 85
 ## Config 1
 recpars1 <- list(name = "recombination_lbga")
 mutpars1 <- list(name = "mutation_rand", f = 4.5)
-popsize1 <- 300
 
 ## Config 2
 recpars2 <- list(name = "recombination_blxAlphaBeta", alpha = 0.1, beta = 0.4)
 mutpars2 <- list(name = "mutation_rand", f = 3)
-popsize2 <- 80
 ```
 
 ``` {r block3f, eval = FALSE}
@@ -216,12 +225,10 @@ popsize2 <- 80
 ## Config 1
 recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
 mutpars1 <- list(name = "mutation_best", f = 4)
-popsize1 <- 375
 
 ## Config 4
 recpars1 <- list(name = "recombination_npoint", N = 17)
 mutpars1 <- list(name = "mutation_rand", f = 2.2)
-popsize1 <- 225
 ```
 
 ``` {r block3g, eval = FALSE}
@@ -230,12 +237,10 @@ popsize1 <- 225
 ## Config 1
 recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0, beta = 0)
 mutpars1 <- list(name = "mutation_rand", f = 4)
-popsize1 <- 200
 
 ## Config 2
 recpars2 <- list(name = "recombination_exp", cr = 0.6)
 mutpars2 <- list(name = "mutation_best", f = 2)
-popsize2 <- 130
 ```
 
 ``` {r block3h, eval = FALSE}
@@ -245,12 +250,10 @@ popsize2 <- 130
 recpars1 <- list(name = "recombination_eigen", 
                  othername = "recombination_bin", cr = 0.9) 
 mutpars1 <- list(name = "mutation_best", f = 2.8)
-popsize1 <- 85
 
 ## Config 2
 recpars2 <- list(name = "recombination_sbx", eta = 90)
 mutpars2 <- list(name = "mutation_best", f = 4.5)
-popsize2 <- 200
 ```
 
 ``` {r block3i, eval = FALSE}
@@ -259,51 +262,45 @@ popsize2 <- 200
 ## Config 1
 recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
 mutpars1 <- list(name = "mutation_rand", f = 4)
-popsize1 <- 230
 
 ## Config 2
 recpars2 <- list(name = "recombination_wright")
 mutpars2 <- list(name = "mutation_best", f = 4.8)
-popsize2 <- 113
 ```
-\newpage
+
 ``` {r block3j, eval = FALSE}
 # Equipe J
 
 ## Config 1
 recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
 mutpars1 <- list(name = "mutation_best", f = 4)
-popsize1 <- 375
 
 ## Config 2
 recpars2 <- list(name = "recombination_geo", alpha = 0.6)
 mutpars2 <- list(name = "mutation_rand", f = 1.2)
-popsize2 <- 70
 
 ```
 
 Cada observação individual do desempenho do algoritmo equipado com um dado operador pode ser obtida através dos comandos abaixo:
 
 ``` {r block4, eval = FALSE}
+suppressPackageStartupMessages(library(ExpDE))
+
 # Run algorithm on problem:
-out <- ExpDE(popsize  = popsizeX, 
-             mutpars  = mutparsX, 
+out <- ExpDE(mutpars  = mutparsX, 
              recpars  = recparsX, 
+             popsize  = popsize, 
              selpars  = selpars, 
              stopcrit = stopcrit, 
              probpars = probpars,
-             showpars = list(show.iters = "dots",
-                             showevery  = 20))
+             showpars = list(show.iters = "dots", showevery  = 20))
 
 # Extract observation:
 out$Fbest
 ```
 
-\noindent onde _popsizeX_, _mutparsX_ a _recparsX_ devem ser substituídos pelas 
-variáveis apropriadas (e.g., _popsize1_, _popsize2_ etc.).
-
-### Questão bônus  
-Há alguma diferença na _variância_ do desempenho das duas configurações para o problema de teste? Como esta eventual diferença (caso haja) impacta nas suas recomendações relativas à adoção de uma dada configuração?
+\noindent onde _mutparsX_ e _recparsX_ devem ser substituídos pelas 
+variáveis apropriadas (e.g., _mutpars1_, _mutpars2_ etc.).
 
 
 ## Outras definições
@@ -311,16 +308,18 @@ Há alguma diferença na _variância_ do desempenho das duas configurações par
 Este estudo de caso consiste das seguintes etapas:
 
 1. Formulação das hipóteses de teste;
-1. Cálculo do tamanho amostral;
+1. Cálculo dos tamanhos amostral (quantas instâncias testar? Quantas repetições de cada algoritmo por instância?);
 1. Coleta e tabulação dos dados;
 1. Teste das hipóteses;
-1. Estimação dos tamanhos de efeito e dos intervalos de confiança;
+1. Estimação da magnitude da diferença entre os métodos (incluindo intervalo de confiança);
 1. Verificação das premissas dos testes;
 1. Derivação de conclusões;
 1. Discussão sobre possíveis limitações do estudo e sugestões de melhoria.
 
 Lembre-se que as conclusões devem ser colocadas no contexto das perguntas 
 técnicas de interesse.
+
+**Importante:** Após a definição do número de instâncias necessárias, as dimensões a serem utilizadas deverão ser amostradas no intervalo de dimensões que define a classe de problemas de interesse, isso é, $dim\in\left[2,150\right]$.
 
 
 ## Relatório
@@ -361,7 +360,7 @@ Relatórios serão aceitos em português ou inglês.
 
 ## Entrega
 
-Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão ser comprimidos em um .ZIP e submetidos via Moodle, na atividade **Case Study 02**, até a data-limite de **Sexta-feira, 25 de maio de 2018, às 23:55h**. Após esta data o sistema estará fechado para recebimento. 
+Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão ser comprimidos em um .ZIP e submetidos via Moodle, na atividade **Case Study 02**, até a data-limite de **Terça-feira, 5 de junho de 2018, às 23:55h**. Após esta data o sistema estará fechado para recebimento. 
 
 **Importante**: Apenas uma submissão por equipe é necessária.
 

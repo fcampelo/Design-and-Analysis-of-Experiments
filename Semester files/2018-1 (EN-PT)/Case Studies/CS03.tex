@@ -111,7 +111,7 @@ comparação experimental de duas configurações em uma classe de
 problemas, representada por um conjunto de instâncias de teste. O
 objetivo deste estudo é responder às seguintes perguntas:
 
-\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, para a classe de problemas de interesse? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center}
+\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, \textbf{para a classe de problemas de interesse}? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center}
 
 Os seguintes parâmetros experimentais são dados para este estudo:
 
@@ -124,7 +124,7 @@ Os seguintes parâmetros experimentais são dados para este estudo:
   Significância desejada: \(\alpha = 0.05\)
 \item
   Potência mínima desejada (para o caso \(d = d^*\)):
-  \(\pi = 1 - \beta = 0.8\) \newpage
+  \(\pi = 1 - \beta = 0.8\)
 \end{itemize}
 
 \subsection{Informações operacionais}\label{informacoes-operacionais}
@@ -136,23 +136,53 @@ Para a execução dos experimentos, instale os pacotes \texttt{ExpDE}
 \begin{Highlighting}[]
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{"ExpDE"}\NormalTok{)}
 \KeywordTok{install.packages}\NormalTok{(}\StringTok{"smoof"}\NormalTok{)}
-\KeywordTok{library}\NormalTok{(ExpDE)}
-\KeywordTok{library}\NormalTok{(smoof)}
 \end{Highlighting}
 \end{Shaded}
 
 A classe de funções de interesse para este teste é composta por funções
 Rosenbrock \citep{rosenbrock} \citep{Fobjs} de dimensão entre 2 e 150.
-To generate a function
-
-Os parâmetros fixos do algoritmo (ao longo de toda a experimentação) são
-dados por:
+To generate a Rosenbrock function of a given dimension (p.ex.,
+\(dim = 10\)) just do:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(smoof))}
+\NormalTok{dim <-}\StringTok{ }\DecValTok{10}
+\NormalTok{fn <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(X)\{}
+  \ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.matrix}\NormalTok{(X)) X <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(X, }\DataTypeTok{nrow =} \DecValTok{1}\NormalTok{) }\CommentTok{# <- if a single vector is passed as X}
+
+\NormalTok{  Y <-}\StringTok{ }\KeywordTok{apply}\NormalTok{(X, }\DataTypeTok{MARGIN =} \DecValTok{1}\NormalTok{, }
+             \DataTypeTok{FUN =}\NormalTok{ smoof}\OperatorTok{::}\KeywordTok{makeRosenbrockFunction}\NormalTok{(}\DataTypeTok{dimensions =}\NormalTok{ dim))}
+  
+  \KeywordTok{return}\NormalTok{(Y)}
+\NormalTok{\}}
+
+\CommentTok{# testing the function on a matrix composed of 2 points}
+\NormalTok{X <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\KeywordTok{runif}\NormalTok{(}\DecValTok{20}\NormalTok{), }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\KeywordTok{fn}\NormalTok{(X)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{ShadedResult}
+\begin{verbatim}
+#  [1] 134.5490 198.7516
+\end{verbatim}
+\end{ShadedResult}
+
+The variable limits for the Rosenbrock function are defined as
+\(-5\leq x_i\leq 10,~i=1,\dotsc,n\).
+
+For any given problem dimension \(dim\), the following parameters are
+set as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dim <-}\StringTok{ }\DecValTok{10} \CommentTok{# for instance}
+
 \NormalTok{selpars  <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"selection_standard"}\NormalTok{)}
-\NormalTok{stopcrit <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{50000}\NormalTok{, }\DataTypeTok{maxiter =} \DecValTok{1000}\NormalTok{)}
-\NormalTok{probpars <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"sphere"}\NormalTok{, }\DataTypeTok{xmin  =} \OperatorTok{-}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{xmax  =} \DecValTok{20} \OperatorTok{+}\StringTok{ }\DecValTok{5} \OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{24}\NormalTok{))}
+\NormalTok{stopcrit <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{5000} \OperatorTok{*}\StringTok{ }\NormalTok{dim, }\DataTypeTok{maxiter =} \DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{dim)}
+\NormalTok{probpars <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"fn"}\NormalTok{, }\DataTypeTok{xmin  =} \KeywordTok{rep}\NormalTok{(}\OperatorTok{-}\DecValTok{5}\NormalTok{, dim), }\DataTypeTok{xmax  =} \KeywordTok{rep}\NormalTok{(}\DecValTok{10}\NormalTok{, dim))}
+\NormalTok{popsize =}\StringTok{ }\DecValTok{5} \OperatorTok{*}\StringTok{ }\NormalTok{dim}
 \end{Highlighting}
 \end{Shaded}
 
@@ -167,12 +197,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_arith"}\NormalTok{) }
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{300}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.7}\NormalTok{) }
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{3}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{300}
 \end{Highlighting}
 \end{Shaded}
 
@@ -183,16 +211,12 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_exp"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.6}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{2}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{130}
     
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_geo"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.2}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{70}
 \end{Highlighting}
 \end{Shaded}
-
-\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -201,12 +225,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \DecValTok{0}\NormalTok{, }\DataTypeTok{beta =} \DecValTok{0}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{200}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_linear"}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.5}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{250}
 \end{Highlighting}
 \end{Shaded}
 
@@ -216,13 +238,11 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{) }
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{230}
 
 \NormalTok{## Config 4}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_eigen"}\NormalTok{, }
                  \DataTypeTok{othername =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.8}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{85}
 \end{Highlighting}
 \end{Shaded}
 
@@ -232,12 +252,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_lbga"}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.5}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{300}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{3}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{80}
 \end{Highlighting}
 \end{Shaded}
 
@@ -248,12 +266,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_mmax"}\NormalTok{, }\DataTypeTok{lambda =} \FloatTok{0.25}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{375}
 
 \NormalTok{## Config 4}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_npoint"}\NormalTok{, }\DataTypeTok{N =} \DecValTok{17}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.2}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{225}
 \end{Highlighting}
 \end{Shaded}
 
@@ -264,12 +280,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \DecValTok{0}\NormalTok{, }\DataTypeTok{beta =} \DecValTok{0}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{200}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_exp"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.6}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{2}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{130}
 \end{Highlighting}
 \end{Shaded}
 
@@ -281,12 +295,10 @@ por:
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_eigen"}\NormalTok{, }
                  \DataTypeTok{othername =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.8}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{85}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_sbx"}\NormalTok{, }\DataTypeTok{eta =} \DecValTok{90}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.5}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{200}
 \end{Highlighting}
 \end{Shaded}
 
@@ -297,16 +309,12 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{) }
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{230}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_wright"}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{4.8}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{113}
 \end{Highlighting}
 \end{Shaded}
-
-\newpage
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -315,12 +323,10 @@ por:
 \NormalTok{## Config 1}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_mmax"}\NormalTok{, }\DataTypeTok{lambda =} \FloatTok{0.25}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
-\NormalTok{popsize1 <-}\StringTok{ }\DecValTok{375}
 
 \NormalTok{## Config 2}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_geo"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.6}\NormalTok{)}
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{1.2}\NormalTok{)}
-\NormalTok{popsize2 <-}\StringTok{ }\DecValTok{70}
 \end{Highlighting}
 \end{Shaded}
 
@@ -329,31 +335,24 @@ dado operador pode ser obtida através dos comandos abaixo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(ExpDE))}
 \CommentTok{# Run algorithm on problem:}
-\NormalTok{out <-}\StringTok{ }\KeywordTok{ExpDE}\NormalTok{(}\DataTypeTok{popsize  =}\NormalTok{ popsizeX, }
-             \DataTypeTok{mutpars  =}\NormalTok{ mutparsX, }
+\NormalTok{out <-}\StringTok{ }\KeywordTok{ExpDE}\NormalTok{(}\DataTypeTok{mutpars  =}\NormalTok{ mutparsX, }
              \DataTypeTok{recpars  =}\NormalTok{ recparsX, }
+             \DataTypeTok{popsize  =}\NormalTok{ popsize, }
              \DataTypeTok{selpars  =}\NormalTok{ selpars, }
              \DataTypeTok{stopcrit =}\NormalTok{ stopcrit, }
              \DataTypeTok{probpars =}\NormalTok{ probpars,}
-             \DataTypeTok{showpars =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{show.iters =} \StringTok{"dots"}\NormalTok{,}
-                             \DataTypeTok{showevery  =} \DecValTok{20}\NormalTok{))}
+             \DataTypeTok{showpars =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{show.iters =} \StringTok{"dots"}\NormalTok{, }\DataTypeTok{showevery  =} \DecValTok{20}\NormalTok{))}
 
 \CommentTok{# Extract observation:}
 \NormalTok{out}\OperatorTok{$}\NormalTok{Fbest}
 \end{Highlighting}
 \end{Shaded}
 
-\noindent onde \emph{popsizeX}, \emph{mutparsX} a \emph{recparsX} devem
-ser substituídos pelas variáveis apropriadas (e.g., \emph{popsize1},
-\emph{popsize2} etc.).
-
-\subsubsection{Questão bônus}\label{questao-bonus}
-
-Há alguma diferença na \emph{variância} do desempenho das duas
-configurações para o problema de teste? Como esta eventual diferença
-(caso haja) impacta nas suas recomendações relativas à adoção de uma
-dada configuração?
+\noindent onde \emph{mutparsX} e \emph{recparsX} devem ser substituídos
+pelas variáveis apropriadas (e.g., \emph{mutpars1}, \emph{mutpars2}
+etc.).
 
 \subsection{Outras definições}\label{outras-definicoes}
 
@@ -365,13 +364,15 @@ Este estudo de caso consiste das seguintes etapas:
 \item
   Formulação das hipóteses de teste;
 \item
-  Cálculo do tamanho amostral;
+  Cálculo dos tamanhos amostral (quantas instâncias testar? Quantas
+  repetições de cada algoritmo por instância?);
 \item
   Coleta e tabulação dos dados;
 \item
   Teste das hipóteses;
 \item
-  Estimação dos tamanhos de efeito e dos intervalos de confiança;
+  Estimação da magnitude da diferença entre os métodos (incluindo
+  intervalo de confiança);
 \item
   Verificação das premissas dos testes;
 \item
@@ -440,8 +441,8 @@ Relatórios serão aceitos em português ou inglês.
 
 Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão
 ser comprimidos em um .ZIP e submetidos via Moodle, na atividade
-\textbf{Case Study 02}, até a data-limite de \textbf{Sexta-feira, 25 de
-maio de 2018, às 23:55h}. Após esta data o sistema estará fechado para
+\textbf{Case Study 02}, até a data-limite de \textbf{Terça-feira, 5 de
+junho de 2018, às 23:55h}. Após esta data o sistema estará fechado para
 recebimento.
 
 \textbf{Importante}: Apenas uma submissão por equipe é necessária.
