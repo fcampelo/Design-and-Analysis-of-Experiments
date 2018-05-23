@@ -141,13 +141,15 @@ Para a execução dos experimentos, instale os pacotes \texttt{ExpDE}
 
 A classe de funções de interesse para este teste é composta por funções
 Rosenbrock \citep{rosenbrock} \citep{Fobjs} de dimensão entre 2 e 150.
-To generate a Rosenbrock function of a given dimension (p.ex.,
-\(dim = 10\)) just do:
+Para gerar uma função de Rosenbrock de uma dada dimensão \(dim\), faça:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(smoof))}
+
+\CommentTok{# FOR INSTANCE: set dim = 10}
 \NormalTok{dim <-}\StringTok{ }\DecValTok{10}
+
 \NormalTok{fn <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(X)\{}
   \ControlFlowTok{if}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.matrix}\NormalTok{(X)) X <-}\StringTok{ }\KeywordTok{matrix}\NormalTok{(X, }\DataTypeTok{nrow =} \DecValTok{1}\NormalTok{) }\CommentTok{# <- if a single vector is passed as X}
 
@@ -165,19 +167,18 @@ To generate a Rosenbrock function of a given dimension (p.ex.,
 
 \begin{ShadedResult}
 \begin{verbatim}
-#  [1] 134.5490 198.7516
+#  [1] 240.9932 203.8389
 \end{verbatim}
 \end{ShadedResult}
 
-The variable limits for the Rosenbrock function are defined as
-\(-5\leq x_i\leq 10,~i=1,\dotsc,n\).
-
-For any given problem dimension \(dim\), the following parameters are
-set as:
+Os limites das variáveis para uma dada função Rosenbrock de dimensão
+\(dim\) são dados por: \(-5\leq x_i\leq 10,~i=1,\dotsc,dim\). Para o
+problema de dimensão \(dim\), os seguintes parâmetros são dados:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{dim <-}\StringTok{ }\DecValTok{10} \CommentTok{# for instance}
+\CommentTok{# FOR INSTANCE: set dim = 10}
+\NormalTok{dim <-}\StringTok{ }\DecValTok{10}
 
 \NormalTok{selpars  <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"selection_standard"}\NormalTok{)}
 \NormalTok{stopcrit <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{5000} \OperatorTok{*}\StringTok{ }\NormalTok{dim, }\DataTypeTok{maxiter =} \DecValTok{100} \OperatorTok{*}\StringTok{ }\NormalTok{dim)}
@@ -336,6 +337,7 @@ dado operador pode ser obtida através dos comandos abaixo:
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{suppressPackageStartupMessages}\NormalTok{(}\KeywordTok{library}\NormalTok{(ExpDE))}
+
 \CommentTok{# Run algorithm on problem:}
 \NormalTok{out <-}\StringTok{ }\KeywordTok{ExpDE}\NormalTok{(}\DataTypeTok{mutpars  =}\NormalTok{ mutparsX, }
              \DataTypeTok{recpars  =}\NormalTok{ recparsX, }
@@ -384,6 +386,11 @@ Este estudo de caso consiste das seguintes etapas:
 
 Lembre-se que as conclusões devem ser colocadas no contexto das
 perguntas técnicas de interesse.
+
+\textbf{Importante:} Após a definição do número de instâncias
+necessárias, as dimensões a serem utilizadas deverão ser amostradas no
+intervalo de dimensões que define a classe de problemas de interesse,
+isso é, \(dim\in\left[2,150\right]\).
 
 \subsection{Relatório}\label{relatorio}
 
@@ -441,7 +448,7 @@ Relatórios serão aceitos em português ou inglês.
 
 Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão
 ser comprimidos em um .ZIP e submetidos via Moodle, na atividade
-\textbf{Case Study 02}, até a data-limite de \textbf{Terça-feira, 5 de
+\textbf{Case Study 03}, até a data-limite de \textbf{Terça-feira, 5 de
 junho de 2018, às 23:55h}. Após esta data o sistema estará fechado para
 recebimento.
 

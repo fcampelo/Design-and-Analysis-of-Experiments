@@ -360,7 +360,7 @@ Relatórios serão aceitos em português ou inglês.
 
 ## Entrega
 
-Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão ser comprimidos em um .ZIP e submetidos via Moodle, na atividade **Case Study 02**, até a data-limite de **Terça-feira, 5 de junho de 2018, às 23:55h**. Após esta data o sistema estará fechado para recebimento. 
+Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão ser comprimidos em um .ZIP e submetidos via Moodle, na atividade **Case Study 03**, até a data-limite de **Terça-feira, 5 de junho de 2018, às 23:55h**. Após esta data o sistema estará fechado para recebimento. 
 
 **Importante**: Apenas uma submissão por equipe é necessária.
 
