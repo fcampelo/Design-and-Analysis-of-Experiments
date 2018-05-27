@@ -167,7 +167,7 @@ Para gerar uma função de Rosenbrock de uma dada dimensão \(dim\), faça:
 
 \begin{ShadedResult}
 \begin{verbatim}
-#  [1] 137.8750 163.3415
+#  [1]  66.31406 118.42492
 \end{verbatim}
 \end{ShadedResult}
 
@@ -269,7 +269,7 @@ por:
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
 
 \NormalTok{## Config 4}
-\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_npoint"}\NormalTok{, }\DataTypeTok{N =} \DecValTok{17}\NormalTok{)}
+\NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_npoint"}\NormalTok{, }\DataTypeTok{N =}\NormalTok{ dim }\OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}

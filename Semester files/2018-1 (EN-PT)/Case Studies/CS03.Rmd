@@ -227,7 +227,7 @@ recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
 mutpars1 <- list(name = "mutation_best", f = 4)
 
 ## Config 4
-recpars1 <- list(name = "recombination_npoint", N = 17)
+recpars1 <- list(name = "recombination_npoint", N = dim / 2)
 mutpars1 <- list(name = "mutation_rand", f = 2.2)
 ```
 
