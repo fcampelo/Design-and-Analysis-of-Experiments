@@ -167,7 +167,7 @@ Para gerar uma função de Rosenbrock de uma dada dimensão \(dim\), faça:
 
 \begin{ShadedResult}
 \begin{verbatim}
-#  [1]  66.31406 118.42492
+#  [1] 123.5844 161.0260
 \end{verbatim}
 \end{ShadedResult}
 
@@ -240,7 +240,6 @@ por:
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_blxAlphaBeta"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{beta =} \FloatTok{0.4}\NormalTok{) }
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
 
-\NormalTok{## Config 4}
 \NormalTok{recpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_eigen"}\NormalTok{, }
                  \DataTypeTok{othername =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
 \NormalTok{mutpars2 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.8}\NormalTok{)}
@@ -268,7 +267,7 @@ por:
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_mmax"}\NormalTok{, }\DataTypeTok{lambda =} \FloatTok{0.25}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_best"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{4}\NormalTok{)}
 
-\NormalTok{## Config 4}
+\NormalTok{## Config 2}
 \NormalTok{recpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_npoint"}\NormalTok{, }\DataTypeTok{N =}\NormalTok{ dim }\OperatorTok{/}\StringTok{ }\DecValTok{2}\NormalTok{)}
 \NormalTok{mutpars1 <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \FloatTok{2.2}\NormalTok{)}
 \end{Highlighting}

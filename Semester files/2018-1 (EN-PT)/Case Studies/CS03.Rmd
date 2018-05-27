@@ -202,7 +202,6 @@ mutpars2 <- list(name = "mutation_rand", f = 1.5)
 recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
 mutpars1 <- list(name = "mutation_rand", f = 4)
 
-## Config 4
 recpars2 <- list(name = "recombination_eigen", 
                  othername = "recombination_bin", cr = 0.9) 
 mutpars2 <- list(name = "mutation_best", f = 2.8)
@@ -226,7 +225,7 @@ mutpars2 <- list(name = "mutation_rand", f = 3)
 recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
 mutpars1 <- list(name = "mutation_best", f = 4)
 
-## Config 4
+## Config 2
 recpars1 <- list(name = "recombination_npoint", N = dim / 2)
 mutpars1 <- list(name = "mutation_rand", f = 2.2)
 ```
