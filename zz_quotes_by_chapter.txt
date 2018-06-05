@@ -7,7 +7,7 @@
 %Ch.4: Florence Nightingale
 %Ch.5: Marie Skłodowska Curie
 %Ch.6: Suzana Herculano-Houzel
-%Ch.7:
+%Ch.7: Gertrude B. Elion
 %Ch.8:
 %Ch.9:
 %Ch.10:
