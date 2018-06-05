@@ -8,10 +8,10 @@
 %Ch.5: Marie Skłodowska Curie
 %Ch.6: Suzana Herculano-Houzel
 %Ch.7: Gertrude B. Elion
-%Ch.8:
-%Ch.9:
-%Ch.10:
-%Ch.11:
+%Ch.8: Lise Meitner (REPEATED - TO CHANGE)
+%Ch.9: TO DO
+%Ch.10: Hertha Ayrton
+%Ch.11: Jocelyn Bell Burnell
 %Ch.12:
 %Ch.13:
 %Ch.14:
