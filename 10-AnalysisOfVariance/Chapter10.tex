@@ -37,7 +37,7 @@
 														one consistent whole, led to the deduction of\\
 														new facts, which, when duly tested by\\
 														experiment, became parts of the growing body,\\
-                                                       and,themselves, opened up fresh questions,\\
+                                                       and, themselves, opened up fresh questions,\\
                                                        to be answered in their turn by experiment.}''\\\ \\\ \\
 Hertha Ayrton\\
 1854--1923\\
@@ -65,7 +65,7 @@ British engineer, mathematician and physicist\\\ \\}
 {Introduction}
 In the previous sections, we have (hopefully) developed a solid understanding of the main concepts associated with comparing the means of two groups;
 \vone
-There are many cases, however, in which one may want to perform inferences about differences of the means of multiple populations;
+There are many cases, however, in which one may want to perform inference about differences of the means of multiple populations;
 \vone
 We will develop the main concepts and ideas related with this kind of test by examining a simple example, related to a paper manufacturing operation.
 \begin{tikzpicture}[remember picture,overlay]
@@ -82,10 +82,10 @@ We will develop the main concepts and ideas related with this kind of test by ex
 {Problem definition}
 Tensile strength (TS) is an important characteristic for certain types of paper for industrial use;
 \vone
-A reasonable conjecture is that this characteristic is influenced by the kind of hardwood used in the manufacturing process.
+A reasonable conjecture is that this characteristic is influenced by the kind of wood fiber used in the manufacturing process.
 \vone
-The process engineer wants to investigate whether four different hardwoods result in papers with relevant differences of TS, using a pilot plant as his experimental unit.
-\lfr{Example inspired by Montgomery \& Runger (2010), Ch. 13.}
+The process engineer wants to investigate whether four different wood fibers result in papers with relevant differences of TS, using a pilot plant as his experimental unit.
+\lfr{Example adapted from Montgomery \& Runger (2010), Ch. 13.}
 \end{ftst}
 
 %=====
@@ -93,11 +93,11 @@ The process engineer wants to investigate whether four different hardwoods resul
 \begin{ftst}
 {Example: paper manufacturing}
 {Problem definition}
-The total budget allocated for the experiment allows the execution of six production runs for each kind of hardwood.
+Suppose that the total budget allocated for the experiment allows only six production runs for each kind of wood fiber.
 \vone
-Under these specifications, the experiment has a single experimental \textit{factor} (\textit{Hardwood type}) with $a = 4$ \textit{levels} (hardwood types \textit{A}, \textit{B}, \textit{C} and \textit{D}) and $n = 6$ \textit{replicates} at each level.
+Under these specifications, the experiment has a single experimental \textit{factor} (\textit{wood fiber}) with $a = 4$ \textit{levels} (fiber types \textit{A}, \textit{B}, \textit{C} and \textit{D}) and $n = 6$ \textit{replicates} at each level.
 \vone
-The response variable will be the tensile strength of paper (measured in kPa). The engineering team is interested in finding out whether any hardwood leads to an increase in the mean TS value of the paper. 
+The response variable will be the tensile strength of paper (measured, e.g., in kPa). The engineering team is interested in finding out whether any fiber type leads to an increase in the mean TS value of the paper. 
 \vone
 The minimum difference of practical meaning is defined as $5 kPa$, and a reasonable upper estimate for the standard deviation of this process is $\hat{\sigma} = 6 kPa$. Desired error levels are defined as $\alpha = 0.1$ and $\beta = 0.2$.
 \end{ftst}
@@ -108,33 +108,25 @@ The minimum difference of practical meaning is defined as $5 kPa$, and a reasona
 {Example: paper manufacturing}
 {Exploratory data analysis}
 \begin{rcode}
-> paper   <- read.table(file = "../data files/paper_strength.csv", 
-+                       header = TRUE, 
-+                       sep = ",")
->
-> summary(paper)
- Hardwood     TS_kPa     
- A:6      Min.   : 9.88  
- B:6      1st Qu.:13.90  
- C:6      Median :15.35  
- D:6      Mean   :15.56  
-          3rd Qu.:17.77  
-          Max.   :20.00  
-> 
-> boxplot(TS_kPa~Hardwood, 
-+         data = paper, 
-+         xlab = "Hardwood",
-+         ylab = "TS (kPa)", 
-+         main = "Paper strength data",
-+         pch  = 16,
-+         col  = "gray")
+> paper <- read.table(file   = "../data files/paper_strength.csv", 
++                     header = TRUE, 
++                     sep    = ",")
+ 
+> library(ggplot2)
+> ggplot(paper, 
++     aes(x    = Fiber.type,
++         y    = TS.kPa,
++         fill = Fiber.type)) + 
++  geom_boxplot() + 
++  geom_point()
+
 \end{rcode}
 %\vhalf
 %Graphical analysis suggests the existence of an effect of the factor on the response variable;
 %\vhalf
 %Besides, a relative symmetry and a fairly consistent variance can be observed in all samples.
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor= east,yshift=-17pt,xshift=0pt] at (current page.east) {\includegraphics[width=.5\textwidth]{../figs/paperbox.png}};
+\node[anchor= east,yshift=-40pt,xshift=0pt] at (current page.east) {\includegraphics[width=.55\textwidth]{../figs/paperbox.png}};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -143,7 +135,7 @@ The minimum difference of practical meaning is defined as $5 kPa$, and a reasona
 \begin{ftst}
 {Example: paper manufacturing}
 {Exploratory data analysis}
-The boxplot suggests the existence of differences among the factor levels;
+The boxplot suggests the existence of differences among factor levels;
 \vone
 Besides, we can also observe a small variability in the spread of different levels; some suggestion of asymmetry in level \textit{B}; and a possible outlier in level \textit{C}.
 \vone
@@ -179,9 +171,10 @@ y_{ij} = \mu + \tau_i + \epsilon_{ij}\begin{cases}i=1,\ldots,a\\j=1,\ldots,n\end
 {Statistical model}
 If these assumptions are correct, the populations are expected to be distributed as:
 
-\includegraphics[width=0.7\textwidth]{../figs/models.png}
+\centering\includegraphics[width=0.7\textwidth]{../figs/models.png}
 
-Since we are interested in testing our data for differences in the mean values of each population, the test hypotheses can be described as:
+\vspace{-1em}
+\flushleft Since we are interested in testing our data for differences in the mean values of each population, the test hypotheses can be described as:
 \beqs
 \begin{cases}
 H_0: \tau_i = 0,\ \ \forall i\in\left\{1,2,\ldots,a\right\}\\
@@ -202,7 +195,7 @@ This approach to modeling the mean effects of specific factor levels is known as
 \vone
 This approach is appropriate to testing hypotheses in situations when factor levels are arbitrarily defined by the experimenter;
 \vone
-For these cases, the inference is made over the mean values for each level, and cannot be extended to similar levels that were not tested (e.g., other types of hardwood);
+For these cases, the inference is made over the mean values for each level, and cannot be extended to similar levels that were not tested (e.g., other types of wood fiber);
 \vone
 Other situations may require different kinds of modeling, such as \textit{random} or \textit{mixed effects models}, but these will not be explored here.
 \end{ftst}
@@ -297,18 +290,21 @@ If $H_0$ is false, the expected value of $MS_{\mbox{\tiny\textit{Levels}}}$ is l
 {Example: paper manufacturing}
 {Computational analysis}
 \begin{rcode}
-> model <- aov(TS_kPa~Hardwood, data = paper)
-> summary.aov(model)
-            Df Sum Sq Mean Sq F value   Pr(>F)    
-Hardwood     3 110.77   36.92   13.62 4.56e-05 ***
+> my.model <- aov(TS.kPa ~ Fiber.type, 
++              data = paper)
+>
+> summary.aov(my.model)
+
+Df Sum Sq Mean Sq F value   Pr(>F)    
+Fiber.type   3 110.77   36.92   13.62 4.56e-05 ***
 Residuals   20  54.24    2.71                     
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 \end{rcode}
 \vhalf
-The \textit{ANOVA table} provides information on the sources of variation, together with their corresponding degrees of freedom, sums of squares and mean square values. The table also informs the values of the test statistic and the corresponding p-value of the test ($Pr(>F)$).
+The \textit{ANOVA table} provides information on the sources of variation, together with their corresponding \textit{d.o.f.}, sums of squares and mean square values. The table also informs the values of the test statistic and the corresponding p-value of the test ($Pr(>F)$).
 \vone
-In this case, the low p-value ($p = 4.56\times 10^{-5}$) suggests the rejection of the null hypothesis in favor of the alternative. But what does that mean?
+In this case, the p-value ($p = 4.56\times 10^{-5}$) suggests the rejection of the null hypothesis in favor of the alternative. But what does that mean?
 \end{ftstf}
 
 %=====
@@ -335,7 +331,7 @@ For this analysis to be complete, we still need to answer two questions:
 
 %=====
 
-\begin{ftst}
+\begin{ftstf}
 {Assumptions}
 {Model validation}
 As mentioned earlier, the ANOVA model is based on three assumptions on the behavior of the residuals:
@@ -348,29 +344,32 @@ The residuals of the model can be easily obtained as:
 \beqs
 e_{ij} = y_{ij} - \hat{y}_{ij} = y_{ij} - \left(\hat{\mu} + \hat{\tau_i}\right) = y_{ij}-\bar{y}_{i\bullet}
 \eqs
-\end{ftst}
+\vhalf
+\noindent or extracted directly from the fitted object in R using \verb|my.model$residuals|.
+
+\end{ftstf}
 
 %=====
 
 \begin{ftstf}
 {Assumptions}
 {Model validation}
-The normality assumption can be tested using the Shapiro-Wilk test coupled with a normal QQ plot of the residuals:
+The normality assumption can be tested using the Shapiro-Wilk test coupled with a normal QQ plot of the residuals.
 \begin{rcode}
 > shapiro.test(model$residuals)
 Shapiro-Wilk normality test
-data:  model$residuals
+data:  my.model$residuals
 W = 0.9722, p-value = 0.7225
 
 > library(car)
-> qqPlot(model$residuals, 
+> qqPlot(my.model$residuals, 
 pch = 16, 
 lwd = 3, 
 cex = 2, 
 las = 1)
 \end{rcode}
 \vskip 3em
-The ANOVA is relatively robust to moderate violations of normality, as long as the other assumptions are verified or the sample size is large enough.
+The ANOVA is relatively robust to moderate violations of normality, as long as the other assumptions are verified (or the sample size is large enough).
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=50pt,xshift=0pt] at (current page.south east) {\includegraphics[width=.45\textwidth]{../figs/paperqq.png}};
 \end{tikzpicture}
@@ -386,14 +385,14 @@ The homoscedasticity assumption can be verified by the Fligner-Killeen test, tog
 > fligner.test(TS_kPa~Hardwood, data = paper)
 Fligner-Killeen test of homogeneity of
 variances
-data:  TS_kPa by Hardwood
+data:  data:  TS.kPa by Fiber.type
 Fligner-Killeen:
 med chi-squared = 1.0622, df = 3, 
 p-value = 0.7862
 >
-> plot(x = model$fitted.values,
-+ y = model$residuals, 
-+ ...)
+> plot(x = my.model$fitted.values,
++      y = my.model$residuals) 
+
 \end{rcode}
 \vhalf
 ANOVA is relatively robust to modest\\
@@ -409,29 +408,29 @@ as the sample is \textit{balanced}.
 \begin{ftstf}
 {Assumptions}
 {Model validation}
-As usual, the independence assumption should be guaranteed (to the best of the experimenter's knowledge) on the design phase;
-\vhalf
-To test for serial correlations, we can use the Durbin-Watson test:
-\vhalf
-\begin{rcode}
-> durbinWatsonTest(model)
- lag Autocorrelation D-W Statistic p-value
-   1    -0.008996302      1.872801   0.868
- Alternative hypothesis: rho != 0
-
-> plot(x    = seq_along(model$residuals),
-+      y    = model$residuals,
-+      type = "l", ...)
-> points(x    = seq_along(model$residuals),
-+        y    = model$residuals,
-+        type = "p",
-+        col  = as.numeric(paper[,1]), ...)
-\end{rcode}
-\vhalf
-The ANOVA is sensitive to violations of independence. Randomization and attention to possibly influential factors can help avoiding violations of this assumption.
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=-78pt,xshift=0pt] at (current page.north east) {\includegraphics[width=.43\textwidth]{../figs/paperind.png}};
-\end{tikzpicture}
+As usual, the independence assumption should be guaranteed (to the best of the experimenter's knowledge) on the design phase, as well as on the analysis. This includes avoiding pseudoreplication and ordering effects, among others.
+\vone
+To test for serial correlations, we can use the Durbin-Watson test, but that only really makes sense if the data is presented to the DW test ordered by an unmodelled and possibly influential variable (such as by order of data collection).
+%\vhalf
+%\begin{rcode}
+%> durbinWatsonTest(model)
+% lag Autocorrelation D-W Statistic p-value
+%   1    -0.008996302      1.872801   0.868
+% Alternative hypothesis: rho != 0
+%
+%> plot(x    = seq_along(model$residuals),
+%+      y    = model$residuals,
+%+      type = "l", ...)
+%> points(x    = seq_along(model$residuals),
+%+        y    = model$residuals,
+%+        type = "p",
+%+        col  = as.numeric(paper[,1]), ...)
+%\end{rcode}
+\vone
+The ANOVA can be quite sensitive to violations of independence. Randomization and attention to possibly influential factors can help avoiding violations of this assumption.
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=-78pt,xshift=0pt] at (current page.north east) {\includegraphics[width=.43\textwidth]{../figs/paperind.png}};
+%\end{tikzpicture}
 \end{ftstf}
 
 %=====
@@ -468,7 +467,7 @@ Usual questions involve (but are not limited to):
 {MHT considerations}
 The multiple comparisons performed after an ANOVA are essentially composed of a series of t-tests for the difference between two population means, with some slight modifications;
 \vone
-If the assumptions of the ANOVA are verified, we already have some information about the data: we know, for instance, that the groups are homoscedastic, and that their common variance is estimated by $MS_E$ (with $a(n-1)$ degrees of freedom);
+If the assumptions of the ANOVA are verified, we already have some information about the data: we know, for instance, that the groups are homoscedastic, and that their common variance is estimated by $MS_E$, with $a(n-1)$ degrees of freedom;
 \vone
 We also know that, if we are going to perform multiple tests on the same data set, that the probability of a type-I error on each test is $\alpha$. If we want to to keep our overall error rate controlled at a given level, we will need to correct the $\alpha$ value used for each test.%
 %\footnote{\tiny This value is the one that should be used in sample size calculations. There are ways to estimate sample sizes for the omnibus ANOVA, but we'll (almost) always want to pinpoint the differences afterwards.}.
@@ -503,7 +502,7 @@ Pairwise comparisons of the \textit{all vs. all} type appear whenever we are sim
 \vone
 In these cases, the number of comparisons is $K=a(a-1)/2$, where $a$ is the number of levels.
 \vone
-The sample size calculations for this case follow the same equations used for the t test for two independent samples, but with the $\alpha$ value corrected for multiple hypotheses and the number of degrees of freedom of the reference distribution equal to those of the residual term in the ANOVA, i.e., $a(n-1)$.
+The sample size calculations for this case can follow the same equations used for the t test for two independent samples, but with the $\alpha$ value corrected for multiple hypotheses and the number of degrees of freedom of the reference distribution equal to those of the residual term in the ANOVA, i.e., $a(n-1)$.
 \end{ftst}
 
 %=====
@@ -513,10 +512,10 @@ The sample size calculations for this case follow the same equations used for th
 {All vs. all}
 For performing \textit{all vs. all} multiple comparisons, a common alternative is to use Tukey's \textit{Honest Significant Difference} (HSD) approach. This method is generally chosen because it provides a slightly higher power when compared to the Bonferroni correction\footnote[4]{\tiny The difference is due to Tukey's approach using a modified value for the $t_{\beta}$ term in the power calculations. See Mathews (2011) and Montgomery (2010) for details.}. 
 \vhalf
-The usual approach is to calculate the sample size using Bonferroni (or \v{S}id\'ak)-corrected $\alpha$-values (for simplicity), and performing the tests using Tukey's HSD corrections (for increased power):
+A simple approach is to calculate the sample size using Bonferroni-corrected $\alpha$-values (for simplicity), and performing the tests using Tukey's HSD corrections (for increased power):
 \vhalf
 \beqs
-n = 2\left(\frac{\left(t_{(\alpha_{adj}/2)}+t_{\beta}\right)\hat{\sigma}}{\delta^*}\right)^2
+n \approxeq 2\left(\frac{\left(t_{(\alpha_{adj}/2)}+t_{\beta}\right)\hat{\sigma}}{\delta^*}\right)^2
 \eqs
 \vhalf
 \noindent with $a(n-1)$ degrees of freedom for the $t$ variables.
@@ -527,18 +526,17 @@ n = 2\left(\frac{\left(t_{(\alpha_{adj}/2)}+t_{\beta}\right)\hat{\sigma}}{\delta
 \begin{ftstf}
 {Multiple comparisons}
 {All vs. all}
-Suppose that was the case for our hardwood example:
+Suppose that was the case for our wood fiber example:
 
 \begin{rcode}
 > library(multcomp)
-> paper_tukey <- glht(model, linfct = mcp(Hardwood = "Tukey"))
-> paper_tukey_CI <- confint(paper_tukey, level = 0.95)
+> mc1    <- glht(my.model, linfct = mcp(Fiber.type = "Tukey"))
+> mc1_CI <- confint(mc1, level = 0.95)
 
 Simultaneous Confidence Intervals
 Multiple Comparisons of Means: Tukey Contrasts
-Fit: aov(formula = TS_kPa ~ Hardwood, data = paper)
-Quantile = 2.7989
 95% family-wise confidence level
+
 Linear Hypotheses:
            Estimate lwr     upr    
 B - A == 0 -1.9867  -4.6478  0.6745
@@ -548,7 +546,7 @@ C - B == 0  5.6367   2.9755  8.2978
 D - B == 0  4.2200   1.5589  6.8811
 D - C == 0 -1.4167  -4.0778  1.2445
 
-> plot(paper_tukey_CI, ...)
+> plot(mc1_CI)
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=.42\textwidth]{../figs/papertukey.png}};
@@ -566,7 +564,7 @@ Pairwise comparisons of the \textit{all vs. one} type usually emerge in the cont
 \vhalf\item Comparison of different approaches vs. a standard one (or a placebo-like group);
 \eitem
 \vhalf
-In these cases, the number of comparisons is $K = a-1$, where $a$ is the number of levels. Each test can again be performed using the $t_0$ test statistic:
+In these cases, the number of comparisons is $K = a-1$, where $a$ is the number of levels. Each test can again be performed (at least in principle) using the $t_0$ test statistic:
 
 \beqs
 t^i_0 = \frac{\bar{y}_i - \bar{y}_0}{\hat{\sigma}\sqrt{\left(\frac{1}{n_i}+\frac{1}{n_0}\right)}}
@@ -603,9 +601,9 @@ n_0 = n_i\sqrt{K}
 \vhalf
 \noindent where $n_i$ is the common sample size for the non-control levels:
 \beqs
-n_i = \left(1 + \frac{1}{\sqrt{K}}\right)\left(\frac{(t_{(\alpha_{adj}/2)}+t_{\beta})\hat{\sigma}}{\delta^*}\right)^2
+n_i \approxeq \left(1 + \frac{1}{\sqrt{K}}\right)\left(\frac{(t_{(\alpha_{adj}/2)}+t_{\beta})\hat{\sigma}}{\delta^*}\right)^2
 \eqs
-\lfr{A good free software for doing sample size calculations and power analysis in nontrivial contexts such as this one is G*Power 3, \url{http://www.gpower.hhu.de/} . It is also not difficult to implement these calculations in R.}
+\lfr{A good free software for doing sample size calculations and power analysis in nontrivial contexts such as this one is G*Power 3, \url{http://www.gpower.hhu.de/} . It is also relatively simple to implement these calculations in R.}
 \end{ftst}
 
 %=====
@@ -626,27 +624,24 @@ The control group sample size $n_0$ calculated assuming that Bonferroni-correcte
 Assuming that in our example the \textit{B} level is the standard one, against which the other ones are to be compared:
 \vhalf
 \begin{rcode}
-> paper$Hardwood   <- relevel(paper$Hardwood, ref = "B")
-> model2           <- aov(TS_kPa~Hardwood, data = paper)
-> paper_dunnett    <- glht(model2, linfct = mcp(Hardwood = "Dunnett"))
-> paper_dunnett_CI <- confint(paper_dunnett, level = 0.95)
+> paper$Fiber.type <- relevel(paper$Fiber.type, ref = "B")
+> model2           <- aov(TS.kPa ~ Fiber.type, data = paper)
+> mc2              <- glht(model2, linfct = mcp(Fiber.type = "Dunnett"))
+> mc2_CI           <- confint(mc2, level = 0.95)
 
 Simultaneous Confidence Intervals
 Multiple Comparisons of Means: Dunnett Contrasts
-Fit: aov(formula = TS_kPa ~ Hardwood, 
-         data = paper)
-Quantile = 2.5394
 95% family-wise confidence level
 Linear Hypotheses:
-           Estimate lwr     upr    
-A - B == 0  1.9867  -0.4277  4.4011
-C - B == 0  5.6367   3.2223  8.0511
-D - B == 0  4.2200   1.8056  6.6344
+Estimate lwr     upr    
+A - B == 0  1.9867  -0.4275  4.4008
+C - B == 0  5.6367   3.2225  8.0508
+D - B == 0  4.2200   1.8058  6.6342
 
-> plot(paper_dunnett_CI, ...)
+> plot(mc2_CI)
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=0pt,xshift=5pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/paperdunnett.png}};
+\node[anchor=south east,yshift=0pt,xshift=4pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/paperdunnett.png}};
 \end{tikzpicture}
 \end{ftstf}
 
