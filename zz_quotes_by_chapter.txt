@@ -12,6 +12,6 @@
 %Ch.9: TO DO
 %Ch.10: Hertha Ayrton
 %Ch.11: Jocelyn Bell Burnell
-%Ch.12:
-%Ch.13:
-%Ch.14:
+%Ch.12: TO DO
+%Ch.13: TO DO
+%Ch.14: TO DO
