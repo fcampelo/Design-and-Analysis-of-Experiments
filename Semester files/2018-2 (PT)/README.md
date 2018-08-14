@@ -1,6 +1,8 @@
 # PLANEJAMENTO E ANÁLISE DE EXPERIMENTOS  
 ### **Prof. Felipe Campelo, Ph.D.**  
 
+* Para acessar todos os materiais da disciplina, basta visitar a raiz deste repositório: [https://github.com/fcampelo/Design-and-Analysis-of-Experiments](https://github.com/fcampelo/Design-and-Analysis-of-Experiments)
+
 ***
 
 ## ATIVIDADE 1: FORMULÁRIO
