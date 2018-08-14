@@ -1,5 +1,10 @@
-## PLANEJAMENTO E ANÁLISE DE EXPERIMENTOS  
+# PLANEJAMENTO E ANÁLISE DE EXPERIMENTOS  
 ### **Prof. Felipe Campelo, Ph.D.**  
+
+***
+
+## ATIVIDADE 1: FORMULÁRIO
+### (Favor concluir até no máximo dia 22/08/2018)
 
 Para acessar o formulário "fale sobre você", por favor clique em um dos links abaixo:
 
