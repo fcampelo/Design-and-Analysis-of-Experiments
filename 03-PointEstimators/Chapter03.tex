@@ -8,7 +8,7 @@
 \subtitle[]{03 - Point Estimators}
 \author[]{Felipe Campelo\\{\footnotesize http://orcslab.cpdee.ufmg.br/}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\March 2018}
+\date{\scriptsize Belo Horizonte\\August 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018b};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -258,19 +258,19 @@ More general estimates of the standard error for different distributions (or dif
 
 %=====
 
-\begin{ftst}
-{Sampling Distributions}
-{Sampling distributions of means}
-Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values are distributed according to a known Normal distribution, i.e., $X\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
-\vone
-Also suppose a random sample of $25$ cables is taken from this production process and their resistance is measured. The sample mean of the observations taken,
-\beqs
-\bar{x} = \frac{1}{25}\sum\limits_{i=1}^{25}{x_i}
-\eqs
-
-\noindent is also normally distributed, with $E[\bar{x}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $\sigma_{\bar{x}} = \sqrt{\sigma^2/25} = 0.4\Omega$.
-\lfr{[5] Example inspired on \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
-\end{ftst}
+%\begin{ftst}
+%{Sampling Distributions}
+%{Sampling distributions of means}
+%Suppose a coaxial cable manufacturing operation that produces cables with a target resistance of $50\Omega$ and a standard deviation of $2\Omega$$^{[5]}$, and assume that the resistance values are distributed according to a known Normal distribution, i.e., $X\sim\mathcal{N}\left(\mu=50,\sigma^2=4\right)$. 
+%\vone
+%Also suppose a random sample of $25$ cables is taken from this production process and their resistance is measured. The sample mean of the observations taken,
+%\beqs
+%\bar{x} = \frac{1}{25}\sum\limits_{i=1}^{25}{x_i}
+%\eqs
+%
+%\noindent is also normally distributed, with $E[\bar{x}] = \mu = 50\Omega$ (since the sample mean is an unbiased estimator) and $\sigma_{\bar{x}} = \sqrt{\sigma^2/25} = 0.4\Omega$.
+%\lfr{[5] Example inspired on \url{https://www.sas.com/resources/whitepaper/wp_4430.pdf}}
+%\end{ftst}
 
 \begin{ftst}
 {Sampling Distributions}
