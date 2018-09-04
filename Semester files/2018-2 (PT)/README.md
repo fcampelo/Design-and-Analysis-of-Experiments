@@ -13,7 +13,7 @@ Cada aluno e aluna deverá ler individualmente os seguintes materiais (disponív
 * _02-TeamPolicies.pdf_  
 * _03-CopingWithNoncooperativeMembers.pdf_
 
-As **equipes** deverão marcar um horário de reunião e produzir uma versão do documento _04-TeamExpectationsAgreement.pdf_ (disponível no mesmo diretório do link acima).
+As **equipes** (definidas em [https://git.io/fA4Ro](https://git.io/fA4Ro), por turma) deverão marcar um horário de reunião e produzir uma versão do documento _04-TeamExpectationsAgreement.pdf_ (disponível no mesmo diretório do link acima).
 
 Esta atividade não será pontuada, mas o documento gerado deverá ser enviado para o e-mail [fcampelo@gmail.com](mailto:fcampelo@gmail.com) até o dia 11/09, para registro e arquivamento.
 
