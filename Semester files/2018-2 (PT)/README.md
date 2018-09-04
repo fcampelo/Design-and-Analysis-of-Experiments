@@ -8,11 +8,17 @@
 ## ATIVIDADE 2: ESTABELECIMENTO DA EQUIPE
 ### (Favor concluir até 11/09/2018)
 
-* Cada aluno e aluna deverá ler os seguintes materiais: 
-	* 
+Cada aluno e aluna deverá ler individualmente os seguintes materiais (disponíveis em [https://git.io/fA4RE](https://git.io/fA4RE)): 
+
+* _02-TeamPolicies.pdf_  
+* _03-CopingWithNoncooperativeMembers.pdf_
+
+As **equipes** deverão marcar um horário de reunião e produzir uma versão do documento _04-TeamExpectationsAgreement.pdf_ (disponível no mesmo diretório do link acima).
+
+Esta atividade não será pontuada, mas o documento gerado deverá ser enviado para o e-mail [fcampelo@gmail.com](mailto:fcampelo@gmail.com) até o dia 11/09, para registro e arquivamento.
 
 
-
+***
 
 ## ATIVIDADE 1: FORMULÁRIO [CONCLUÍDA]
 
