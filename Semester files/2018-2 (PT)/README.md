@@ -5,8 +5,16 @@
 
 ***
 
-## ATIVIDADE 1: FORMULÁRIO
-### (Favor concluir até no máximo dia 22/08/2018)
+## ATIVIDADE 2: ESTABELECIMENTO DA EQUIPE
+### (Favor concluir até 11/09/2018)
+
+* Cada aluno e aluna deverá ler os seguintes materiais: 
+	* 
+
+
+
+
+## ATIVIDADE 1: FORMULÁRIO [CONCLUÍDA]
 
 Para acessar o formulário "fale sobre você", por favor clique em um dos links abaixo:
 
