@@ -8,7 +8,7 @@
 \subtitle[]{05 - Statistical Inference}
 \author[]{Felipe Campelo\\{\footnotesize http://orcslab.cpdee.ufmg.br/}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\April 2018}
+\date{\scriptsize Belo Horizonte\\September 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018b};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -103,8 +103,8 @@ The \textit{hypothetico-deductive model} of construction of scientific knowledge
 
 \bitems Formulation of falsifiable hypotheses;
 	\item Refutation or corroboration of the hypotheses by the data;
-	\item Comparison between alternative hypotheses - principle of parsimony (Ockham's razor);
 	\item Predictive power;
+	\item Comparison between alternative hypotheses - principle of parsimony (Ockham's razor);
 \eitem
 
 \begin{columns}[T]
@@ -148,7 +148,7 @@ The \textit{hypothetico-deductive model} of construction of scientific knowledge
 \vone
 \textbf{Attention}: the statements in statistical hypotheses are about parameters of the \textit{population} or \textit{model}, \textbf{not the \textit{sample}}.
 \vone
-the \textit{null hypothesis significance testing} (NHST) approach involves the contrast between \textit{null} and \textit{alternative} hypotheses.
+The \textit{null hypothesis significance testing} (NHST) approach involves the contrast between \textit{null} and \textit{alternative} hypotheses.
 \begin{columns}[T]
 	\column{0.48\textwidth}
 	\begin{block}{Null hypothesis ($H_0$)}
@@ -270,11 +270,11 @@ Another frequently used term is the \textit{confidence level} of the test, given
 {Type I error}
 For a given sample, the selected value of $\alpha$ defines the critical threshold for the rejection of $H_0$.
 \vone
-If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of values of $\bar{x}$ is approximately normal (assuming the CLT conditions are met), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
+If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of $\bar{X}$ is approximately Normal (assuming that the population is Normal, OR that the CLT conditions are met and $N$ is suitably large), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
 \vone
-For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{x}$ are the ones for which the probability content within the acceptance region under the null hypothesis is $1-\alpha = 0.95$.
+For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{X}$ are the ones for which the probability content within the acceptance region under the null hypothesis is $1-\alpha = 0.95$.
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=0.5\textwidth]{../figs/alpha.png}};
+\node[anchor=south east,yshift=0pt,xshift=0pt] at (current page.south east) {\includegraphics[width=0.45\textwidth]{../figs/alpha.png}};
 \end{tikzpicture}
 \end{ftst}
 
@@ -373,7 +373,7 @@ It is important to remember that failing to reject $H_0$ does not mean that ther
 
 \begin{ftst}
 {Hypothesis Testing}
-{Mean of a normal distribution, variance known}
+{Mean of a Normal distribution, variance known}
 Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the sacks. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
 
 \beqs\begin{cases}
@@ -383,7 +383,7 @@ H_1: \mu \neq 50kg
 \vone
 Let the desired significance level be $\alpha = 0.05$;
 \vone
-Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is normal, with $Var(\bar{X})=\sigma^2/n$ and, \underline{\textbf{if $H_0$ is true}}, a mean of $\mu_{\bar{X}}=\mu_0=50$;
+Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is Normal, with $Var(\bar{X})=\sigma^2/n$ and, \underline{\textbf{if $H_0$ is true}}, a mean of $\mu_{\bar{X}}=\mu_0=50$;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
@@ -393,11 +393,11 @@ Given these characteristics, we expect that the sampling distribution of $\bar{X
 
 \begin{ftst}
 {Hypothesis Testing}
-{Mean of a normal distribution, variance known}
+{Mean of a Normal distribution, variance known}
 Based on these characteristics, the standardized variable
 \beqs Z_0 = \frac{\bar{X} - \mu_0}{\sigma/\sqrt{n}}\eqs
 \vhalf
-\noindent will be distributed, \underline{\textbf{under the null hypothesis}}, according to the standard normal, $\mathcal{N}\left(0,1\right)$.
+\noindent will be distributed, \underline{\textbf{under the null hypothesis}}, according to the standard Normal, $\mathcal{N}\left(0,1\right)$.
 \vhalf
 This result implies that:
 \beqs
@@ -418,14 +418,14 @@ P\left(z_{\alpha/2}\leq Z_0\leq z_{1-\alpha/2}\mid H_0~\mbox{is true}\right) = 1
 
 \begin{ftst}
 {Hypothesis Testing}
-{Mean of a normal distribution, variance known}
+{Mean of a Normal distribution, variance known}
 Assume that we got $\bar{x} = 49.65$kg from our $n=10$ observations, and that we know that $\sigma = 1$kg. In this case,
 
 \beqs 
 z_0 = \frac{49.65 - 50}{1/\sqrt{10}} = -1.113
 \eqs
 \vhalf
-The critical values of the standard normal distribution at the significance level $\alpha = 0.05$ are $\left[z_{0.025},z_{0.975}\right] = \left[-1.96,1.96\right]$;
+The critical values of the standard Normal distribution at the significance level $\alpha = 0.05$ are $\left[z_{0.025},z_{0.975}\right] = \left[-1.96,1.96\right]$;
 \vone
 Since $z_0\in \left[-1.96,1.96\right]$, we can conclude that there is not enough evidence to reject $H_0$ at the $95\%$ confidence level.
 \begin{tikzpicture}[remember picture,overlay]
@@ -437,7 +437,7 @@ Since $z_0\in \left[-1.96,1.96\right]$, we can conclude that there is not enough
 
 \begin{ftst}
 {Hypothesis Testing}
-{Mean of a normal distribution, variance unknown}
+{Mean of a Normal distribution, variance unknown}
 Suppose now a more realistic situation in which the real variance is unknown. Besides, assume that we are interested in detecting only negative deviations from the nominal contents of the package.
 \vone
 The test hypotheses can be defined as:
@@ -460,7 +460,7 @@ In this case, \textbf{if $H_0$ is true}, we have that
 
 \begin{ftst}
 {Hypothesis Testing}
-{Mean of a normal distribution, variance unknown}
+{Mean of a Normal distribution, variance unknown}
 From the same data used earlier, $\bar{x} = 49.65$kg, $n=10$, $s = 0.697$kg:
 \beqs t_0 = \frac{49.65 - 50}{0.697/\sqrt{10}} = -1.597\eqs
 \vhalf
@@ -476,7 +476,7 @@ Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to rejec
 
 \begin{ftstf}
 	{Hypothesis Testing}
-	{Mean of a normal distribution, variance unknown}
+	{Mean of a Normal distribution, variance unknown}
 	\begin{rcode}
 > my.sample <- read.table("../data files/greenpeas.txt")
 
@@ -585,7 +585,7 @@ d = \frac{\bar{x}-\mu_0}{s}
 \centering\textit{Point estimators + confidence intervals quantify the magnitude and accuracy of effects, and must be reported alongside the results of significance testing whenever possible.}
 \end{block}
 \vhalf
-Suppose we are testing $H_0: \mu=50$ against the two-sided alternative hypothesis, with $n=10$ and $\alpha=0.01$. Assume that the population is known to be normal, with unknown variance. We'll use the same data as before:
+Suppose we are testing $H_0: \mu=50$ against the two-sided alternative hypothesis, with $n=10$ and $\alpha=0.01$. Assume that the population is known to be Normal, with unknown variance. We'll use the same data as before:
 \vhalf
 \begin{rcode}
 > t.test(my.sample, mu = 50, conf.level = 0.99)
@@ -713,7 +713,7 @@ We need at least 48 observations to detect a $-0.5kg\ (1\%)$ or larger deviation
 {The normality assumption}
 The assumption of normality, required for the \textbf{z} and \textbf{t} tests, needs to be validated.
 	\begin{colorblock}{}{bg=green!30,fg=black}
-	``\textit{The Assumption of Normality (note the upper case) that underlies parametric stats does not assert that the observations within a given sample are normally distributed, nor does it assert that the values within the population (from which the sample was taken) are normal. This core element of the Assumption of Normality asserts that \textbf{the distribution of sample means (across independent samples) is normal.}}''\\
+	``\textit{The Assumption of Normality (note the upper case) that underlies parametric stats does not assert that the observations within a given sample are normally distributed, nor does it assert that the values within the population (from which the sample was taken) are Normal. This core element of the Assumption of Normality asserts that \textbf{the distribution of sample means (across independent samples) is Normal.}}''\\
 	\flushright -- J. Toby Mordkoff, 2011.$^{(a)}$
 	\end{colorblock}
 
@@ -756,11 +756,11 @@ Analytical tests of normality (choose \textbf{one});
 \vone
 These procedures use different aspects of the sample distribution to test the following hypotheses:
 \beqs\begin{cases}
-	H_0: \mbox{population is normal}\\
-	H_1: \mbox{population is not normal}
+	H_0: \mbox{population is Normal}\\
+	H_1: \mbox{population is not Normal}
 \end{cases}\eqs
 \vhalf
-In this case, rejection of the null hypothesis suggests evidence that the \textbf{sample} came from a non-normal population. Generally we use a strict $\alpha$ threshold for these tests, and consider their results together with a graphical analysis.
+In this case, rejection of the null hypothesis suggests evidence that the \textbf{sample} came from a non-Normal population. Generally we use a strict $\alpha$ threshold for these tests, and consider their results together with a graphical analysis.
 \end{ftst}
 
 %=====
