@@ -1,0 +1,257 @@
+\documentclass[11pt,twoside,printwatermark=false]{pinp}
+
+%% Some pieces required from the pandoc template
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Use the lineno option to display guide line numbers if required.
+% Note that the use of elements such as single-column equations
+% may affect the guide line number alignment.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\definecolor{pinpblue}{HTML}{185FAF}  % imagecolorpicker on blue for new R logo
+\definecolor{pnasbluetext}{RGB}{101,0,0} %
+
+
+
+\title{EEE933 - Design and Analysis of Experiments}
+
+\author[]{Case Study 01}
+
+
+\setcounter{secnumdepth}{0}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{}
+
+% Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
+ 
+
+\begin{abstract}
+Experiment: performance of a new software version.
+\end{abstract}
+
+\dates{This version was compiled on \today}
+
+
+\begin{document}
+
+% Optional adjustment to line up main text (after abstract) of first page with line numbers, when using both lineno and twocolumn options.
+% You should only change this length when you've finalised the article contents.
+\verticaladjustment{-2pt}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+% If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
+
+
+\section{The experiment}\label{the-experiment}
+
+The \textbf{current} version of a given system is known, based on
+extensive past experience, to have a distribution of execution costs
+with populational mean \(\mu = 50\) and populational variance
+\(\sigma^2 = 100\) (the specific units are not important in this
+particular experiment). Notice that these are considered populational
+parameters, not sample estimates.
+
+A \textbf{new} version of this software is developed, and we wish to
+investigate whether it results in \emph{performance improvements} (e.g.,
+smaller mean execution cost and/or smaller variance) in relation to the
+current standard. To investigate this particular question, an
+experimental analysis will be performed.
+
+To \textbf{simulate} the data collection procedures for the \textbf{new}
+software version, the following routines will be used. First, to set up
+the data collection procedure, use:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Install required package and set up simulation}
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"ExpDE"}\NormalTok{) }\CommentTok{# <-- you only need to install it once}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Set up the data-generating procedure}
+\KeywordTok{library}\NormalTok{(ExpDE)}
+\NormalTok{mre <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"recombination_bin"}\NormalTok{, }\DataTypeTok{cr =} \FloatTok{0.9}\NormalTok{) }
+\NormalTok{mmu <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name =} \StringTok{"mutation_rand"}\NormalTok{, }\DataTypeTok{f =} \DecValTok{2}\NormalTok{)}
+\NormalTok{mpo <-}\StringTok{ }\DecValTok{100}
+\NormalTok{mse <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"selection_standard"}\NormalTok{)}
+\NormalTok{mst <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{10000}\NormalTok{)}
+\NormalTok{mpr <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"sphere"}\NormalTok{, }\DataTypeTok{xmin  =} \OperatorTok{-}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{xmax  =} \DecValTok{20} \OperatorTok{+}\StringTok{ }\DecValTok{5} \OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{24}\NormalTok{))}
+\NormalTok{my.seed <-}\StringTok{ }\DecValTok{1998}  \CommentTok{# <--- }\AlertTok{ATTENTION}\CommentTok{: USE THE BIRTH YEAR OF YOUNGEST TEAM MEMBER}
+\end{Highlighting}
+\end{Shaded}
+
+A \textbf{single} observation of running cost for the \textbf{new}
+version can be obtained by running:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Generate a single observation}
+\KeywordTok{ExpDE}\NormalTok{(mpo, mmu, mre, mse, mst, mpr, }\DataTypeTok{seed =}\NormalTok{ my.seed,}
+      \DataTypeTok{showpars =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{show.iters =} \StringTok{"none"}\NormalTok{))}\OperatorTok{$}\NormalTok{Fbest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{ShadedResult}
+\begin{verbatim}
+#  [1] 57.94537
+\end{verbatim}
+\end{ShadedResult}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\newpage
+
+\section{Activities}\label{activities}
+
+\subsection{For the test on the mean
+cost}\label{for-the-test-on-the-mean-cost}
+
+For this test, assume a desired significance level \(\alpha = 0.01\), a
+minimally relevant effect size of \(\delta^* = 4\), and a desired power
+of \(\pi = 1 - \beta = 0.8\). Each team must perform the following
+activities:
+
+\begin{itemize}
+\tightlist
+\item
+  Define the statistical hypotheses to be tested (null/alternative).
+\item
+  Define the sample size to be used in this experiment, and collect the
+  sample.
+\item
+  Test the hypotheses and decide for rejecting (or not) the null
+  hypothesis.
+\item
+  Calculate the confidence interval on the mean.
+\item
+  Validate and discuss the assumptions of the test.
+\item
+  Discuss the power of the test (if needed), and the adequacy of the
+  sample size used for this particular test.
+\end{itemize}
+
+\subsection{For the test on the variance of the
+cost}\label{for-the-test-on-the-variance-of-the-cost}
+
+For this test, assume a desired significance level \(\alpha = 0.05\).
+Assume also that reductions in standard deviation is a secondary
+benefit, to be investigated using the same observations collected for
+the first test. Each team must perform the following activities:
+
+\begin{itemize}
+\tightlist
+\item
+  Define the statistical hypotheses to be tested (null/alternative).
+\item
+  Test the hypotheses and decide for rejecting (or not) the null
+  hypothesis.
+\item
+  Calculate the confidence interval on the variance.
+\item
+  Validate and discuss the assumptions of the test.
+\end{itemize}
+
+After performing the activities related to each test individually, the
+team must:
+
+\begin{itemize}
+\tightlist
+\item
+  Draw conclusions and provide recommendations regarding the adoption
+  (or not) of the new software version.
+\item
+  Discuss possible ways to improve this experiment.
+\end{itemize}
+
+\subsection{{[}Bonus question{]}}\label{bonus-question}
+
+Can you also provide a 90\% tolerance interval (using a confidence level
+\(\alpha = 0.05\)) for the population of running costs? Notice that the
+data may not be Normal.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\newpage
+
+\section{Report}\label{report}
+
+Each team must prepare a short report detailing the experiment and the
+analysis performed. The report will be evaluated according to the
+following criteria:
+
+\begin{itemize}
+\tightlist
+\item
+  Use of the predefined format (see below);
+\item
+  Reproducibility of the analyses;
+\item
+  Technical quality;
+\item
+  Logical structure;
+\item
+  Correct use of language (grammar, orthography, \emph{etc.});
+\end{itemize}
+
+The report must \textbf{necessarily} be prepared using
+\href{http://rmarkdown.rstudio.com}{R Markdown}, and must contain the
+full code needed to reproduce the analysis performed by the team,
+embedded in the form of \emph{code blocks}. Each team must deliver the
+following files:
+
+\begin{itemize}
+\tightlist
+\item
+  The report file, compiled in \textbf{.pdf} .
+\item
+  The original (\textbf{.Rmd} source file) of the report.
+\item
+  The data file (\textbf{.csv}) generated in this experiment.
+\end{itemize}
+
+The \textbf{.Rmd} file must be able to be recompiled, if needed (tip:
+save your \textbf{.Rmd} file using UTF-8 encoding, to prevent
+compilation problems in other operational systems.
+
+Report templates are available on \url{https://git.io/vHk0F}, and an
+example of report structure can be consulted on
+\url{https://git.io/vHk0j}. This document can also be used as a
+template.
+
+\textbf{Important}: Please include in the report the roles of each team
+member (Coordinator, Recorder, Checker and, for 4-member teams, Monitor)
+
+\textbf{Important}: Reports can be prepared in either Portuguese or
+English.
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\section{Deadline}\label{deadline}
+
+The report files (pdf + rmd + csv) must be compressed into a single file
+(use \textbf{.ZIP}) and uploaded to the activity \textbf{Case Study 01}
+on Moodle, until \textbf{Monday, September 24 2018, 11:59p.m.}. After
+that deadline the system will be closed.
+
+\textbf{Important}: Only ONE submission is required for each team.
+
+\textbf{Important}: Reports will NOT be received by e-mail or in printed
+form.
+
+%\showmatmethods
+
+
+
+
+
+\end{document}
+
