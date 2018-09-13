@@ -85,7 +85,6 @@ the data collection procedure, use:
 \NormalTok{mse <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"selection_standard"}\NormalTok{)}
 \NormalTok{mst <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{names =} \StringTok{"stop_maxeval"}\NormalTok{, }\DataTypeTok{maxevals =} \DecValTok{10000}\NormalTok{)}
 \NormalTok{mpr <-}\StringTok{ }\KeywordTok{list}\NormalTok{(}\DataTypeTok{name  =} \StringTok{"sphere"}\NormalTok{, }\DataTypeTok{xmin  =} \OperatorTok{-}\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{xmax  =} \DecValTok{20} \OperatorTok{+}\StringTok{ }\DecValTok{5} \OperatorTok{*}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{24}\NormalTok{))}
-\NormalTok{my.seed <-}\StringTok{ }\DecValTok{1998}  \CommentTok{# <--- }\AlertTok{ATTENTION}\CommentTok{: USE THE BIRTH YEAR OF YOUNGEST TEAM MEMBER}
 \end{Highlighting}
 \end{Shaded}
 
@@ -95,14 +94,14 @@ version can be obtained by running:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{# Generate a single observation}
-\KeywordTok{ExpDE}\NormalTok{(mpo, mmu, mre, mse, mst, mpr, }\DataTypeTok{seed =}\NormalTok{ my.seed,}
+\KeywordTok{ExpDE}\NormalTok{(mpo, mmu, mre, mse, mst, mpr,}
       \DataTypeTok{showpars =} \KeywordTok{list}\NormalTok{(}\DataTypeTok{show.iters =} \StringTok{"none"}\NormalTok{))}\OperatorTok{$}\NormalTok{Fbest}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{ShadedResult}
 \begin{verbatim}
-#  [1] 57.94537
+#  [1] 51.45831
 \end{verbatim}
 \end{ShadedResult}
 
