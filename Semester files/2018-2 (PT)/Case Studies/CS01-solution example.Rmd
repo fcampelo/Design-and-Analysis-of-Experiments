@@ -1,0 +1,292 @@
+---
+title: Estudo de caso 01 - exemplo de solução
+
+# Use letters for affiliations
+author:
+  - name: Felipe Campelo
+    affiliation: a
+address:
+  - code: a
+    address: Departamento de Engenharia Elétrica, UFMG.
+
+# For footer text  TODO(fold into template, allow free form two-authors)
+lead_author_surname: Campelo
+
+# Place DOI URL or CRAN Package URL here
+doi: "http://github.com/fcampelo/Design-and-Analysis-of-Experiments"
+
+# Abstract
+abstract: |
+  Este documento apresenta um modelo de solução do Estudo de Caso 1 da 
+  disciplina de Planejamento e Análise de Experimentos, semestre 2018-2. 
+  Atenção: isto NÃO é um exemplo de relatório.
+
+# Optional: Acknowledgements
+#acknowledgements: |
+#  This template package builds upon, and extends, the work of the excellent
+
+# Optional: One or more keywords
+# keywords:
+  # - one
+  # - two
+  # - optional
+  # - keywords
+  # - here
+
+# Font size of the document, values of 9pt (default), 10pt, 11pt and 12pt
+fontsize: 11pt
+
+# Optional: Force one-column layout, default is two-column
+one_column: true
+
+# Optional: Enables lineno mode, but only if one_column mode is also true
+#lineno: true
+
+# Optional: Enable one-sided layout, default is two-sided
+#one_sided: true
+
+# Optional: Enable section numbering, default is unnumbered
+#numbersections: true
+
+# Optional: Specify the depth of section number, default is 5
+#secnumdepth: 5
+
+# Optional: Skip inserting final break between acknowledgements, default is false
+skip_final_break: true
+
+# Optional: Bibliography 
+bibliography: pinp
+
+# Optional: Enable a 'Draft' watermark on the document
+watermark: false
+
+# Customize footer, eg by referencing the vignette
+footer_contents: "Estudo de Caso 1: exemplo de solução"
+
+# Produce a pinp document
+output: pinp::pinp
+
+# Required: Vignette metadata for inclusion in a package.
+# vignette: >
+#   %\VignetteIndexEntry{YourPackage-vignetteentry}
+#   %\VignetteKeywords{YourPackage, r, anotherkeyword}
+#   %\VignettePackage{YourPackage}
+#   %\VignetteEngine{knitr::rmarkdown}
+---
+
+# Parte 1: teste sobre a média
+
+## Informações do problema 
+As seguintes informações são dadas na definição do problema:
+
+- Parâmetro considerado como conhecido da distribuição de custos da versão atual do software: $\mu_0 = 50$.
+- Questão de interesse: a nova versão apresenta _ganhos_ em termos de custo médio?
+- Nível de confiança desejado: $1-\alpha = 0.99$.
+- Tamanho de efeito de mínima relevância prática: $\delta^* = 4$.
+- Potência desejada para efeitos iguais ou maiores que $\delta^*$: $\pi = 1-\beta = 0.8$.
+
+## Definição das hipóteses de interesse
+Os pontos acima resultam na seguinte formulação para as hipóteses de teste:
+
+$$
+\left\{
+  \begin{matrix}
+    H_0: \mu = 50\\
+    H_1: \mu < 50\\
+  \end{matrix}
+\right.
+$$
+
+## Cálculo do tamanho amostral 
+Com base nas propriedades desejadas para o experimento, pode-se realizar a estimativa do tamanho amostral de três formas. A primeira envolve a realização de um experimento preliminar para estimação da variância dos dados, que poderá então ser utilizada para a derivação de um tamanho amostral razoável para o experimento. A segunda envolve a utilização de informações preliminares sobre o problema para gerar uma estimativa razoável de variância, que pode então ser utilizada no cálculo do número de observações necessárias. O terceiro seria a utilização de um tamanho amostral predefinido (p.ex., 30, 50 ou 100 execuções), o que não garantiria a potência desejada.
+
+Neste exemplo de solução seguiremos a abordagem número 2, utilizando a seguinte fundamentação para o mesmo: a variância do software _atual_ é dada como $\sigma^2 = 100$, e espera-se que o novo sistema possa trazer _ganhos_ de variância. Mesmo que tais ganhos não sejam observados, a variância do sistema atual pode ser considerada como uma primeira estimativa (possivelmente sobre-estimada) da variância dos custos do novo sistema. Esta premissa técnica pode (e deve) ser avaliada posteriormente.
+
+Assumindo $\sigma^2=100$ e tendo $\delta^* = 4$, $\alpha = 0.01$, $\pi = 0.8$ e uma hipótese alternativa unilateral, o tamanho amostral pode ser estimado como:
+
+```{r}
+(my.sscalc <- power.t.test(delta       = 4, 
+                           sd          = 10, 
+                           sig.level   = 0.01, 
+                           power       = 0.8, 
+                           alternative = "one.sided", 
+                           type        = "one.sample"))
+N <- ceiling(my.sscalc$n)
+```
+
+Ou seja, uma estimativa de $N =$ `r N` observações.
+
+## Coleta das observações
+Para coletar os os dados do experimento, basta seguir as instruções dadas na definição do estudo de caso:
+
+``` {r, cache = TRUE}
+suppressPackageStartupMessages(library(ExpDE))
+mre <- list(name  = "recombination_bin", cr = 0.9)
+mmu <- list(name  = "mutation_rand", f = 2)
+mpo <- 100
+mse <- list(name  = "selection_standard")
+mst <- list(names = "stop_maxeval", maxevals = 10000)
+mpr <- list(name  = "sphere", 
+            xmin = -seq(1, 20), 
+            xmax = 20 + 5 * seq(5, 24))
+
+set.seed(1234) # <- isso não estava na definição do trabalho
+
+my.sample <- numeric(N)
+for (i in seq(N)){
+  my.sample[i] <- ExpDE(mpo, mmu, mre, mse, mst, mpr,
+                        showpars = list(show.iters = "none"))$Fbest
+}
+```
+\
+Antes de proceder com o teste de hipóteses, é interessante realizar uma análise exploratória dos dados. Isto pode ser feito facilmente com os gráficos básicos do R, mas a biblioteca _ggplot2_ tende a gerar visualizações mais esteticamente agradáveis:
+
+```{r}
+# Some summary statistics
+summary(my.sample)
+var(my.sample)
+```
+
+Note que a variância amostral é substancialmente inferior à considerada no cálculo do tamanho amostral, o que sugere que nosso teste terá uma potência superior à nominal (assumindo que as premissas dos testes estejam válidas).
+
+```{r, fig.width=5, fig.height=3}
+# Plot a boxplot (basic)
+boxplot(my.sample, horizontal = TRUE)
+```
+```{r, fig.width=5, fig.height=3}
+# Plot a boxplot (ggplot2)
+suppressPackageStartupMessages(library(ggplot2))
+p1 <- ggplot(as.data.frame(my.sample), aes(y = my.sample))
+p1 + geom_boxplot() + coord_flip() + theme(axis.text.y = element_blank())
+```
+
+```{r, fig.width=5, fig.height=3}
+# plot a histogram (basic)
+hist(my.sample, las = 1, breaks = 10)
+
+# plot a histogram (ggplot2)
+p2 <- ggplot(as.data.frame(my.sample), aes(x = my.sample))
+p2 + geom_histogram(bins = 10)
+```
+
+```{r, fig.width=5, fig.height=3}
+# Plot a Normal qq-plot (basic)
+qqnorm(my.sample, las = 1)
+qqline(my.sample)
+
+# Plot a Normal qq-plot (a little better)
+suppressPackageStartupMessages(library(car))
+qqPlot(my.sample, las = 1, pch = 16)
+
+# Plot a Normal qq-plot (ggplot2)
+p3 <- ggplot(as.data.frame(my.sample), aes(sample = my.sample))
+p3 + geom_qq() + geom_qq_line()
+```
+
+A análise exploratória é muito importante para revelar possíveis assimetrias, outliers, ou outras peculiaridades dos dados. Neste caso específico, vemos que a distribuição das observações aparenta ter uma cauda mais pesada à direita, o que pode comprometer as premissas do teste-t. Contudo, o gráfico quantil-quantil sugere que este desvio é pequeno, e o tamanho amostral (`r N`) é alto o bastante para que a distribuição amostral das médias já esteja suficientemente próxima da Normal (mais sobre isso na parte de teste de premissas).
+
+## Teste de hipóteses
+Utilizando os dados coletados, o teste de hipóteses pode ser feito de forma simples:
+
+```{r}
+(my.test <- t.test(my.sample, mu = 50, 
+                   alternative = "less", 
+                   conf.level  = 0.99))
+```
+
+Com base nestes dados, não é possível rejeitar a hipótese nula ao nível de confiança de $99\%$ (note o valor-p obtido). O intervalo de confiança fornecido por este teste é um intervalo aberto (posto que a alternativa era unilateral), mas é possível estimar um intervalo fechado para o valor da média utilizando:
+
+```{r}
+t.test(my.sample, mu = 50, conf.level  = 0.99)$conf.int
+```
+
+## Validação das premissas
+Assumindo independência no processo de obtenção dos dados (garantido pelo planejamento) e a ausência de outras co-variáveis de importância nos resíduos (o que pode ser assumido neste caso específico, dada a simplicidade do teste), a única premissa a ser validada é a de normalidade. Os gráficos quantil-quantil gerados anteriormente sugerem uma cauda ligeiramente pesada à direita. 
+
+Dado o tamanho amostral é possível que esta leve assimetria não impacte na normalidade da distribuição amostral das médias. Uma forma simples de testar esta possibilidade envolve a estimação qualitativa da distribuição amostral das médias através de reamostragem (_bootstrap_):
+
+```{r, cache = TRUE}
+K <- 999
+boot.means <- numeric(K)
+for (i in seq(K)){
+  boot.sample <- sample(my.sample, replace = TRUE) # sample with replacement
+  boot.means[i] <- mean(boot.sample)
+}
+```
+```{r, fig.width=6, fig.height=3}
+qqnorm(boot.means, las = 1, pch = 16)
+qqline(boot.means)
+```
+
+Esta estimativa da distribuição amostral das médias sugere que a mesma se aproxima bastante do que seria esperado de uma Normal, e consequentemente quaisquer efeitos de degradação nas taxas de erro devem ser pequenas o bastante para não requerer a modificação do teste estatístico utilizado. Alternativamente o teste de Wilcoxon (_Wilcoxon signed-ranks test_) poderia ser utilizado, uma vez que o mesmo não depende da premissa de normalidade.
+
+## Discussão sobre a potência do teste
+Uma vez que a variância amostral é substancialmente inferior à variância de referência utilizada para a estimativa do tamanho amostral, é esperado que a potência efetiva para a detecção de diferenças maiores que o tamanho de efeito de mínima relevância prática seja superior aos $80\%$ utilizados no cálculo de $N$. Um limitante inferior para a potência estatística pode ser derivado a partir da margem de confiança superior para o valor da variância. Um intervalo de confiança unilateral superior para a variância (ao nível de confiança $1 - \alpha$) pode ser estimado como:
+
+$$
+\sigma^2\leq\frac{(n-1)s^2}{{\chi^2}_{\alpha}^{(n-1)}}
+$$
+
+Para a amostra disponível:
+
+```{r}
+(CI_u <- (N - 1) * var(my.sample) / qchisq(p = 0.01, df = N - 1))
+```
+
+ou seja, o intervalo entre $0$ (limite inferior de variâncias, por definição) e `r CI_u` contém o valor real da variância com $99\%$ de confiança\footnote{Note que este intervalo assume normalidade, e consequentemente é somente uma aproximação útil. Um intervalo melhor é estimado na seção sobre o teste da variância}. Utilizando este limitante superior podemos estimar uma ``potência de pior caso'' para efeitos maiores ou iguais a $\delta^*$ (ou seja, diferenças em relação à hipótese nula de magnitude tão grande ou maior que $\delta^* = 4$) utilizando:
+
+```{r}
+(my.pwr <- power.t.test(n           = N, 
+                        delta       = 4, 
+                        sd          = sqrt(CI_u), 
+                        sig.level   = 0.01, 
+                        type        = "one.sample", 
+                        alternative = "one.sided"))
+```
+
+\noindent ou seja, teríamos uma potência de no mínimo `r round(my.pwr$power, 4)` para efeitos iguais ou maiores que $\delta^*$, o que é absolutamente aceitável para este experimento.
+
+
+# Parte 2: teste sobre a variância
+
+## Informações do problema 
+
+- Parâmetro considerado como conhecido da distribuição de custos da versão atual do software: $\sigma^2_0 = 100$.
+- Questão de interesse: a nova versão apresenta _ganhos_ em termos de variância média?
+- Nível de confiança desejado: $1-\alpha = 0.95$.
+- Uso da amostra disponível para o teste das médias.
+
+## Definição das hipóteses de interesse
+Os pontos acima resultam na seguinte formulação para as hipóteses de teste:
+
+$$
+\left\{
+  \begin{matrix}
+    H_0: \sigma^2 = 100\\
+    H_1: \sigma^2 < 100\\
+  \end{matrix}
+\right.
+$$
+
+No caso dos testes sobre a variância, a premissa é requerida diretamente sobre os dados, e não somente na distribuição amostral do estimador (o o Teorema do Limite Central não se aplica ao estimador variância amostral). Assim, precisamos de i) encontrar uma transformação dos dados que leve os mesmos à normalidade, ou ii) utilizar uma abordagem que não dependa desta premissa. As transformações mais usuais para dados com caudas pesadas à direita são a logarítmica e a raiz quadrada:
+
+```{r, fig.width=6, fig.height=3}
+qqPlot(log(my.sample), pch = 16, las = 1)
+qqPlot(sqrt(my.sample), pch = 16, las = 1)
+```
+
+Infelizmente nenhum dos dois casos leva a distribuição para a normalidade. Uma forma de testar as hipóteses sobre a variância neste caso envolve novamente o uso de _bootstrap_, juntamente com a correspondência entre a região coberta por um intervalo de confiança e a rejeição (ou não) de uma dada hipótese relativa a um parâmetro de interesse. Desta vez utilizaremos uma implementação mais eficiente\footnote{E com melhores propriedades estatísticas - ver, p.ex., [http://users.stat.umn.edu/~helwig/notes/bootci-Notes.pdf](http://users.stat.umn.edu/~helwig/notes/bootci-Notes.pdf).}
+
+```{r}
+suppressPackageStartupMessages(library(boot))
+boot.out <- boot(my.sample, statistic = function(x, i){var(x[i])}, R = 999)
+(my.boot.var <- boot.ci(boot.out, conf = 0.9, type = "bca"))
+```
+
+Note que o nível de confiança foi ajustado para $0.9$, de forma a ter uma taxa de erros de $0.05$ para cada lado do intervalo. Como estamos interessados somente no limitante superior, podemos ignorar o limitante inferior e declarar que, com $95\%$ de confiança, a variância da nova versão do software é inferior a `r round(my.boot.var$bca[5], 4)`. Um intervalo bilateral de confiança ao nível de $95\%$ pode ser derivado de forma igualmente simples,
+
+```{r}
+boot.ci(boot.out, conf = 0.95, type = "bca")
+```
+
+De qualquer forma, a variância da nova versão pode ser declarada significativamente inferior (ao nível de confiança de $95\%$) à da versão atual.
