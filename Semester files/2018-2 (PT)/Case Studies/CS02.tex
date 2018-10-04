@@ -1,0 +1,177 @@
+\documentclass[11pt,twocolumn,printwatermark=false]{pinp}
+
+%% Some pieces required from the pandoc template
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Use the lineno option to display guide line numbers if required.
+% Note that the use of elements such as single-column equations
+% may affect the guide line number alignment.
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\definecolor{pinpblue}{HTML}{185FAF}  % imagecolorpicker on blue for new R logo
+\definecolor{pnasbluetext}{RGB}{101,0,0} %
+
+
+
+\title{EEE933 - Estudo de Caso 02}
+
+\author[a]{Felipe Campelo}
+
+  \affil[a]{Programa de Pós-Graduação em Engenharia Elétrica, UFMG.}
+
+\setcounter{secnumdepth}{0}
+
+% Please give the surname of the lead author for the running footer
+\leadauthor{}
+
+% Keywords are not mandatory, but authors are strongly encouraged to provide them. If provided, please include two to five keywords, separated by the pipe symbol, e.g:
+ 
+
+\begin{abstract}
+Comparação do IMC médio de alunos do PPGEE-UFMG ao longo de dois
+semestres
+\end{abstract}
+
+\dates{This version was compiled on \today}
+
+\pinpfootercontents{Document created using R Markdown + PINP package}
+
+\begin{document}
+
+% Optional adjustment to line up main text (after abstract) of first page with line numbers, when using both lineno and twocolumn options.
+% You should only change this length when you've finalised the article contents.
+\verticaladjustment{-2pt}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+% If your first paragraph (i.e. with the \dropcap) contains a list environment (quote, quotation, theorem, definition, enumerate, itemize...), the line after the list may have some extra indentation. If this is the case, add \parshape=0 to the end of the list environment.
+
+
+\subsection{O Experimento}\label{o-experimento}
+
+Neste estudo deseja-se comparar o IMC
+{[}\href{http://apps.who.int/bmi/index.jsp?introPage=intro_3.html}{1}{]}
+médio de duas populações de estudantes, a saber: alunos de pós-graduação
+em Engenharia Elétrica na UFMG nos semestres 2016-2 e 2017-2. Neste caso
+estamos usando o IMC como um valor \emph{proxy} para variáveis relativas
+ao estilo de vida dos alunos (apesar das limitações conhecidas deste
+indicador
+{[}\href{http://www.nytimes.com/interactive/projects/cp/summer-of-science-2015/latest/how-often-is-bmi-misleading}{2},\href{http://science.sciencemag.org/content/341/6148/856.summary}{3},\href{http://www.medicalnewstoday.com/articles/265215.php}{4}{]}.
+Neste caso, é razoável supor que a divisão da análise em duas
+sub-populações (masculina e feminina) seja interessante.
+
+Os dados relativos ao semestre 2016-2 estão tabulados no arquivo
+\href{https://raw.githubusercontent.com/fcampelo/Design-and-Analysis-of-Experiments/master/data\%20files/imc_20162.csv}{imc\_20162.csv},
+disponível na pasta \emph{data files} do repositório Github da
+disciplina; e os dados da turma 2017-2 estão disponíveis na mesma pasta,
+no arquivo
+\href{https://raw.githubusercontent.com/fcampelo/Design-and-Analysis-of-Experiments/master/data\%20files/CS01_20172.csv}{CS01\_20172.csv}.
+
+Note que o arquivo relativo a 2016-2 contém também dados de uma turma de
+graduação, e que os dois arquivos (2016-2 e 2017-2) estão em formatos
+ligeiramente diferentes. É parte da tarefa deste estudo de caso isolar
+os dados de interesse e consolidar os mesmos de forma a realizar a
+análise de forma correta.
+
+\subsection{Atividades}\label{atividades}
+
+\begin{itemize}
+\tightlist
+\item
+  Definição das hipóteses de teste (qual a hipótese nula? Qual a
+  alternativa? Que tipo de teste utilizar?);
+\item
+  Teste de hipóteses;
+\item
+  Estimação do tamanho do efeito e do intervalo de confiança na grandeza
+  de interesse;
+\item
+  Verificação e discussão das premissas do teste;
+\item
+  Derivação de conclusões e recomendações.
+\item
+  Discussão sobre a potência do teste (se aplicável).
+\item
+  Discussão sobre possíveis formas de melhorar este experimento.
+\end{itemize}
+
+Atenção: é interessante neste caso separar as amostras por sexo
+(masculino/feminino) e realizar testes independentes para as populações
+correspondentes.
+
+\subsection{Relatório}\label{relatorio}
+
+Cada grupo deverá entregar um relatório detalhando o experimento e a
+análise dos dados. O relatório será avaliado de acordo com os seguintes
+critérios:
+
+\begin{itemize}
+\tightlist
+\item
+  Obediência ao formato determinado (ver abaixo);
+\item
+  Reproducibilidade dos resultados;
+\item
+  Qualidade técnica;
+\item
+  Estrutura da argumentação;
+\item
+  Correto uso da linguagem (gramática, ortografia, etc.);
+\end{itemize}
+
+O relatório deve \emph{obrigatoriamente} ser produzido utilizando
+\href{http://rmarkdown.rstudio.com}{R Markdown} (opcionalmente
+utilizando estilos distintos, como o do presente documento), e deve
+conter todo o código necessário para a reprodução da análise obtida,
+embutido na forma de blocos de código no documento. Os grupos devem
+enviar:
+
+\begin{itemize}
+\tightlist
+\item
+  O arquivo \textbf{.Rmd} do relatório.
+\item
+  O arquivo de dados utilizado.
+\end{itemize}
+
+O arquivo \textbf{.Rmd} deve ser capaz de ser compilado em um pdf sem
+erros, e deve assumir que o arquivo de dados se encontra no mesmo
+diretório do arquivo do relatório. Modelos de estudos de caso estão
+disponíveis
+\href{https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Report\%20template}{aqui}
+e
+\href{https://github.com/fcampelo/Design-and-Analysis-of-Experiments/tree/master/Grading/Case\%20Studies/Report\%20Examples}{aqui}.
+Caso a equipe deseje utilizar o estilo do presente documento, pode
+consultar seu código-fonte
+\href{https://raw.githubusercontent.com/fcampelo/Design-and-Analysis-of-Experiments/master/Semester\%20files/2017-2\%20(PT)/Case\%20Studies/CS02.Rmd}{aqui}
+(note que o mesmo requer a instalação do pacote \emph{pinp}).
+
+\textbf{Importante}: Salve seu arquivo \textbf{.Rmd} em UTF-8 (para
+evitar erros na compilação em outros sistemas). \textbf{Importante}:
+Inclua no relatório os papéis desempenhados por cada membro da equipe
+(Relator, Verificador etc.)
+
+Relatórios serão aceitos em português, inglês ou espanhol.
+
+\subsection{Entrega}\label{entrega}
+
+Os arquivos deverão ser enviados via \emph{e-mail} para o endereço
+\url{fcampelo@ufmg.br}. O título do e-mail deve seguir o padrão
+``\textbf{{[}EEE933\_2017-2\_EC02{]} Nome\_da\_equipe}'' (sem as aspas).
+A data-limite para o recebimento dos arquivos é \textbf{quarta-feira
+(17/10) às 23:55h}
+
+%\showmatmethods
+
+\pnasbreak 
+
+
+
+
+\end{document}
+
