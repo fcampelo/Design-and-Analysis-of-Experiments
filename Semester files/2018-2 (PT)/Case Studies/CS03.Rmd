@@ -1,0 +1,370 @@
+---
+title: EEE933 - Planejamento e Análise de Experimentos
+
+# Use letters for affiliations
+author:
+  - name: Estudo de caso 03
+
+# For footer text  TODO(fold into template, allow free form two-authors)
+#lead_author_surname: ELE077 - TC1
+
+# Place DOI URL or CRAN Package URL here
+#doi: "https://cran.r-project.org/package=YourPackage"
+
+# Abstract
+abstract: |
+  Experimento: Comparação de desempenho de duas configurações de um algoritmo de otimização
+
+# Optional: Acknowledgements
+# acknowledgements: |
+#   This template package builds upon, and extends, the work of the excellent 
+#   [rticles](https://cran.r-project.org/package=rticles) package, and both rely on
+#   the [PNAS LaTeX](http://www.pnas.org/site/authors/latex.xhtml) macros. Both sources
+#   are gratefully acknowledged as this work would not have been possible without them.
+#   Our extensions are under the same respective licensing term 
+#   ([GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html) and
+#   [LPPL (>= 1.3)](https://www.latex-project.org/lppl/)).
+
+# Optional: One or more keywords
+# keywords:
+#   - one
+#   - two
+#   - optional
+#   - keywords
+#   - here
+
+# Font size of the document, values of 9pt (default), 10pt, 11pt and 12pt
+fontsize: 11pt
+
+# Optional: Force one-column layout, default is two-column
+one_column: true
+
+# Optional: Enables lineo mode, but only if one_column mode is also true
+#lineno: true
+
+# Optional: Enable one-sided layout, default is two-sided
+#one_sided: true
+
+# Optional: Enable section numbering, default is unnumbered
+#numbersections: true
+
+# Optional: Specify the depth of section number, default is 5
+#secnumdepth: 5
+
+# Optional: Bibliography 
+bibliography: CS03.bib
+
+# Optional: Enable a 'Draft' watermark on the document
+#watermark: true
+
+# Customize footer, eg by referencing the vignette
+#footer_contents: "YourPackage Vignette"
+
+# Optional: Skip inserting final break between acknowledgements, default is false
+skip_final_break: true
+
+# Produce a pinp document
+output: pinp::pinp
+
+
+# Required: Vignette metadata for inclusion in a package.
+#vignette: >
+#  %\VignetteIndexEntry{YourPackage-vignetteentry}
+#  %\VignetteKeywords{YourPackage, r, anotherkeyword}
+#  %\VignettePackage{YourPackage}
+#  %\VignetteEngine{knitr::rmarkdown}
+---
+
+## Apresentação
+
+Algoritmos baseados em populações são uma alternativa comum para a solução de 
+problemas de otimização em engenharia. Tais algoritmos normalmente consistem de 
+um ciclo iterativo, no qual um conjunto de soluções-candidatas ao problema são 
+repetidamente sujeitas a operadores de variação e seleção, de forma a promover 
+uma exploração do espaço de variáveis do problema em busca de um ponto de ótimo 
+(máximo ou mínimo) de uma dada função-objetivo.
+
+Dentre estes algoritmos, um método que tem sido bastante utilizado nos últimos 
+anos é conhecido como _evolução diferencial_ (DE, do inglês 
+_differential evolution_)[@Storn1997]. De forma simplificada, este método é composto pelos 
+seguintes passos:
+
+0. Entrada: $N,\ n_{iter},\ recpars,\ mutpars$ 
+1. $t \leftarrow 0$
+2. $X_t \leftarrow \{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_N\}$ (população inicial)
+3. $\vec{f}_t \leftarrow f(X_t)$ 
+4. Enquanto ($t < n_{iter}$)
+    1. $V_t \leftarrow$ mutação($X_t,\ mutpars$)
+    2. $U_t \leftarrow$ recombinação($X_t,\ V_t,\ recpars$)
+    3. $\vec{j}_t \leftarrow f(U_t)$ 
+    4. $(X_{t+1},\ \vec{f}_{t+1}) \leftarrow$ seleção($X_t,\ U_t,\ \vec{f}_t,\ \vec{j}_t$)
+    5. $t \leftarrow t + 1$
+5. Saída: $(X_t,\ \vec{f}_t)$
+    
+Suponha que um pesquisador está interessado em investigar o efeito de duas configurações distintas deste algoritmo em seu desempenho para uma dada classe de problemas de otimização.
+
+## Atividades
+
+Como forma de análise deste problema, cada equipe terá como tarefa a comparação experimental de duas configurações em uma classe de problemas, representada por um conjunto de instâncias de teste. O objetivo deste estudo é responder às seguintes perguntas:
+
+\begin{center}\textit{Há alguma diferença no desempenho médio do algoritmo quando equipado com estas diferentes configurações, \textbf{para a classe de problemas de interesse}? Caso haja, qual a melhor configuração em termos de desempenho médio (atenção: quanto \textit{menor} o valor retornado, melhor o algoritmo), e qual a magnitude das diferenças encontradas? Há alguma configuração que deva ser recomendada em relação à outra?}\end{center} 
+
+Os seguintes parâmetros experimentais são dados para este estudo:
+
+- Mínima diferença de importância prática (padronizada): ($d^* = \delta^*/\sigma$) = 0.5
+- Significância desejada: $\alpha = 0.05$
+- Potência mínima desejada (para o caso $d = d^*$): $\pi = 1 - \beta = 0.8$
+
+## Informações operacionais
+
+Para a execução dos experimentos, instale os pacotes `ExpDE` [@Campelo2016] e `smoof` [@smoof]:
+
+```{r block1, eval=FALSE}
+install.packages("ExpDE")
+install.packages("smoof")
+```
+
+A classe de funções de interesse para este teste é composta por funções Rosenbrock [@rosenbrock] [@Fobjs] de dimensão entre 2 e 150. Para gerar uma função de Rosenbrock de uma dada dimensão $dim$, faça:
+
+```{r block1b, eval = TRUE}
+suppressPackageStartupMessages(library(smoof))
+
+# FOR INSTANCE: set dim = 10
+dim <- 10
+
+fn <- function(X){
+  if(!is.matrix(X)) X <- matrix(X, nrow = 1) # <- if a single vector is passed as X
+
+  Y <- apply(X, MARGIN = 1, 
+             FUN = smoof::makeRosenbrockFunction(dimensions = dim))
+  
+  return(Y)
+}
+
+# testing the function on a matrix composed of 2 points
+X <- matrix(runif(20), nrow = 2)
+fn(X)
+```
+
+Os limites das variáveis para uma dada função Rosenbrock de dimensão $dim$ são dados por: $-5\leq x_i\leq 10,~i=1,\dotsc,dim$. Para o problema de dimensão $dim$, os seguintes parâmetros são dados:
+
+```{r block2b, eval=FALSE}
+# FOR INSTANCE: set dim = 10
+dim <- 10
+
+selpars  <- list(name  = "selection_standard")
+stopcrit <- list(names = "stop_maxeval", maxevals = 5000 * dim, maxiter = 100 * dim)
+probpars <- list(name  = "fn", xmin  = rep(-5, dim), xmax  = rep(10, dim))
+popsize = 5 * dim
+```
+\newpage
+As configurações que deverão ser comparadas por cada equipe passaram por uma etapa anterior de ajuste de parâmetros. Suas definições são dadas por:
+
+``` {r block3a, eval = FALSE}
+# Equipe A
+
+## Config 1
+recpars1 <- list(name = "recombination_arith") 
+mutpars1 <- list(name = "mutation_rand", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_bin", cr = 0.7) 
+mutpars2 <- list(name = "mutation_best", f = 3)
+```
+
+``` {r block3b, eval = FALSE}
+# Equipe B
+
+## Config 1
+recpars1 <- list(name = "recombination_exp", cr = 0.6)
+mutpars1 <- list(name = "mutation_best", f = 2)
+    
+## Config 2
+recpars2 <- list(name = "recombination_geo", alpha = 0.6)
+mutpars2 <- list(name = "mutation_rand", f = 1.2)
+```
+
+``` {r block3c, eval = FALSE}
+# Equipe C
+
+## Config 1
+recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0, beta = 0)
+mutpars1 <- list(name = "mutation_rand", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_linear")
+mutpars2 <- list(name = "mutation_rand", f = 1.5)
+```
+
+``` {r block3d, eval = FALSE}
+# Equipe D
+
+## Config 1
+recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
+mutpars1 <- list(name = "mutation_rand", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_eigen", othername = "recombination_bin", cr = 0.9) 
+mutpars2 <- list(name = "mutation_best", f = 2.8)
+```
+\newpage
+``` {r block3e, eval = FALSE}
+# Equipe E
+
+## Config 1
+recpars1 <- list(name = "recombination_lbga")
+mutpars1 <- list(name = "mutation_rand", f = 4.5)
+
+## Config 2
+recpars2 <- list(name = "recombination_blxAlphaBeta", alpha = 0.1, beta = 0.4)
+mutpars2 <- list(name = "mutation_rand", f = 3)
+```
+
+``` {r block3f, eval = FALSE}
+# Equipe F
+
+## Config 1
+recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
+mutpars1 <- list(name = "mutation_best", f = 4)
+
+## Config 2
+recpars1 <- list(name = "recombination_npoint", N = dim / 2)
+mutpars1 <- list(name = "mutation_rand", f = 2.2)
+```
+
+``` {r block3g, eval = FALSE}
+# Equipe G
+
+## Config 1
+recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0, beta = 0)
+mutpars1 <- list(name = "mutation_rand", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_exp", cr = 0.6)
+mutpars2 <- list(name = "mutation_best", f = 2)
+```
+
+``` {r block3h, eval = FALSE}
+# Equipe H
+
+## Config 1
+recpars1 <- list(name = "recombination_eigen", 
+                 othername = "recombination_bin", cr = 0.9) 
+mutpars1 <- list(name = "mutation_best", f = 2.8)
+
+## Config 2
+recpars2 <- list(name = "recombination_sbx", eta = 90)
+mutpars2 <- list(name = "mutation_best", f = 4.5)
+```
+\newpage
+``` {r block3i, eval = FALSE}
+# Equipe I
+
+## Config 1
+recpars1 <- list(name = "recombination_blxAlphaBeta", alpha = 0.4, beta = 0.4) 
+mutpars1 <- list(name = "mutation_rand", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_wright")
+mutpars2 <- list(name = "mutation_best", f = 4.8)
+```
+
+``` {r block3j, eval = FALSE}
+# Equipe J
+
+## Config 1
+recpars1 <- list(name = "recombination_mmax", lambda = 0.25)
+mutpars1 <- list(name = "mutation_best", f = 4)
+
+## Config 2
+recpars2 <- list(name = "recombination_geo", alpha = 0.6)
+mutpars2 <- list(name = "mutation_rand", f = 1.2)
+
+```
+
+Cada observação individual do desempenho do algoritmo equipado com um dado operador pode ser obtida através dos comandos abaixo:
+
+``` {r block4, eval = FALSE}
+suppressPackageStartupMessages(library(ExpDE))
+
+# Run algorithm on problem:
+out <- ExpDE(mutpars  = mutparsX, 
+             recpars  = recparsX, 
+             popsize  = popsize, 
+             selpars  = selpars, 
+             stopcrit = stopcrit, 
+             probpars = probpars,
+             showpars = list(show.iters = "dots", showevery  = 20))
+
+# Extract observation:
+out$Fbest
+```
+
+\noindent onde _mutparsX_ e _recparsX_ devem ser substituídos pelas 
+variáveis apropriadas (e.g., _mutpars1_, _mutpars2_ etc.).
+
+
+
+## Outras definições
+
+Este estudo de caso consiste das seguintes etapas:
+
+1. Formulação das hipóteses de teste;
+1. Cálculo dos tamanhos amostrais (quantas instâncias testar? Quantas repetições de cada algoritmo por instância?);
+1. Coleta e tabulação dos dados;
+1. Teste das hipóteses;
+1. Estimação da magnitude da diferença entre os métodos (incluindo intervalo de confiança);
+1. Verificação das premissas dos testes;
+1. Derivação de conclusões;
+1. Discussão sobre possíveis limitações do estudo e sugestões de melhoria.
+
+Lembre-se que as conclusões devem ser colocadas no contexto das perguntas 
+técnicas de interesse.
+
+**Importante:** Após a definição do número de instâncias necessárias, as dimensões a serem utilizadas deverão ser amostradas no intervalo de dimensões que define a classe de problemas de interesse, isso é, $dim\in\left[2,150\right]$.
+
+**Dica:** Embora não resolva todos os problemas deste estudo de caso, o artigo _Sample size estimation for power and accuracy in the experimental comparison of algorithms_ ([https://link.springer.com/article/10.1007%2Fs10732-018-9396-7](https://link.springer.com/article/10.1007%2Fs10732-018-9396-7)) pode ser interessante em termos de uma melhor compreensão dos aspectos estatísticos deste tipo de comparação.
+
+## Relatório
+
+Cada equipe deverá entregar um relatório detalhando o experimento e a análise 
+dos dados. O relatório será avaliado de acordo com os seguintes critérios:
+
+- Obediência ao formato determinado (ver abaixo);
+- Reproducibilidade dos resultados;
+- Qualidade técnica;
+- Estrutura da argumentação;
+- Correto uso da linguagem (gramática, ortografia, etc.);
+
+O relatório deve *obrigatoriamente* ser produzido utilizando [R Markdown](http://rmarkdown.rstudio.com) (opcionalmente utilizando estilos 
+distintos, como o do presente documento), e deve conter todo o código 
+necessário para a reprodução da análise obtida, embutido na forma de blocos de 
+código no documento. Os grupos devem enviar:
+
+- O arquivo **.Rmd** para geração do relatório.
+- O arquivo **.pdf** compilado a partir do **.Rmd**.
+- O arquivo de dados utilizado, em formato **.csv**.
+
+O arquivo **.Rmd** deve ser capaz de ser compilado em um pdf sem erros, e deve 
+assumir que o arquivo de dados se encontra no mesmo diretório do arquivo do 
+relatório. Modelos de estudos de caso estão disponíveis no repositório da 
+disciplina no github. 
+Caso a equipe deseje utilizar o estilo do presente documento, pode consultar seu 
+código-fonte no repositório (note que o mesmo requer a instalação do pacote 
+_pinp_).
+
+**Importante**: Salve seu arquivo **.Rmd** em UTF-8 (para evitar erros na 
+compilação em outros sistemas).
+**Importante**: Inclua no relatório os papéis desempenhados por cada membro da 
+equipe (Relator, Verificador etc.)
+
+Relatórios serão aceitos em português ou inglês.
+
+
+## Entrega
+
+Os arquivos relativos a este estudo de caso (pdf + rmd + csv) deverão ser comprimidos em um .ZIP e submetidos via Moodle, na atividade **Case Study 03**, até a data-limite de **Quarta-feira, 24 de outubro de 2018, às 23:55h**. Após esta data o sistema estará fechado para recebimento. 
+
+**Importante**: Apenas uma submissão por equipe é necessária.
+
+**Importante**: Relatórios não serão recebidos por e-mail ou em formato impresso.
