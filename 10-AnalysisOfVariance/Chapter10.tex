@@ -8,7 +8,7 @@
 \subtitle[]{10 - Analysis of Variance}
 \author[]{Felipe Campelo\\{\footnotesize http://orcslab.cpdee.ufmg.br/}}
 \institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\June 2018}
+\date{\scriptsize Belo Horizonte\\October 2018}
 
 \begin{document}
 
@@ -20,7 +20,7 @@
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018b};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
@@ -454,43 +454,11 @@ Whenever possible, the researcher should opt to perform the smallest number of c
 \vone
 Usual questions involve (but are not limited to):
 
+\vhalf
 \bitems\textit{How does one level compare to the others?}
-\spitem\textit{How does each level compare to the grand mean?}
+%\spitem\textit{How does each level compare to the grand mean?}
 \spitem\textit{How do the levels compare to each other (all vs. all)?}
 \eitem
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Multiple comparisons}
-{MHT considerations}
-The multiple comparisons performed after an ANOVA are essentially composed of a series of t-tests for the difference between two population means, with some slight modifications;
-\vone
-If the assumptions of the ANOVA are verified, we already have some information about the data: we know, for instance, that the groups are homoscedastic, and that their common variance is estimated by $MS_E$, with $a(n-1)$ degrees of freedom;
-\vone
-We also know that, if we are going to perform multiple tests on the same data set, that the probability of a type-I error on each test is $\alpha$. If we want to to keep our overall error rate controlled at a given level, we will need to correct the $\alpha$ value used for each test.%
-%\footnote{\tiny This value is the one that should be used in sample size calculations. There are ways to estimate sample sizes for the omnibus ANOVA, but we'll (almost) always want to pinpoint the differences afterwards.}.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Multiple comparisons}
-{MHT corrections}
-There are a number of ways of adjusting the $\alpha$ value of the pairwise comparisons in order to maintain the \textit{familywise error rate} (FWER) at a controlled level\footnote[3]{\tiny The methods presented here work well for a relatively small number of comparison. For more on MHT, see Schaffer(1995)'s discussion on controlling the False Discovery Rate.}.
-\vhalf
-Two of the most common (and most conservative) are the Bonferroni and the \v{S}id\'ak corrections.
-\vhalf
-Assuming $K$ planned comparisons, the Bonferroni method tests each individual hypothesis with:
-\beqs
-\alpha_{adj}=\frac{\alpha_{\mbox{\scriptsize \textit{family}}}}{K}
-\eqs
-\vhalf
-\noindent while the \v{S}id\'ak correction uses:
-\beqs
-\alpha_{adj}=1 - \left(1-\alpha_{\mbox{\scriptsize \textit{family}}}\right)^{1/K}
-\eqs
 \end{ftst}
 
 %=====
@@ -500,25 +468,10 @@ Assuming $K$ planned comparisons, the Bonferroni method tests each individual hy
 {All vs. all}
 Pairwise comparisons of the \textit{all vs. all} type appear whenever we are simply interested in detecting which levels are significantly different from which, without any prior information or special interest in one specific level or ordering.
 \vone
-In these cases, the number of comparisons is $K=a(a-1)/2$, where $a$ is the number of levels.
+In these cases, the number of comparisons is $K=a(a-1)/2$, where\\$a$ is the number of levels.
 \vone
-The sample size calculations for this case can follow the same equations used for the t test for two independent samples, but with the $\alpha$ value corrected for multiple hypotheses and the number of degrees of freedom of the reference distribution equal to those of the residual term in the ANOVA, i.e., $a(n-1)$.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Multiple comparisons}
-{All vs. all}
-For performing \textit{all vs. all} multiple comparisons, a common alternative is to use Tukey's \textit{Honest Significant Difference} (HSD) approach. This method is generally chosen because it provides a slightly higher power when compared to the Bonferroni correction\footnote[4]{\tiny The difference is due to Tukey's approach using a modified value for the $t_{\beta}$ term in the power calculations. See Mathews (2011) and Montgomery (2010) for details.}. 
-\vhalf
-A simple approach is to calculate the sample size using Bonferroni-corrected $\alpha$-values (for simplicity), and performing the tests using Tukey's HSD corrections (for increased power):
-\vhalf
-\beqs
-n \approxeq 2\left(\frac{\left(t_{(\alpha_{adj}/2)}+t_{\beta}\right)\hat{\sigma}}{\delta^*}\right)^2
-\eqs
-\vhalf
-\noindent with $a(n-1)$ degrees of freedom for the $t$ variables.
+%The sample size calculations for this case can follow the same equations used for the t test for two independent samples, but with the $\alpha$ value corrected for multiple hypotheses and the number of degrees of freedom of the reference distribution equal to those of the residual term in the ANOVA, i.e., $a(n-1)$.
+To perform \textit{all vs. all} multiple comparisons, a common approach is to use Tukey's \textit{Honest Significant Difference} (HSD) approach. This method provides a slightly higher power than performing multiple t-tests with adjusted values of $\alpha$.%\footnote[4]{\tiny The difference is due to Tukey's approach using a modified value for the $t_{\beta}$ term in the power calculations. See Mathews (2011) and Montgomery (2010) for details.}. 
 \end{ftst}
 
 %=====
@@ -564,63 +517,65 @@ Pairwise comparisons of the \textit{all vs. one} type usually emerge in the cont
 \vhalf\item Comparison of different approaches vs. a standard one (or a placebo-like group);
 \eitem
 \vhalf
-In these cases, the number of comparisons is $K = a-1$, where $a$ is the number of levels. Each test can again be performed (at least in principle) using the $t_0$ test statistic:
+In these cases, the number of comparisons is $K = a-1$, where $a$ is the number of levels. %Each test can again be performed (at least in principle) using the $t_0$ test statistic:
 
-\beqs
-t^i_0 = \frac{\bar{y}_i - \bar{y}_0}{\hat{\sigma}\sqrt{\left(\frac{1}{n_i}+\frac{1}{n_0}\right)}}
-\eqs
+%\beqs
+%t^i_0 = \frac{\bar{y}_i - \bar{y}_0}{\hat{\sigma}\sqrt{\left(\frac{1}{n_i}+\frac{1}{n_0}\right)}}
+%\eqs
 \end{ftst}
 
 %=====
 
-\begin{ftst}
-{Multiple comparisons}
-{All vs. one}
-There are two main approaches to calculating sample size for \textit{all vs. one} comparisons:
-
-\bitems Balanced design;
-\spitem Optimal allocation of units.
-\eitem
-\vone
-With a balanced design (that is, all levels have the same number of observations), the calculation of $n$ follows the same approach as the \textit{all vs. all} comparisons, but correcting $\alpha$ for only $a-1$ comparisons.
-\vone
-For the optimal allocation of units, an unbalanced design is used.
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Multiple comparisons}
-{All vs. one - optimal allocation}
-As several levels will be compared against the single control group, the relative importance of the latter is greater and therefore it should have a larger sample size.
-\vhalf
-To maximize the power of this multiple comparisons procedure, the sample size of the control group should be:
-\beqs
-n_0 = n_i\sqrt{K}
-\eqs
-\vhalf
-\noindent where $n_i$ is the common sample size for the non-control levels:
-\beqs
-n_i \approxeq \left(1 + \frac{1}{\sqrt{K}}\right)\left(\frac{(t_{(\alpha_{adj}/2)}+t_{\beta})\hat{\sigma}}{\delta^*}\right)^2
-\eqs
-\lfr{A good free software for doing sample size calculations and power analysis in nontrivial contexts such as this one is G*Power 3, \url{http://www.gpower.hhu.de/} . It is also relatively simple to implement these calculations in R.}
-\end{ftst}
-
-%=====
-
-\begin{ftst}
-{Multiple comparisons}
-{All vs. one - \textbf{Dunnett's test}}
-As in the case of \textit{all vs. all} comparisons, there is a test that is usually employed for its superior sensitivity: Dunnett's test.
-\vone
-The control group sample size $n_0$ calculated assuming that Bonferroni-corrected t-tests will be used is slightly overestimated in relation to the required $n_0$ for Dunnett's test, but in practice the differences are small enough not to matter;
-\end{ftst}
+%\begin{ftst}
+%{Multiple comparisons}
+%{All vs. one}
+%There are two main approaches to calculating sample size for \textit{all vs. one} comparisons:
+%
+%\bitems Balanced design;
+%\spitem Optimal allocation of units.
+%\eitem
+%\vone
+%With a balanced design (that is, all levels have the same number of observations), the calculation of $n$ follows the same approach as the \textit{all vs. all} comparisons, but correcting $\alpha$ for only $a-1$ comparisons.
+%\vone
+%For the optimal allocation of units, an unbalanced design is used.
+%\end{ftst}
+%
+%%=====
+%
+%\begin{ftst}
+%{Multiple comparisons}
+%{All vs. one - optimal allocation}
+%As several levels will be compared against the single control group, the relative importance of the latter is greater and therefore it should have a larger sample size.
+%\vhalf
+%To maximize the power of this multiple comparisons procedure, the sample size of the control group should be:
+%\beqs
+%n_0 = n_i\sqrt{K}
+%\eqs
+%\vhalf
+%\noindent where $n_i$ is the common sample size for the non-control levels:
+%\beqs
+%n_i \approxeq \left(1 + \frac{1}{\sqrt{K}}\right)\left(\frac{(t_{(\alpha_{adj}/2)}+t_{\beta})\hat{\sigma}}{\delta^*}\right)^2
+%\eqs
+%\lfr{A good free software for doing sample size calculations and power analysis in nontrivial contexts such as this one is G*Power 3, \url{http://www.gpower.hhu.de/} . It is also relatively simple to implement these calculations in R.}
+%\end{ftst}
+%
+%%=====
+%
+%\begin{ftst}
+%{Multiple comparisons}
+%{All vs. one - \textbf{Dunnett's test}}
+%As in the case of \textit{all vs. all} comparisons, there is a test that is usually employed for its superior sensitivity: Dunnett's test.
+%\vone
+%The control group sample size $n_0$ calculated assuming that Bonferroni-corrected t-tests will be used is slightly overestimated in relation to the required $n_0$ for Dunnett's test, but in practice the differences are small enough not to matter;
+%\end{ftst}
 
 %=====
 
 \begin{ftstf}
 {Multiple comparisons}
-{All vs. one}
+{All vs. one - \textbf{Dunnett's test}}
+As in the case of \textit{all vs. all} comparisons, there is a test that is usually employed for its superior sensitivity: Dunnett's test.
+\vhalf
 Assuming that in our example the \textit{B} level is the standard one, against which the other ones are to be compared:
 \vhalf
 \begin{rcode}
@@ -641,7 +596,7 @@ D - B == 0  4.2200   1.8058  6.6342
 > plot(mc2_CI)
 \end{rcode}
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=0pt,xshift=4pt] at (current page.south east) {\includegraphics[width=.4\textwidth]{../figs/paperdunnett.png}};
+\node[anchor=south east,yshift=0pt,xshift=4pt] at (current page.south east) {\includegraphics[width=.35\textwidth]{../figs/paperdunnett.png}};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -649,18 +604,76 @@ D - B == 0  4.2200   1.8058  6.6342
 
 \begin{ftst}
 {Multiple comparisons}
-{Some final considerations}
-The kind of comparisons that are to be performed after an ANOVA should be planned in advance, as it influences your data collection and sample size calculations. There are of course sample size formulas for the pure ANOVA, but these are usually of limited use since researchers frequently want to know where the detected differences lie.
+{Some considerations on sample sizes}
+The kind of comparisons that are to be performed after an ANOVA should be planned in advance, as it influences your data collection and sample size calculations. There are of course sample size formulas for the pure ANOVA, but these are often of limited use since they require the specification of counterintuitive parameters (such as MRES in terms of the ratio of within-groups to across-groups variances).
 \vone
-There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow the ideas outlined above: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
+There are a myriad of approaches for post-ANOVA multiple comparisons\footnote[5]{\tiny Check Hothorn \textit{et al.} (2008) for an idea on how varied this can get.}, but in general the formulas for sample size calculation will follow the ideas outlined below: correct the $\alpha$ value to account for type-I error inflation and calculate $n$ based on formulas for two-sample $t$ tests. 
 \end{ftst}
 
 %=====
 
 \begin{ftst}
+{Multiple comparisons}
+{Some considerations on sample sizes}
+A usual, simpler approach for sample size calculations in the context of the one-way ANOVA is to perform the estimation based on the multiple comparisons one wishes to perform in case an effect is detected.
+\vhalf
+To perform these calculations we need to account for the fact that we will be testing multiple hypotheses on the same data, and correct the type-I error rate accordingly.
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{MHT considerations}
+The multiple comparisons performed after an ANOVA can be thought of as a series of t-tests (with some slight modifications) on the difference between two population means;
+\vone
+If the assumptions of the ANOVA are verified, we already have some information about the data: we know, for instance, that the groups are homoscedastic, and that their common variance is estimated by $MS_E$, with $a(n-1)$ degrees of freedom;\footnote{\tiny This value is the one that should be used in sample size calculations. There are ways to estimate sample sizes for the omnibus ANOVA, but we'll usually want to pinpoint the differences anyway.}.
+\vone
+We also know that the probability of a type-I error on \textbf{each test} is given as $\alpha$. If we want to to keep our overall error rate controlled at a given level while we perform multiple tests on the same data set, we will need to correct the $\alpha$ value used for each test.
+\end{ftst} 
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{MHT corrections}
+There are a number of ways of adjusting the $\alpha$ value of the pairwise comparisons in order to maintain the \textit{familywise error rate} (FWER) at a controlled level\footnote[3]{\tiny The methods presented here work well when the number of comparisons is relatively small. For more on MHT, see Schaffer(1995)'s discussion on controlling the False Discovery Rate.}.
+\vhalf
+Two of the most common (and most conservative) are the Bonferroni and the \v{S}id\'ak corrections, which have different formulations but tend to provide very similar results.
+\vhalf
+Assuming $K$ planned comparisons, the Bonferroni method tests each individual hypothesis with:
+\beqs
+\alpha_{adj}=\frac{\alpha_{\mbox{\scriptsize \textit{family}}}}{K}
+\eqs
+%\vhalf
+%\noindent while the \v{S}id\'ak correction uses:
+%\beqs
+%\alpha_{adj}=1 - \left(1-\alpha_{\mbox{\scriptsize \textit{family}}}\right)^{1/K}
+%\eqs
+\end{ftst}
+
+%=====
+
+\begin{ftst}
+{Multiple comparisons}
+{All vs. all}
+A simple approach is to calculate the sample size using Bonferroni-corrected $\alpha$-values (for simplicity), and performing the actual pairwise tests using Tukey's or Dunnett's methods (for increased power).
+\vhalf
+An approximate formula to calculate balanced sample sizes is:
+\beqs
+n \approxeq 2\left[\left(t^{a(n-1)}_{\alpha_{adj}/2}+t^{a(n-1)}_{\beta}\right)d^*\right]^2
+\eqs
+\vhalf
+\noindent where $d^*$ is the (standardized) MRES for the comparison of two groups.
+\end{ftst}
+
+%=====
+
+
+\begin{ftst}
 {More on sample sizes}
 {Sample size formulas for ANOVA}
-If one is interested in calculating the required sample size for the ANOVA procedure (without worrying about the eventual post-hoc testing), the formulas are almost as simple as those used for the t tests.
+If one is interested in calculating the required sample size directly for the ANOVA procedure (without worrying about the eventual post-hoc testing), the formulas are almost as simple as those used for the t tests.
 \vone
 Essentially, the power/sample size calculations for the ANOVA boil down to the equality:
 
@@ -680,15 +693,11 @@ with both $F$ distributions having $(a-1)$ degrees of freedom in the numerator a
 \begin{ftst}
 {More on sample sizes}
 {Sample size formulas for ANOVA}
-To ilustrate the sample size calculation procedure, imagine an experimental design with $a = 4,\ \alpha = 0.05,\ \hat{\sigma} = 7$, and suppose that the researcher wants to be able to detect whether any two means present differences of magnitude $\delta^* = 12$ with power $(1-\beta)=0.8$.
+To ilustrate the sample size calculation procedure, imagine an experimental design with $a = 4,\ \alpha = 0.05$, an upper estimate of the within-groups standard deviation $ \sigma = 7$, and suppose that the researcher wants to be able to detect whether any two means present differences of magnitude $\delta^* = 12$ with power $(1-\beta)=0.8$.
 \vone
-Under these conditions, two scenarios tend to be of interest: the first is if we have two levels biased symmetrically about the grand mean, and all the others equal to zero:
+Under these conditions, we can assume a hypothetical (conservative) scenario where we have two levels biased symmetrically about the grand mean, and all the others equal to zero:
 
 $$ \tau = \left\{-\frac{\delta^*}{2}, \frac{\delta^*}{2}, 0, 0\right\}$$
-
-\noindent and the second is if we have one level biased in relation to all others:
-
-$$ \tau = \left\{-\frac{(a-1)\delta^*}{a}, \frac{\delta^*}{a}, \frac{\delta^*}{a}, \frac{\delta^*}{a}\right\}$$
 
 \end{ftst}
 
@@ -697,7 +706,7 @@ $$ \tau = \left\{-\frac{(a-1)\delta^*}{a}, \frac{\delta^*}{a}, \frac{\delta^*}{a
 \begin{ftst}
 {More on sample sizes}
 {Sample size formulas for ANOVA}
-For the first case we have a noncentrality parameter of:
+For this case we have a noncentrality parameter:
 
 $$\phi = \frac{4\left(6^2+6^2+0+0\right)}{7^2} = 5.88$$
 
@@ -738,22 +747,22 @@ Using \verb|power.anova.test()|:
 \end{rcode}
 \end{ftstf}
 
-\begin{ftstf}
-{More on sample sizes}
-{Sample size formulas for ANOVA}
-The second case (one level biased in relation to all others) is also quite easy to calculate manually, but lets keep it simple:
-
-\begin{rcode}
-> tau <- c(-delta*(a - 1)/a, rep(delta/a, a - 1))
-> vartau <- var(tau)
-> power.anova.test(groups = 4, between.var = vartau, 
-+                  within.var = sigma^2, sig.level = alpha, 
-+                  power = 1 - beta)$n
-[1] 6.018937
-\end{rcode}
-\vone
-It is important to remember that these are the sample sizes required for the ANOVA only - any multiple comparisons procedure executed afterwards to pinpoint the significant differences will have smaller power for same-sized effects (unless more observations are added). This is one reason why it is common to design experiments calculating the sample sizes based on the multiple comparisons procedure, instead of using the ANOVA formulas.
-\end{ftstf}
+%\begin{ftstf}
+%{More on sample sizes}
+%{Sample size formulas for ANOVA}
+%The second case (one level biased in relation to all others) is also quite easy to calculate manually, but lets keep it simple:
+%
+%\begin{rcode}
+%> tau <- c(-delta*(a - 1)/a, rep(delta/a, a - 1))
+%> vartau <- var(tau)
+%> power.anova.test(groups = 4, between.var = vartau, 
+%+                  within.var = sigma^2, sig.level = alpha, 
+%+                  power = 1 - beta)$n
+%[1] 6.018937
+%\end{rcode}
+%\vone
+%It is important to remember that these are the sample sizes required for the ANOVA only - any multiple comparisons procedure executed afterwards to pinpoint the significant differences will have smaller power for same-sized effects (unless more observations are added). This is one reason why it is common to design experiments calculating the sample sizes based on the multiple comparisons procedure, instead of using the ANOVA formulas.
+%\end{ftstf}
 
 \begin{ftst}
 {Bibliography}
