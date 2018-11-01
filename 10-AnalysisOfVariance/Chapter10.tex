@@ -382,7 +382,7 @@ The ANOVA is relatively robust to moderate violations of normality, as long as t
 {Model validation}
 The homoscedasticity assumption can be verified by the Fligner-Killeen test, together with plots of residuals by fitted values:
 \begin{rcode}
-> fligner.test(TS_kPa~Hardwood, data = paper)
+> fligner.test(TS_kPa ~ Fiber.type, data = paper)
 Fligner-Killeen test of homogeneity of
 variances
 data:  data:  TS.kPa by Fiber.type
