@@ -1,0 +1,44 @@
+---
+title: "EEE933 - Planejamento e Análise de Experimentos"
+subtitle: "Projeto Final"
+header-includes:
+   - \usepackage{framed}
+output: pdf_document
+---
+
+## Sumário
+As equipes devem escolher uma questão de interesse para investigação experimental. Enquanto a preferência é por experimentos planejados, estudos observacionais ou retrospectivos também serão aceitos.^[Caso alguma equipe deseje realizar algo diferente, deve entrar em contato com o professor da disciplina **o quanto antes** para discussão.] O projeto final deve consistir de:
+
+- Definição da questão experimental;
+- Revisão da literatura relevante;
+- Planejamento experimental (para experimentos planejados) ou limpeza e pré-condicionamento dos dados (estudos retrospectivos);
+- Coleta de dados;
+- Modelagem estatística e análise dos dados obtidos;
+- Derivação de conclusões e recomendações.
+
+## Proposta do tema
+Cada equipe deverá entrar em contato com o professor da disciplina (pode ser por e-mail) e descrever sucintamente sua proposta de tema para o trabalho final, **até o final da primeira semana de novembro**. A apresentação e discussão do tema com o professor é importante para ajustar o nível de desafio do trabalho, bem como para que seja possível uma orientação em termos de possíveis tópicos de estudo.
+
+## Execução do trabalho e orientação
+As equipes terão um prazo de cerca de um mês para a realização do trabalho final. Neste prazo não haverão aulas expositivas da disciplina (a menos da prova final no dia 27/11). O professor estará disponível (sala 2225, bloco 1) nos dias da aula para o esclarecimento de dúvidas e orientação relativa à execução do trabalho.
+
+
+## Avaliação
+A avaliação será feita mediante apresentação oral do trabalho. Cada equipe deve apresentar seu trabalho em um seminário de **até 15 minutos**, detalhando o problema, o planejamento e a análise do experimento, os resultados e conclusões obtidos, e sugestões de melhoria ou continuidade. A apresentação será avaliada de acordo com os seguintes critérios:
+
+- Correção técnica;
+- Qualidade gráfica / estética;
+- Correto uso da linguagem;
+- Grau de desenvoltura (na apresentação) na explicação dos conceitos apresentados;
+
+O trabalho final pode ser apresentado por todo o grupo ou apenas por alguns, a critério de cada equipe. Contudo, **todos os membros da equipe devem estar preparados para responder a perguntas sobre qualquer aspecto do trabalho.**
+
+O formato do seminário é livre (sejam criativos), mas o limite de tempo é rígido. Além dos softwares usuais de _slide decks_  (Powerpoint, Beamer, Keynote etc.), outras possibilidades que podem ser exploradas por grupos que optarem por se ater às tradicionais apresentações de slides são o [Prezi](https://prezi.com/explore/staff-picks/), o [Slidify](http://ramnathv.github.io/slidifyExamples/), ou o [R Markdown + ioslides](http://rmarkdown.rstudio.com/ioslides_presentation_format.html).
+
+A ordem das apresentações será determinada aleatoriamente no dia dos seminários.
+
+**ATENÇÃO**: não será necessária a apresentação de um relatório final, apenas a apresentação.
+
+
+## Datas
+As apresentações acontecerão no horário e sala usuais da disciplina, no dia 04 de dezembro de 2018.
