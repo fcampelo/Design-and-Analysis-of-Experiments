@@ -5,12 +5,12 @@ rm(list=ls())
 # Greenpeas example
 
 # load data (single vector)
-my.sample <- read.table("../data files/greenpeas.txt")
+my.sample <- read.table("../data files/algorithm.txt")
 my.sample <- as.numeric(my.sample$V1)
 
 # Mean of normal distribution, variance unknown, one-sided test
 t.test(my.sample,
-       alternative = "less",
+       alternative = "greater",
        mu          = 50,
        conf.level  = 0.99)
 
@@ -22,19 +22,19 @@ t.test(my.sample,
 
 
 # Power for the 10-observation sample
-power.t.test(n           = 10, 
-             delta       = 0.5, 
-             sd          = 1, 
-             sig.level   = 0.01, 
-             type        = "one.sample", 
+power.t.test(n           = 10,
+             delta       = 0.5,
+             sd          = 1,
+             sig.level   = 0.01,
+             type        = "one.sample",
              alternative = "one.sided")
 
 # Minimal sample size for power = 0.85
-power.t.test(power       = 0.85, 
-             delta       = 0.5, 
-             sd          = 1, 
-             sig.level   = 0.01, 
-             type        = "one.sample", 
+power.t.test(power       = 0.85,
+             delta       = 0.5,
+             sd          = 1,
+             sig.level   = 0.01,
+             type        = "one.sample",
              alternative = "one.sided")
 
 

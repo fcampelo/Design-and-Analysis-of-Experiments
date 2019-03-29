@@ -6,9 +6,9 @@
 % Specific definitions
 \title[]{Design and Analysis of Experiments}
 \subtitle[]{05 - Statistical Inference}
-\author[]{Felipe Campelo\\{\footnotesize http://orcslab.cpdee.ufmg.br/}}
-\institute{Graduate Program in Electrical Engineering}
-\date{\scriptsize Belo Horizonte\\September 2018}
+\author[]{Felipe Campelo\\{\footnotesize f.campelo@aston.ac.uk}}
+\institute{Computer Science Group}
+\date{\scriptsize Birmingham\\March 2019}
 
 \begin{document}
 
@@ -16,39 +16,39 @@
 \setbeamertemplate{footline}{}
 \begin{frame}
 \begin{flushright}
-\includegraphics[width=.25\textwidth]{../figs/principal_completa3_ufmg}
+\includegraphics[width=.25\textwidth]{../figs/Aston_375x134}
 \end{flushright}
   \titlepage
   \begin{tikzpicture}[remember picture,overlay]
-  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.12.2018b};
+  \node[anchor=south east,xshift=-5pt,yshift=122pt] at (current page.south east) {\tiny Version 2.2.2019};
   \node[anchor=south west,yshift=0pt] at (current page.south west) {\includegraphics[width=.15\textwidth]{../figs/by-nc-sa.png}};
   \end{tikzpicture}  
 \end{frame}
 
 %=====
 
-% quotation page
-  \begin{frame}[b]
-		\frametitle{}
-\begin{columns}[T]
-\column{0.65\textwidth}
-\flushright{\small ``\textit{Nothing in life is to be feared,\\
-it is only to be understood.\\
-Now is the time to understand more,\\
-so that we may fear less.}''
-\vskip 5em
-Marie Sk\l{}odowska Curie\\
-1867--1934\\
-Polish-French physicist and chemist.\\}
-\column{0.35\textwidth}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=south east,yshift=15pt,xshift=0pt] at (current page.south east)
-{\includegraphics[width=\textwidth]{../figs/curie.jpg}};
-\end{tikzpicture}
-\end{columns}
-\vhalf
-\lfr{Image: \url{http://mariecurietpe.unblog.fr}}
-\end{frame}
+%% quotation page
+%  \begin{frame}[b]
+%		\frametitle{}
+%\begin{columns}[T]
+%\column{0.65\textwidth}
+%\flushright{\small ``\textit{Nothing in life is to be feared,\\
+%it is only to be understood.\\
+%Now is the time to understand more,\\
+%so that we may fear less.}''
+%\vskip 5em
+%Marie Sk\l{}odowska Curie\\
+%1867--1934\\
+%Polish-French physicist and chemist.\\}
+%\column{0.35\textwidth}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=south east,yshift=15pt,xshift=0pt] at (current page.south east)
+%{\includegraphics[width=\textwidth]{../figs/curie.jpg}};
+%\end{tikzpicture}
+%\end{columns}
+%\vhalf
+%\lfr{Image: \url{http://mariecurietpe.unblog.fr}}
+%\end{frame}
 
 %=====
 
@@ -136,7 +136,7 @@ The \textit{hypothetico-deductive model} of construction of scientific knowledge
 	\bitems Scope: how applicable is the hypothesis to multiple instances of the phenomenon it addresses?
 	\item External consistency: how well does the hypothesis fit with existing, well-accepted knowledge systems?
 	\eitem
-	\lfr{Also refer to Schick \& Vaughn's book \textit{How to think about weird things: critical thinking for a New Age.} McGraw-Hill, 2013.}
+%	\lfr{Also refer to Schick \& Vaughn's book \textit{How to think about weird things: critical thinking for a New Age.} McGraw-Hill, 2013.}
 \end{ftst}
 
 %=====
@@ -192,42 +192,42 @@ Hypothesis testing involves:
 \begin{ftst}
 {Statistical Hypotheses}
 {Example}
-Suppose you own a company that sells green peas to large customers, 
-and that you want to determine whether your $50$kg sacks really 
-contain their nominal weight (at least on average).
+Suppose that you have implemented an algorithm and you want to verify whether your implementation is correct. 
+A theoretical model of the algorithm behaviour indicates that its convergence should happen on average at iteration $50$,
+so a good initial test would be to run your algorithm a few times and check if it conforms with this prediction.
 \vhalf
 In this case the null hypothesis could be defined as:
-\textit{the average net weight of a sack is $50$kg}, and the alternative of interest could be expressed as the complementary inequality.
+\textit{the average iteration at which convergence is achieved is $50$}, and the alternative of interest could be expressed as the complementary inequality.
 \beqs\begin{cases}
-H_0: \mu = 50kg \\
-H_1: \mu \neq 50kg 
+H_0: \mu = 50 \\
+H_1: \mu \neq 50
 \end{cases}\eqs
 \vone
-Suppose still that $n = 10$ sacks are randomly sampled, and their contents are weighted using a reliable scale;
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
-\lfr{Image: \url{http://www.storko.eu/ed_files/image/green-peas.jpg}}
+Suppose still that $n = 10$ runs are performed and recorded.
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
+%\lfr{Image: \url{http://www.storko.eu/ed_files/image/green-peas.jpg}}
 \end{ftst}
 
 %=====
 
-\begin{ftst}
-	{Statistical Hypotheses}
-	{Example}
-	Notice that we are already adopting a number of underlying assumptions (both statistical and technical):
-	\vhalf
-	\bitems The mean is a good measure for our question of interest (under-underlying assumptions: the variance is small enough, the customers purchase larger quantities so that on average the deal is fair, ...)
-	\spitem The sacks sampled are representative of our population of interest (i.e., of the sacks that are actually going to be sold);
-	\spitem The contents of the sacks are only green peas (no significant amounts of stones or other contaminants);
-	\spitem ...
-	\eitem
-
-	\begin{tikzpicture}[remember picture,overlay]
-	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-	\end{tikzpicture}
-	\lfr{Image: \url{http://www.storko.eu/ed_files/image/green-peas.jpg}}
-\end{ftst}
+%\begin{ftst}
+%	{Statistical Hypotheses}
+%	{Example}
+%	Notice that we are already adopting a number of underlying assumptions (both statistical and technical):
+%	\vhalf
+%	\bitems The mean is a good measure for our question of interest (under-underlying assumptions: the variance is small enough, the customers purchase larger quantities so that on average the deal is fair, ...)
+%	\spitem The sacks sampled are representative of our population of interest (i.e., of the sacks that are actually going to be sold);
+%	\spitem The contents of the sacks are only green peas (no significant amounts of stones or other contaminants);
+%	\spitem ...
+%	\eitem
+%
+%	\begin{tikzpicture}[remember picture,overlay]
+%	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%	\end{tikzpicture}
+%	\lfr{Image: \url{http://www.storko.eu/ed_files/image/green-peas.jpg}}
+%\end{ftst}
 
 %=====
 
@@ -236,16 +236,16 @@ Suppose still that $n = 10$ sacks are randomly sampled, and their contents are w
 {Example}
 Since the sample mean $\bar{X}$ is a good estimator of the real mean $\mu$, common sense suggests that:
 
-\bitems If $\bar{x} \cong 50$kg - corroboration of $H_0$;
-\item If $\bar{x} \ll 50$kg or $\bar{x} \gg 50$kg - refutation of $H_0$;
+\bitems If $\bar{x} \cong 50$ - corroboration of $H_0$;
+\item If $\bar{x} \ll 50$ or $\bar{x} \gg 50$ - refutation of $H_0$;
 \eitem
 \vone
 That is, we can use $\bar{x}$ as the basis for a test. But how to define a \textit{critical region} for the rejection of $H_0$?
 \vone\vhalf
 \centering\includegraphics[width=\textwidth]{../figs/regcrit.png}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -270,7 +270,7 @@ Another frequently used term is the \textit{confidence level} of the test, given
 {Type I error}
 For a given sample, the selected value of $\alpha$ defines the critical threshold for the rejection of $H_0$.
 \vone
-If $H_0$ is true (i.e., if $\mu=50$kg), the distribution of $\bar{X}$ is approximately Normal (assuming that the population is Normal, OR that the CLT conditions are met and $N$ is suitably large), with average $50$kg and standard error $(\sigma/\sqrt{n})$ kg;
+If $H_0$ is true (i.e., if $\mu=50$), the distribution of $\bar{X}$ is approximately Normal (assuming that the population is Normal, OR that the CLT conditions are met and $N$ is suitably large), with average $50$ and standard error $(\sigma/\sqrt{n})$;
 \vone
 For a desired Type-I error probability $\alpha=0.05$, the critical values of the distribution of $\bar{X}$ are the ones for which the probability content within the acceptance region under the null hypothesis is $1-\alpha = 0.95$.
 \begin{tikzpicture}[remember picture,overlay]
@@ -374,19 +374,19 @@ It is important to remember that failing to reject $H_0$ does not mean that ther
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a Normal distribution, variance known}
-Back to the green peas example, we want to determine if there is any significant deviation on the mean weight of the sacks. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
+Back to the example, we want to determine if there is any significant deviation on the mean performance of the algorithm. Assume (for now) that the variance of the process is known. The test hypotheses are defined as:
 
 \beqs\begin{cases}
-H_0: \mu = 50kg\\
-H_1: \mu \neq 50kg
+H_0: \mu = 50\\
+H_1: \mu \neq 50
 \end{cases}\eqs
 \vone
 Let the desired significance level be $\alpha = 0.05$;
 \vone
 Given these characteristics, we expect that the sampling distribution of $\bar{X}$ is Normal, with $Var(\bar{X})=\sigma^2/n$ and, \underline{\textbf{if $H_0$ is true}}, a mean of $\mu_{\bar{X}}=\mu_0=50$;
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -409,9 +409,9 @@ P\left(z_{\alpha/2}\leq Z_0\leq z_{1-\alpha/2}\mid H_0~\mbox{is true}\right) = 1
 \bitems If $z_{\alpha/2}> Z_0$ or $z_{1-\alpha/2}<Z_0$, reject $H_0$ with confidence $(1-\alpha)$;
 	\spitem Otherwise, there is not enough evidence to reject $H_0$ at this confidence level;
 \eitem
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -419,7 +419,7 @@ P\left(z_{\alpha/2}\leq Z_0\leq z_{1-\alpha/2}\mid H_0~\mbox{is true}\right) = 1
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a Normal distribution, variance known}
-Assume that we got $\bar{x} = 49.65$kg from our $n=10$ observations, and that we know that $\sigma = 1$kg. In this case,
+Assume that we got $\bar{x} = 49.65$ from our $n=10$ observations, and that we know that $\sigma = 1$. In this case,
 
 \beqs 
 z_0 = \frac{49.65 - 50}{1/\sqrt{10}} = -1.113
@@ -428,9 +428,9 @@ z_0 = \frac{49.65 - 50}{1/\sqrt{10}} = -1.113
 The critical values of the standard Normal distribution at the significance level $\alpha = 0.05$ are $\left[z_{0.025},z_{0.975}\right] = \left[-1.96,1.96\right]$;
 \vone
 Since $z_0\in \left[-1.96,1.96\right]$, we can conclude that there is not enough evidence to reject $H_0$ at the $95\%$ confidence level.
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -438,12 +438,12 @@ Since $z_0\in \left[-1.96,1.96\right]$, we can conclude that there is not enough
 \begin{ftst}
 {Hypothesis Testing}
 {Mean of a Normal distribution, variance unknown}
-Suppose now a more realistic situation in which the real variance is unknown. Besides, assume that we are interested in detecting only negative deviations from the nominal contents of the package.
+Suppose now a more realistic situation in which the real variance is unknown. Besides, assume that we are interested in detecting only positive deviations from the theoretical predictions.
 \vone
 The test hypotheses can be defined as:
 \beqs\begin{cases}
-H_0: \mu \geq 50kg\\
-H_1: \mu < 50kg 
+H_0: \mu = 50\\
+H_1: \mu > 50 
 \end{cases}\eqs
 \vhalf
 Assume also that we want to be more conservative, so we pick a significance level $\alpha = 0.01$;
@@ -451,9 +451,9 @@ Assume also that we want to be more conservative, so we pick a significance leve
 In this case, \textbf{if $H_0$ is true}, we have that
 \beqs T_0 = \frac{\bar{X} - \mu_0}{S/\sqrt{n}} \sim t^{(n-1)}
 \eqs
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -464,12 +464,12 @@ In this case, \textbf{if $H_0$ is true}, we have that
 From the same data used earlier, $\bar{x} = 49.65$kg, $n=10$, $s = 0.697$kg:
 \beqs t_0 = \frac{49.65 - 50}{0.697/\sqrt{10}} = -1.597\eqs
 \vhalf
-The critical value of this test statistic for the desired significance is $t_{\alpha}^{(n-1)} = t_{0.01}^{(9)} = -2.82$, which means that under $H_0$ there is a $99\%$ change that the test statistic will yield a value greater than this number.
+The critical value of this test statistic for the desired significance is $t_{\alpha}^{(n-1)} = t_{0.99}^{(9)} = 2.82$, which means that under $H_0$ there is a $99\%$ change that the test statistic will yield a value smaller than this threshold.
 \vone
-Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+Given that $t_0 < 2.82$, we conclude that the evidence is insufficient to reject $H_0$ at the $99\%$ confidence level;
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -478,16 +478,16 @@ Given that $t_0 > -2.82$, we conclude that the evidence is insufficient to rejec
 	{Hypothesis Testing}
 	{Mean of a Normal distribution, variance unknown}
 	\begin{rcode}
-> my.sample <- read.table("../data files/greenpeas.txt")
+> my.sample <- read.table("../data files/algorithm.txt")
 
 > t.test(my.sample,
-+        alternative = "less",
++        alternative = "greater",
 +        mu = 50,
 +        conf.level = 0.99)
 
 One Sample t-test
 data:  my.sample
-t = -1.5969, df = 9, p-value =0.07237
+t = -1.5969, df = 9, p-value = 1
 alternative hypothesis: true mean is less than 50
 99 percent confidence interval:
 -Inf 50.2699
@@ -497,7 +497,7 @@ mean of x
 	\end{rcode}
 	\begin{tikzpicture}[remember picture,overlay]
 	\node[anchor=north east,yshift=-70pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.22\textwidth]{../figs/peastxt.png}};
-	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%	\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 	\end{tikzpicture}
 \end{ftstf}
 
@@ -651,9 +651,9 @@ This technique is most useful to compute the required sample size for the experi
 \begin{ftstf}
 {Sample size and Type-II error}
 {Example}
-Suppose that on the green peas example we are really interested in detecting negative deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01\times 50 = 0.5$kg. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The desired significance is $\alpha = 0.01$.
+Suppose that on the algorithm validation example we are really interested in detecting positive deviations from the nominal value greater than $1\%$, i.e., $\delta^* = 0.01\times 50 = 0.5$. The researcher defines that, for this minimally interesting effect, a test power of $0.85$ is desired. The desired significance is $\alpha = 0.01$.
 \vone
-The same sample of $n=10$ sacks is used. Assume that a reasonable upper bound for the standard deviation can be estimated as $\sigma=1$kg. From this data, we can compute the power of this test as:
+The same sample of $n=10$ runs is used. Assume that a reasonable upper bound for the standard deviation can be estimated as $\sigma=1$. From this data, we can compute the power of this test as:
 \begin{columns}
 \column[T]{0.5\textwidth}
 \begin{rcode}
@@ -676,7 +676,7 @@ alternative = one.sided
 \end{rcode}
 \end{columns}
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \node[anchor=south east,yshift=31pt,xshift=-75pt] at (current page.south east) {\footnotesize\color{red}$\boldsymbol{\longleftarrow}$};
 \end{tikzpicture}
 \end{ftstf}
@@ -701,9 +701,9 @@ power = 0.85
 alternative = one.sided
 \end{rcode}
 \vhalf
-We need at least 48 observations to detect a $-0.5kg\ (1\%)$ or larger deviation on the mean weight of the green peas packages with a power level of $0.85$.
+We need at least 48 observations to detect a $0.5\ (1\%)$ or greater deviation from the theoretical mean value with a power level of $0.85$.
 \begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \node[anchor=south east,yshift=140pt,xshift=-182pt] at (current page.south east) {\footnotesize\color{red}$\mbf{\longleftarrow}$ \textbf{(round this value up)}};
 \end{tikzpicture}
 \end{ftstf}
@@ -739,7 +739,7 @@ Graphical/qualitative tests;
 \begin{tikzpicture}[remember picture,overlay]
 \node[anchor=south east,yshift=-10pt,xshift=10pt] at (current page.south east) {\includegraphics[width=.7\textwidth]{../figs/GraphNorm.pdf}};
 \node[anchor=south east,yshift=42pt,xshift=-120pt] at (current page.south east) {\color{red}$\boldsymbol{\longleftarrow}$ \textit{outlier}?};
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
 \end{tikzpicture}
 \end{ftstf}
 
@@ -777,9 +777,9 @@ Shapiro-Wilk normality test
 data:  my.sample
 W = 0.8809, p-value = 0.1335
 \end{rcode}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftstf}
 
 %=====
@@ -787,7 +787,7 @@ W = 0.8809, p-value = 0.1335
 \begin{ftstf}
 {Model validation}
 {The independence assumption}
-Possibly the strongest assumption of the statistical model used for the t-test is that of independence, that is, of the absence of unmodeled biases contaminating the data.
+Possibly the strongest assumption of the statistical model used for the t-test is that of independence, that is, of the absence of unmodelled biases contaminating the data.
 \vhalf
 While I know of no procedure to test independence in the general case, the special case of serial autocorrelations in the data (which can emerge, for instance, as a consequence of heating effects or equipment degradation) can be tested by a procedure known as the Durbin-Watson test:
 \begin{rcode}
@@ -798,9 +798,9 @@ lag Autocorrelation D-W Statistic p-value
 1      -0.0848535      2.111733   0.898
 Alternative hypothesis: rho != 0
 \end{rcode}
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftstf}
 
 %=====
@@ -816,9 +816,9 @@ Violations of the independence assumption tend to be the hardest to weed out, so
 %=====
 
 \begin{ftst}
-{The green peas experiment}
+{The algorithm validation experiment}
 {Going over the process}
-After examining the green peas example, it is interesting to go back and follow the recommended sequence for this kind of experiment:
+After examining the algorithm validation example, it is interesting to go back and follow the recommended sequence for this kind of experiment:
 
 \bitems Formulate question of interest;
 	\spitem Define minimally interesting effect;
@@ -828,9 +828,9 @@ After examining the green peas example, it is interesting to go back and follow 
 	\spitem Perform statistical analysis;
 	\spitem Draw conclusions and recommendations.
 \eitem
-\begin{tikzpicture}[remember picture,overlay]
-\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
-\end{tikzpicture}
+%\begin{tikzpicture}[remember picture,overlay]
+%\node[anchor=north east,yshift=12pt,xshift=-5pt] at (current page.north east) {\includegraphics[width=0.2\textwidth]{../figs/peas.png}};
+%\end{tikzpicture}
 \end{ftst}
 
 %=====
@@ -840,17 +840,13 @@ After examining the green peas example, it is interesting to go back and follow 
 {Bibliography}
 {\ }
 \scriptsize
-\textbf{Required reading}
+\textbf{Recommended reading}
 
 \benums D.C. Montgomery, G.C. Runger, \textit{Applied Statistics and Probability for Engineers}, Ch. 9.\\5th ed., Wiley, 2010. 
 \item J.T. Mordkoff (2011), \textit{The assumption(s) of normality} - \url{http://goo.gl/Z3w8ku}
-\eenum
-
-\textbf{Recommended reading}
-
-\benums A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide}. No Starch Press, 2015 ({\tiny\url{http://www.statisticsdonewrong.com}})
-\item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
-\item E. Ernst and S. Singh, \textit{Trick or Treatment}, Norton \& Company, 2009.
+\item A. Reinhart, \textit{Statistics Done Wrong: the woefully complete guide}. No Starch Press, 2015 ({\tiny\url{http://www.statisticsdonewrong.com}})
+%\item W. Thalheimer and S. Cook, \textit{How to calculate effect sizes from published research articles: A simplified methodology} - {\tiny\url{http://goo.gl/c0g1oK}}
+%\item E. Ernst and S. Singh, \textit{Trick or Treatment}, Norton \& Company, 2009.
 \eenum
 \end{ftst}
 
