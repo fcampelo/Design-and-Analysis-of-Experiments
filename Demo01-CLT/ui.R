@@ -22,16 +22,20 @@ shinyUI(fluidPage(
                                           "Uniform",
                                           "Weibull",
                                           "Poisson",
-                                          "Binomial"),
-                              selected = "Lognormal"),
+                                          "Binomial",
+                                          "Cauchy"),
+                              selected = "Beta"),
                   sliderInput("nobs",
                               "Sample size",
-                              min = 10,
-                              max = 500,
-                              step = 10,
-                              value = 30,
+                              min = 2,
+                              max = 200,
+                              step = 2,
+                              value = 4,
                               ticks = F,
-                              animate=list(interval=500,loop=F))
+                              animate=list(interval=250,loop=F)),
+                  numericInput("prng", 
+                               "Random seed:", 4, 
+                               min = 1, max = 100000)
             ),
             
             # Show a plot of the generated distribution
